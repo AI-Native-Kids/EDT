@@ -75,6 +75,11 @@
   ul,ol{margin:14px 0;padding-left:22px}
   li{margin:7px 0}
   strong{color:var(--navy)}
+  /* On dark backgrounds, navy <strong> would be invisible — force light */
+  .hero strong, .hero .lede strong{color:#fff}
+  footer strong, footer .disclaimer strong{color:#D7E4EC}
+  /* any inline white-text box (e.g. the value-stack exhibits): keep <strong> white too */
+  [style*="color:#fff"] strong{color:#fff}
 
   /* ---- Cards / grid ---- */
   .grid{display:grid;gap:18px;margin:26px 0}
