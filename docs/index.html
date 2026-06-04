@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vibe Coding 学习产品 · 战略评估报告</title>
+<meta name="description" content="以「免费学习换 Token 消费」为核心的 Vibe Coding 学习产品 —— 麦肯锡标准战略评估与建议" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#051C2C;        /* McKinsey deep blue */
+    --navy2:#0A2A3D;
+    --ink:#1A1A1A;
+    --slate:#5B6B78;
+    --line:#E3E8EC;
+    --paper:#FFFFFF;
+    --mist:#F4F7F9;
+    --cyan:#00A9F4;
+    --blue:#2251FF;
+    --teal:#0BA39A;
+    --amber:#F2A900;
+    --red:#E1383C;
+    --green:#1E9E62;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    color:var(--ink);background:var(--paper);line-height:1.7;-webkit-font-smoothing:antialiased;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{font-family:"Noto Serif SC","Noto Sans SC",serif;line-height:1.3;color:var(--navy);font-weight:700}
+  a{color:var(--blue);text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  .mono{font-variant-numeric:tabular-nums}
+
+  /* ---- Top nav ---- */
+  nav.top{position:sticky;top:0;z-index:50;background:rgba(5,28,44,.97);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.08)}
+  nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  nav.top .brand{color:#fff;font-weight:700;font-size:15px;letter-spacing:.02em;font-family:"Noto Serif SC",serif}
+  nav.top .brand span{color:var(--cyan)}
+  nav.top .links{display:flex;gap:4px;flex-wrap:wrap}
+  nav.top .links a{color:#AEC2CE;font-size:13px;padding:6px 10px;border-radius:6px;transition:.15s}
+  nav.top .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+  @media(max-width:860px){nav.top .links{display:none}}
+
+  /* ---- Hero ---- */
+  .hero{background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(0,169,244,.18), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgba(34,81,255,.16), transparent 55%),
+      var(--navy);
+    color:#EAF2F7;padding:72px 0 64px;position:relative;overflow:hidden}
+  .hero .kicker{color:var(--cyan);font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:18px}
+  .hero h1{color:#fff;font-size:clamp(30px,5vw,52px);font-weight:900;margin:0 0 18px;letter-spacing:-.01em}
+  .hero .lede{font-size:clamp(16px,2vw,20px);color:#C9DAE6;max-width:760px;font-weight:300}
+  .hero .meta{margin-top:34px;display:flex;gap:28px;flex-wrap:wrap;font-size:13px;color:#90AABA;border-top:1px solid rgba(255,255,255,.12);padding-top:20px}
+  .hero .meta b{color:#fff;font-weight:500;display:block;font-size:14px}
+  .verdict{margin-top:34px;display:inline-flex;align-items:center;gap:12px;background:rgba(11,163,154,.16);border:1px solid rgba(11,163,154,.5);color:#7FE3D9;padding:10px 18px;border-radius:30px;font-weight:500;font-size:14px}
+  .verdict b{color:#fff}
+
+  /* ---- Sections ---- */
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  section.alt{background:var(--mist)}
+  .sec-no{color:var(--cyan);font-weight:700;font-size:13px;letter-spacing:.14em;font-family:"Noto Sans SC"}
+  h2.sec{font-size:clamp(24px,3.4vw,34px);margin:8px 0 8px;font-weight:900}
+  .sec-sub{color:var(--slate);font-size:17px;max-width:780px;margin-bottom:8px}
+  .lead-answer{border-left:4px solid var(--cyan);background:#fff;padding:16px 22px;margin:24px 0;font-size:17px;color:var(--navy);font-weight:500;box-shadow:0 1px 0 var(--line)}
+  section.alt .lead-answer{background:#fff}
+
+  p{margin:14px 0}
+  ul,ol{margin:14px 0;padding-left:22px}
+  li{margin:7px 0}
+  strong{color:var(--navy)}
+
+  /* ---- Cards / grid ---- */
+  .grid{display:grid;gap:18px;margin:26px 0}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px;transition:.2s}
+  .card:hover{box-shadow:0 8px 28px rgba(5,28,44,.08);transform:translateY(-2px)}
+  .card h4{margin:0 0 8px;font-size:17px}
+  .card p{margin:0;font-size:14.5px;color:var(--slate)}
+  .card .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:20px;margin-bottom:12px}
+
+  /* ---- Stat ---- */
+  .stat{background:linear-gradient(160deg,#fff,#F7FAFC);border:1px solid var(--line);border-radius:12px;padding:24px;text-align:left}
+  .stat .num{font-family:"Noto Serif SC";font-size:38px;font-weight:900;color:var(--navy);line-height:1}
+  .stat .num small{font-size:18px;color:var(--cyan)}
+  .stat .lab{margin-top:10px;font-size:13.5px;color:var(--slate)}
+
+  /* ---- Exhibit ---- */
+  .exhibit{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin:30px 0;box-shadow:0 2px 14px rgba(5,28,44,.04)}
+  .exhibit .ex-head{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--navy);padding-bottom:12px;margin-bottom:18px;flex-wrap:wrap}
+  .exhibit .ex-no{background:var(--navy);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;padding:4px 10px;border-radius:4px}
+  .exhibit .ex-title{font-family:"Noto Serif SC";font-weight:700;font-size:17px;color:var(--navy)}
+  .exhibit .ex-foot{margin-top:14px;font-size:12px;color:#90A0AC;border-top:1px solid var(--line);padding-top:10px}
+  .chart-box{position:relative;height:340px}
+  .chart-box.tall{height:420px}
+
+  /* ---- Table ---- */
+  table{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+  th{background:var(--navy);color:#fff;font-weight:500;font-size:12.5px;letter-spacing:.02em}
+  tr:nth-child(even) td{background:var(--mist)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:700}
+  .pill.hi{background:#FDECEC;color:var(--red)}
+  .pill.md{background:#FEF6E0;color:#B07D00}
+  .pill.lo{background:#E6F6EE;color:var(--green)}
+
+  /* ---- Callouts ---- */
+  .callout{border-radius:12px;padding:20px 22px;margin:22px 0;border:1px solid}
+  .callout.insight{background:#EAF7FE;border-color:#BfE6FB}
+  .callout.risk{background:#FDF0F0;border-color:#F6CFCF}
+  .callout.action{background:#EAF8F0;border-color:#C6E9D4}
+  .callout h4{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .callout p{margin:0;font-size:14.5px;color:#33454F}
+  .callout.insight h4{color:#0270A8}
+  .callout.risk h4{color:#B92E32}
+  .callout.action h4{color:#157C49}
+
+  /* ---- SWOT ---- */
+  .swot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+  @media(max-width:720px){.swot{grid-template-columns:1fr}}
+  .swot .q{border-radius:12px;padding:18px 20px;border:1px solid var(--line)}
+  .swot .q h4{margin:0 0 10px;font-size:15px}
+  .swot .q ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--slate)}
+  .swot .s{background:#EAF8F0;border-color:#C6E9D4}
+  .swot .w{background:#FDF0F0;border-color:#F6CFCF}
+  .swot .o{background:#EAF7FE;border-color:#BfE6FB}
+  .swot .t{background:#FEF6E0;border-color:#F6E3B0}
+
+  /* ---- Options ---- */
+  .opt{border:1px solid var(--line);border-radius:14px;padding:24px;background:#fff;position:relative}
+  .opt.rec{border:2px solid var(--teal);box-shadow:0 10px 30px rgba(11,163,154,.12)}
+  .opt .badge{position:absolute;top:-12px;right:18px;background:var(--teal);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;padding:5px 12px;border-radius:20px}
+  .opt h4{margin:0 0 4px;font-size:18px}
+  .opt .sub{color:var(--slate);font-size:13px;margin-bottom:14px}
+  .opt .row{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-top:1px dashed var(--line)}
+  .opt .row span:first-child{color:var(--slate)}
+  .opt .row span:last-child{font-weight:600;color:var(--navy)}
+
+  /* ---- Timeline ---- */
+  .tl{position:relative;margin:30px 0;padding-left:30px}
+  .tl:before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--cyan),var(--blue))}
+  .tl .item{position:relative;margin-bottom:26px}
+  .tl .item:before{content:"";position:absolute;left:-26px;top:5px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--cyan)}
+  .tl .ph{font-size:12px;font-weight:700;color:var(--cyan);letter-spacing:.08em;text-transform:uppercase}
+  .tl h4{margin:3px 0 6px;font-size:16px}
+  .tl p{margin:0;font-size:14px;color:var(--slate)}
+
+  /* ---- footer ---- */
+  footer{background:var(--navy);color:#9FB6C4;padding:48px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  footer b{color:#fff}
+  footer a{color:var(--cyan)}
+  .disclaimer{font-size:12px;color:#6E889A;margin-top:18px;line-height:1.6;border-top:1px solid rgba(255,255,255,.1);padding-top:16px}
+
+  .anchor{scroll-margin-top:70px}
+  .twocol{columns:2;column-gap:30px}
+  @media(max-width:720px){.twocol{columns:1}}
+  .src{font-size:12px;color:#90A0AC}
+  hr.soft{border:none;border-top:1px solid var(--line);margin:30px 0}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <div class="brand">Vibe<span>Labs</span> · 战略评估</div>
+    <div class="links">
+      <a href="#summary">执行摘要</a>
+      <a href="#market">市场</a>
+      <a href="#model">模式</a>
+      <a href="#economics">单位经济学</a>
+      <a href="#competition">竞争</a>
+      <a href="#risk">风险</a>
+      <a href="#options">建议</a>
+      <a href="#roadmap">路线图</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">战略评估报告 · Strategy Assessment</div>
+    <h1>用「免费学习」卖 Token：<br/>Vibe Coding 学习产品的商业可行性</h1>
+    <p class="lede">一个以 AI Labs 模式运营、利润主要来自 Token 消费的学习产品 —— 它是教育公司，还是一家披着教育外衣的 AI 算力分销商？本报告以麦肯锡标准拆解其市场机会、单位经济学、竞争格局与战略路径。</p>
+
+    <div class="verdict">
+      <span>核心结论</span>
+      <b>模式成立，但变现逻辑必须从「卖 Token」升级为「卖被 Token 驱动的价值」</b>
+    </div>
+
+    <div class="meta">
+      <div><b>评估对象</b>Vibe Coding 学习 × Token 变现</div>
+      <div><b>方法</b>金字塔结构 · MECE · 情景测算</div>
+      <div><b>受众</b>创始团队与合伙人</div>
+      <div><b>日期</b>2026 年 6 月</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ 1. EXEC SUMMARY ============ -->
+<section id="summary" class="anchor">
+  <div class="wrap">
+    <div class="sec-no">01 / 执行摘要</div>
+    <h2 class="sec">一句话回答：这门生意值得做，但「卖 Token」不是终局</h2>
+
+    <div class="lead-answer">
+      你设想的不是一家「在线教育公司」，而是一家<strong>以教育为获客漏斗、以 AI 消费为收入引擎的算力商业体</strong>。
+      它的本质是「剃须刀 + 刀片」模型：免费内容是剃须刀（压低获客成本、建立信任与习惯），Token 是刀片（持续、随用量增长的收入）。
+      模式逻辑成立，但若<strong>只做 Token 的成本加价转售（cost-plus markup），毛利会被模型厂商的价格通缩持续侵蚀</strong>，最终沦为低毛利的算力分销商。
+      胜负手在于：把变现单位从「Token」抽象为「AI Credits / 成果」，从而掌握定价权、与底层成本脱钩。
+    </div>
+
+    <div class="grid g3">
+      <div class="stat"><div class="num">3<small>大杠杆</small></div><div class="lab">决定成败：① Token 毛利的可持续性 ② 学习者→重度创作者的转化与留存 ③ 教育作为 CAC 压缩器的有效性</div></div>
+      <div class="stat"><div class="num">~80<small>/20</small></div><div class="lab">收入呈幂律分布：预计 10–20% 的「重度创作者」贡献 70–80% 的 Token 收入 —— 产品必须为他们设计</div></div>
+      <div class="stat"><div class="num">↓10×<small>/2y</small></div><div class="lab">关键风险：同等能力的 Token 单价每 1–2 年下降约一个数量级，纯转售毛利不可持续</div></div>
+    </div>
+
+    <h3 style="margin-top:34px">五个关键判断</h3>
+    <div class="grid g2">
+      <div class="card"><span class="tag" style="background:#E6F6EE;color:var(--green)">机会</span><h4>时机正确（Why Now）</h4><p>模型能力刚跨过「非程序员也能造软件」的门槛，Vibe Coding 成为新的大众技能入口；传统订阅制编程教育正经历「订阅疲劳」，给了消费式定价切入空间。</p></div>
+      <div class="card"><span class="tag" style="background:#E6F6EE;color:var(--green)">机会</span><h4>定价模型更优（对两端）</h4><p>对轻度用户：按用量付费比 $20–40/月订阅更便宜，降低尝试门槛；对重度用户：无订阅天花板，付费上不封顶。一个定价机制同时改善获客与变现。</p></div>
+      <div class="card"><span class="tag" style="background:#FDECEC;color:var(--red)">风险</span><h4>毛利结构脆弱</h4><p>若按成本加价转售 Token，毛利率被锁死在 30–50%，且随模型降价而下行。必须用「Credits + 捆绑价值（模板/Agent/托管/Review）」重建定价权。</p></div>
+      <div class="card"><span class="tag" style="background:#FDECEC;color:var(--red)">风险</span><h4>受众错配会致命</h4><p>纯零基础学员消耗低、流失高，是「成本中心」。必须锁定「有动机的造物者（prosumer / aspiring builder）」，而非把规模建立在低价值新手上。</p></div>
+      <div class="card" style="grid-column:1/-1"><span class="tag" style="background:#EAF2FB;color:var(--blue)">建议</span><h4>推荐战略：「免费学院 + Credits 钱包 + 创作者飞轮」</h4><p>免费/低价内容做顶部漏斗 → 引导进入「边学边造」的产品内环境 → 以 AI Credits 计费（封装底层 Token，附加模板、一键托管、AI Review 等价值）→ 作品/社区形成留存与口碑飞轮。先用一个垂直场景（如「AI 全栈小应用」）做 MVP 验证转化与 LTV:CAC，再扩科目。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. MARKET ============ -->
+<section id="market" class="alt anchor">
+  <div class="wrap">
+    <div class="sec-no">02 / 市场机会</div>
+    <h2 class="sec">为什么是现在：两条曲线的交汇</h2>
+    <p class="sec-sub">一条是 AI 编程工具的爆发式采用，另一条是传统订阅制教育的增长见顶。你的产品恰好站在两者的交叉口。</p>
+
+    <div class="lead-answer">需求侧驱动力清晰：① AI 让「软件创造」从专业技能变成大众可及的能力，潜在学习人群从「程序员」扩展到「所有想把想法变成产品的人」；② 同时，付费习惯正从「订阅一门课」转向「为实际使用付费」。这两点共同支撑「免费学 + 按用量付费」的产品逻辑。</p>
+
+    <div class="grid g4">
+      <div class="stat"><div class="num">$1.5T<small>+</small></div><div class="lab">全球软件 + IT 服务市场（被 AI 编程重构的底层盘子，方向性）</div></div>
+      <div class="stat"><div class="num">~30%<small>+ CAGR</small></div><div class="lab">AI 辅助/生成式编程工具市场的增速区间（方向性，需校验）</div></div>
+      <div class="stat"><div class="num">1 亿<small>+</small></div><div class="lab">全球编程/技术学习者量级（Codecademy/freeCodeCamp/Udemy 等合计）</div></div>
+      <div class="stat"><div class="num">新增<small>非程序员</small></div><div class="lab">Vibe Coding 打开的增量人群：设计师、产品、运营、创业者、学生</div></div>
+    </div>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 1</span><span class="ex-title">两条曲线交汇：AI 编程采用 ↑ 与 传统订阅教育增长 ↓（示意）</span></div>
+      <div class="chart-box"><canvas id="chMarket"></canvas></div>
+      <div class="ex-foot">示意性曲线，用于呈现趋势方向而非精确预测。真实数据需以一手调研与三方报告（IDC / Gartner / a16z / 各产品财报）校验。</div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card"><h4>需求 1 · 受众扩容</h4><p>"造软件"的门槛从「会写代码」降到「会描述想法」。潜在学习者从数百万程序员，扩展到数亿有创造诉求的非技术人群。</p></div>
+      <div class="card"><h4>需求 2 · 付费迁移</h4><p>用户对"又一个 $20/月订阅"的抵触上升（订阅疲劳）。"按实际使用付费"被认为更公平、更可控，正成为 AI 时代的主流计费心智。</p></div>
+      <div class="card"><h4>需求 3 · 工具成熟</h4><p>Cursor / Lovable / bolt.new / v0 / Replit Agent 等已证明"自然语言造应用"可行，但它们缺少系统化的"教 + 引导"，留下了教育切入点。</p></div>
+    </div>
+
+    <div class="callout insight">
+      <h4>◆ 洞察</h4>
+      <p>真正的市场不是"在线编程课"这个红海，而是"<strong>帮非程序员用 AI 把想法变成可运行产品</strong>"这个尚未被系统化服务的新蓝海。教育只是入口，"陪着造出第一个作品"才是价值核心 —— 而这个过程天然消耗 Token。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. BUSINESS MODEL ============ -->
+<section id="model" class="anchor">
+  <div class="wrap">
+    <div class="sec-no">03 / 商业模式解构</div>
+    <h2 class="sec">机制：剃须刀 + 刀片，教育是 CAC，Token 是引擎</h2>
+    <p class="sec-sub">把你的想法翻译成商业语言，并与传统订阅制做结构性对比。</p>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 2</span><span class="ex-title">价值与现金流结构：从「卖课」到「卖持续消费」</span></div>
+      <table>
+        <thead><tr><th>维度</th><th>传统在线教育（订阅制）</th><th>本模式（免费学习 × Token 变现）</th></tr></thead>
+        <tbody>
+          <tr><td>核心收入</td><td>月/年订阅费（固定）</td><td>Token / Credits 消费（随用量浮动，无上限）</td></tr>
+          <tr><td>内容定位</td><td>付费墙后的资产，是<strong>产品本身</strong></td><td>免费/低价的<strong>获客与留存工具</strong>（CAC 压缩器）</td></tr>
+          <tr><td>用户付费心智</td><td>"我为学习内容付费"（易因学完/倦怠而流失）</td><td>"我为造东西付费"（持续创造 = 持续付费）</td></tr>
+          <tr><td>收入与价值挂钩</td><td>弱：学不学都收同样的钱</td><td>强：用得多 = 价值大 = 付费多（对齐）</td></tr>
+          <tr><td>毛利来源</td><td>内容边际成本≈0，毛利高但天花板低</td><td>Token 加价 / Credits 溢价（取决于定价权）</td></tr>
+          <tr><td>关键风险</td><td>获客贵、订阅流失、内容易被复制</td><td>底层成本通缩、轻度用户不付费、对厂商依赖</td></tr>
+        </tbody>
+      </table>
+      <div class="ex-foot">结论：本模式把"一次性教育付费"重构为"持续的消费收入"，收入与用户实际获得的价值正相关 —— 这是它相对订阅制的结构性优势。</div>
+    </div>
+
+    <h3>三种 Token 变现路径（毛利与防御性递增）</h3>
+    <div class="grid g3">
+      <div class="card"><span class="tag" style="background:#FDECEC;color:var(--red)">最弱</span><h4>A. 成本加价转售</h4><p>按 API 成本 ×1.3–2 转售原始 Token。<strong>毛利 30–50%，但随模型降价持续下行</strong>，纯算力分销，无护城河。</p></div>
+      <div class="card"><span class="tag" style="background:#FEF6E0;color:#B07D00">中</span><h4>B. Credits 抽象层</h4><p>把 Token 封装为平台"Credits"，对用户隐藏底层单价。<strong>定价与成本解耦</strong>，模型降价时毛利扩张归你。Cursor / Lovable 的做法。</p></div>
+      <div class="card"><span class="tag" style="background:#E6F6EE;color:var(--green)">最强</span><h4>C. 成果 / 价值计费</h4><p>按"造出一个可运行应用""一次 AI Review""一键部署"等<strong>成果</strong>计费，附加模板、托管、协作。毛利与品牌、体验绑定，最难被复制。</p></div>
+    </div>
+
+    <div class="callout insight">
+      <h4>◆ 核心洞察：不要做 A，要做 B→C</h4>
+      <p>"卖 Token"听起来直接，但<strong>原始 Token 是高度同质化的商品（commodity）</strong>，价格透明、持续下降、零切换成本。一旦你只做转售，用户随时会发现"我直接调 API 更便宜"。真正的利润来自你在 Token 之上封装的<strong>体验、成果与确定性</strong>——这才是教育公司能比纯 API 网关多赚的钱。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. UNIT ECONOMICS ============ -->
+<section id="economics" class="alt anchor">
+  <div class="wrap">
+    <div class="sec-no">04 / 单位经济学（核心章节）</div>
+    <h2 class="sec">钱从哪来：把模式压到一张测算表上</h2>
+    <p class="sec-sub">商业模式的成败，最终由单位经济学决定。以下为<strong>示意性测算（illustrative）</strong>，所有数字均为待验证假设，目的是揭示"哪些变量真正决定生死"。</p>
+
+    <div class="lead-answer">关键结论：单位经济学能否成立，取决于<strong>付费转化率 × 重度用户占比 × 毛利率</strong>三者的乘积是否足以覆盖 CAC。在合理假设下，LTV:CAC 可达 3:1 以上 —— 但前提是教育真的把 CAC 压到足够低，且产品能"养出"重度创作者。</p>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 3</span><span class="ex-title">两种计费下的「用户月成本」曲线：消费制对两端都更优</span></div>
+      <div class="chart-box"><canvas id="chCost"></canvas></div>
+      <div class="ex-foot">轻度用户区间，消费制远低于固定订阅（降低尝试门槛）；重度用户区间，消费制收入随用量上升无天花板（提升变现）。交叉点的位置 = 你的定价策略锚点。</div>
+    </div>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 4</span><span class="ex-title">收入幂律分布：少数「创作者」撑起大盘（示意）</span></div>
+      <div class="chart-box"><canvas id="chPower"></canvas></div>
+      <div class="ex-foot">免费/轻度用户人数最多但贡献收入极少；产品与运营资源应向"活跃创作者 / 鲸鱼用户"倾斜。这也意味着：<strong>注册量是虚荣指标，付费用户的 Token 月耗才是北极星。</strong></div>
+    </div>
+
+    <h3>示意性单位经济学测算</h3>
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 5</span><span class="ex-title">单用户经济模型（每获取 1,000 名免费学习者，示意）</span></div>
+      <table>
+        <thead><tr><th>指标</th><th class="num">悲观 Bear</th><th class="num">基准 Base</th><th class="num">乐观 Bull</th><th>说明 / 假设</th></tr></thead>
+        <tbody>
+          <tr><td>免费学习者</td><td class="num">1,000</td><td class="num">1,000</td><td class="num">1,000</td><td>漏斗顶端</td></tr>
+          <tr><td>付费转化率</td><td class="num">3%</td><td class="num">8%</td><td class="num">15%</td><td>转向 Credits 充值的比例</td></tr>
+          <tr><td>付费用户数</td><td class="num">30</td><td class="num">80</td><td class="num">150</td><td>—</td></tr>
+          <tr><td>付费用户月均充值</td><td class="num">$12</td><td class="num">$25</td><td class="num">$45</td><td>含少量重度"鲸鱼"拉高均值</td></tr>
+          <tr><td>毛利率（Credits）</td><td class="num">35%</td><td class="num">55%</td><td class="num">65%</td><td>取决于走 A / B / C 哪条路径</td></tr>
+          <tr><td><strong>月毛利（该批用户）</strong></td><td class="num"><strong>$126</strong></td><td class="num"><strong>$1,100</strong></td><td class="num"><strong>$4,388</strong></td><td>= 付费数 × 充值 × 毛利率</td></tr>
+          <tr><td>留存（平均付费月数）</td><td class="num">4</td><td class="num">10</td><td class="num">18</td><td>创作越多越粘</td></tr>
+          <tr><td><strong>批次 LTV（毛利口径）</strong></td><td class="num"><strong>$504</strong></td><td class="num"><strong>$11,000</strong></td><td class="num"><strong>$78,975</strong></td><td>每千名免费用户的累计毛利</td></tr>
+          <tr><td>单付费用户 LTV</td><td class="num">$16.8</td><td class="num">$137</td><td class="num">$526</td><td>—</td></tr>
+          <tr><td>获客成本 CAC（每付费用户）</td><td class="num">$60</td><td class="num">$35</td><td class="num">$20</td><td>免费内容 + 社区 + 口碑摊薄</td></tr>
+          <tr><td><strong>LTV : CAC</strong></td><td class="num"><span class="pill hi">0.3 : 1</span></td><td class="num"><span class="pill lo">3.9 : 1</span></td><td class="num"><span class="pill lo">26 : 1</span></td><td>健康线 ≥ 3:1</td></tr>
+        </tbody>
+      </table>
+      <div class="ex-foot">⚠ 全部为示意性假设，仅用于揭示敏感变量。<strong>悲观情景（低转化 + 低留存 + 高 CAC + 低毛利）会直接亏损</strong> —— 这正是 MVP 阶段必须优先验证的死亡区。</div>
+    </div>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 6</span><span class="ex-title">敏感性：LTV:CAC 对四个变量的弹性（基准=3.9:1）</span></div>
+      <div class="chart-box"><canvas id="chSens"></canvas></div>
+      <div class="ex-foot">留存月数与毛利率是最高杠杆变量。提升留存（让用户持续创作）、提升毛利（走 Credits/成果计费）比单纯做大注册量更能改善经济模型。</div>
+    </div>
+
+    <div class="grid g3">
+      <div class="callout action" style="margin:0"><h4>▶ 决定生死的 3 个数</h4><p><strong>① 付费转化率</strong>（免费→充值）<br/><strong>② 重度用户占比与月耗</strong>（鲸鱼贡献）<br/><strong>③ 毛利率</strong>（路径 A/B/C 决定）</p></div>
+      <div class="callout risk" style="margin:0"><h4>▶ 最危险的假设</h4><p>"免费内容能把 CAC 压到很低"——若内容无差异化、获客仍要买量，CAC 不降，整个模式回到普通教育公司的苦战。<strong>内容的差异化 = 经济模型的命门。</strong></p></div>
+      <div class="callout insight" style="margin:0"><h4>▶ 北极星指标</h4><p>不是注册数，而是 <strong>"付费用户的月度 Credits 净毛利（扣除模型成本后）" × 留存</strong>。围绕它设计产品、内容与运营。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. COMPETITION ============ -->
+<section id="competition" class="anchor">
+  <div class="wrap">
+    <div class="sec-no">05 / 竞争格局</div>
+    <h2 class="sec">谁在你左右：教育深度 × 变现模式 的定位地图</h2>
+    <p class="sec-sub">这片市场的两端都很拥挤 —— 一端是"会教不会变现"的教育平台，另一端是"会变现不会教"的 AI 编程工具。你的机会在中间的空白带。</p>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 7</span><span class="ex-title">竞争定位图（X：教育/引导深度 · Y：消费式变现强度）</span></div>
+      <div class="chart-box tall"><canvas id="chMap"></canvas></div>
+      <div class="ex-foot">气泡大小 = 相对体量（示意）。右上空白区 =「既系统化地教、又靠消费变现」—— 这是本产品的卡位。气泡为定性判断，非精确市场份额。</div>
+    </div>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 8</span><span class="ex-title">关键对手画像</span></div>
+      <table>
+        <thead><tr><th>玩家</th><th>类型</th><th>变现</th><th>对你的威胁 / 启示</th></tr></thead>
+        <tbody>
+          <tr><td>Cursor</td><td>AI 编程工具</td><td>订阅 + 用量（Credits）</td><td>已用 Credits 抽象层验证 B 路径；但面向已会编程者，<span class="pill md">教育留白</span></td></tr>
+          <tr><td>Lovable / bolt.new / v0</td><td>Vibe Coding 平台</td><td>用量 / 积分</td><td>"自然语言造应用"标杆，但<strong>缺系统化教学</strong>，新手易卡住流失 —— 你的切入点</td></tr>
+          <tr><td>Replit</td><td>云 IDE + Agent</td><td>订阅 + 算力</td><td>最接近你的全栈对手，有教育历史；正面竞争需差异化定位</td></tr>
+          <tr><td>Codecademy / Scrimba</td><td>互动编程教育</td><td>订阅</td><td>会教不会"消费变现"，正承受订阅疲劳 —— 你的反面参照</td></tr>
+          <tr><td>freeCodeCamp</td><td>免费教育（非营利）</td><td>捐赠</td><td>证明"免费内容"可聚拢巨大流量，但<strong>未货币化</strong>——你要补上的正是变现层</td></tr>
+          <tr><td>YouTube / 自媒体教程</td><td>免费分散内容</td><td>广告/引流</td><td>真正的"免费内容"竞争来自这里；你需提供"教程给不了的东西"：环境、Credits、成果</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout insight">
+      <h4>◆ 洞察：你的护城河不在"内容"，而在"教育 × 消费"的闭环</h4>
+      <p>免费内容本身无法防御（YouTube 上全是）。可防御的是这个<strong>闭环</strong>：系统化教学建立信任与习惯 → 产品内环境让用户立刻动手造 → Credits 让创造可持续 → 作品与社区形成网络效应与转换成本。单看任何一环都不稀缺，<strong>把四环咬合成飞轮才稀缺</strong>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. SWOT ============ -->
+<section id="swot" class="alt anchor">
+  <div class="wrap">
+    <div class="sec-no">06 / 战略评估</div>
+    <h2 class="sec">SWOT：优势能否压住风险</h2>
+
+    <div class="swot">
+      <div class="q s"><h4>S · 优势</h4><ul>
+        <li>定价对齐价值：用得多 = 付得多，无订阅天花板</li>
+        <li>免费内容 = 低 CAC 漏斗 + 口碑引擎</li>
+        <li>收入随单个用户成长而增长（净留存可 &gt;100%）</li>
+        <li>切中"非程序员造软件"的增量人群</li>
+      </ul></div>
+      <div class="q w"><h4>W · 劣势 / 内部约束</h4><ul>
+        <li>毛利依赖底层模型成本，定价权需主动构建</li>
+        <li>免费用户多为成本，转化与留存未经证实</li>
+        <li>对模型厂商（API）有供应与价格依赖</li>
+        <li>"教育 + 产品 + 算力"三件事都要做，执行复杂度高</li>
+      </ul></div>
+      <div class="q o"><h4>O · 机会</h4><ul>
+        <li>订阅疲劳 → 消费式定价的心智窗口期</li>
+        <li>Vibe Coding 工具缺教学，留下整合空位</li>
+        <li>模型降价 → 同样 Credits 你能给更多价值（若走 B/C，降价利好你）</li>
+        <li>作品/模板/社区可演化为 marketplace 第二曲线</li>
+      </ul></div>
+      <div class="q t"><h4>T · 威胁</h4><ul>
+        <li>Token 价格通缩侵蚀纯转售毛利</li>
+        <li>Replit/Cursor 等向"教育+消费"延伸</li>
+        <li>模型厂商直接面向 C 端（绕过你）</li>
+        <li>免费内容被 AI 自动生成，差异化变难</li>
+      </ul></div>
+    </div>
+
+    <div class="callout action">
+      <h4>▶ 战略含义</h4>
+      <p>优势与机会都<strong>指向同一个动作</strong>：尽快建立"定价权 + 教育闭环"。劣势与威胁也<strong>指向同一个解药</strong>：不要停留在卖原始 Token（路径 A），要爬到 Credits / 成果计费（路径 B→C）。换言之，<strong>SWOT 的四个象限收敛到一条主线 —— 用教育闭环换取定价权。</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. RISK / RED TEAM ============ -->
+<section id="risk" class="anchor">
+  <div class="wrap">
+    <div class="sec-no">07 / 关键风险与红队视角</div>
+    <h2 class="sec">这个模式可能怎么死</h2>
+    <p class="sec-sub">麦肯锡式严谨要求主动证伪。以下是最可能击穿模式的失败路径与缓解方案。</p>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 9</span><span class="ex-title">风险矩阵（影响 × 概率）与缓解</span></div>
+      <table>
+        <thead><tr><th>风险</th><th>影响</th><th>概率</th><th>缓解策略</th></tr></thead>
+        <tbody>
+          <tr><td><strong>毛利通缩</strong>：模型降价压垮转售利润</td><td><span class="pill hi">高</span></td><td><span class="pill hi">高</span></td><td>走 Credits/成果计费（B/C），定价与成本解耦；降价时锁定用户价格 → 毛利扩张归你</td></tr>
+          <tr><td><strong>转化失败</strong>：免费用户不付费</td><td><span class="pill hi">高</span></td><td><span class="pill md">中</span></td><td>设计"非充值不可继续创造"的自然卡点；锁定 prosumer 而非纯新手；免费额度精准卡在"上瘾后"</td></tr>
+          <tr><td><strong>CAC 不降</strong>：内容无差异，仍需买量</td><td><span class="pill hi">高</span></td><td><span class="pill md">中</span></td><td>内容做到"教程给不了的体验"；押注社区/口碑/SEO/作品传播等自然流量</td></tr>
+          <tr><td><strong>厂商依赖</strong>：API 涨价/限流/封号</td><td><span class="pill md">中</span></td><td><span class="pill md">中</span></td><td>多模型路由（Anthropic/OpenAI/开源），抽象层屏蔽底层；关键路径可降级</td></tr>
+          <tr><td><strong>巨头下场</strong>：Replit/Cursor 补教育，或厂商直连 C 端</td><td><span class="pill md">中</span></td><td><span class="pill md">中</span></td><td>以垂直人群 + 社区 + 品牌做窄而深的护城河；速度优先</td></tr>
+          <tr><td><strong>滥用/亏损用户</strong>：免费额度被刷、重度用户毛利为负</td><td><span class="pill md">中</span></td><td><span class="pill md">中</span></td><td>实时用量风控、缓存/小模型路由、阶梯定价、对负毛利行为设限</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout risk">
+      <h4>▶ 红队最尖锐的一问</h4>
+      <p>"如果模型厂商明天推出<strong>面向学习者的免费 + 自带 Credits</strong> 的官方产品，你还剩什么？" —— 答案必须是：<strong>你拥有的是关系、信任、社区和教学体验，而不是算力本身。</strong> 如果你的全部价值就是"转卖便宜一点的 Token"，这个生意不该做。这一问应成为每个产品决策的试金石。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. OPTIONS & RECOMMENDATION ============ -->
+<section id="options" class="alt anchor">
+  <div class="wrap">
+    <div class="sec-no">08 / 战略选项与建议</div>
+    <h2 class="sec">三条路，推荐第三条</h2>
+    <p class="sec-sub">把战略选择摆在桌面上，明确取舍，给出推荐。</p>
+
+    <div class="grid g3">
+      <div class="opt">
+        <h4>选项 A · 算力分销商</h4>
+        <div class="sub">免费内容引流，转售原始 Token</div>
+        <div class="row"><span>毛利</span><span>低（30–50%，下行）</span></div>
+        <div class="row"><span>护城河</span><span>几乎没有</span></div>
+        <div class="row"><span>启动难度</span><span>低</span></div>
+        <div class="row"><span>结局</span><span>商品化价格战</span></div>
+        <p class="src" style="margin-top:12px">❌ 不推荐：本质是 API 套壳，无防御性。</p>
+      </div>
+      <div class="opt">
+        <h4>选项 B · 全能平台一步到位</h4>
+        <div class="sub">教育 + 工具 + 社区 + Credits 同时大干</div>
+        <div class="row"><span>毛利</span><span>中高（若做成）</span></div>
+        <div class="row"><span>护城河</span><span>强（若做成）</span></div>
+        <div class="row"><span>启动难度</span><span>很高 · 烧钱</span></div>
+        <div class="row"><span>结局</span><span>赢家通吃或耗尽资源</span></div>
+        <p class="src" style="margin-top:12px">⚠ 风险高：战线过宽，早期团队难以同时跑通三件事。</p>
+      </div>
+      <div class="opt rec">
+        <span class="badge">★ 推荐</span>
+        <h4>选项 C · 垂直闭环，先窄后宽</h4>
+        <div class="sub">单一场景验证飞轮，再横向扩张</div>
+        <div class="row"><span>毛利</span><span>中→高（Credits/成果）</span></div>
+        <div class="row"><span>护城河</span><span>渐进式构建</span></div>
+        <div class="row"><span>启动难度</span><span>可控 · MVP 验证</span></div>
+        <div class="row"><span>结局</span><span>跑通单元经济后规模化</span></div>
+        <p class="src" style="margin-top:12px">✅ 推荐：先在一个垂直场景把 LTV:CAC 跑正，再复制。</p>
+      </div>
+    </div>
+
+    <div class="callout action">
+      <h4>▶ 推荐战略全景：「免费学院 + Credits 钱包 + 创作者飞轮」</h4>
+      <p>
+        <strong>1）选一个高 Token 强度的垂直场景做 MVP</strong>（如"用 AI 造一个能上线的全栈小应用 / 个人作品集 / 小工具"）—— 这类任务天然需要持续生成、调试、部署，Token 消耗与价值都高。<br/>
+        <strong>2）内容免费但"环境内嵌"</strong>：不是看完视频自己去别处做，而是在你的产品里边学边造，学习路径与 Credits 消费无缝衔接。<br/>
+        <strong>3）以 Credits 计费、隐藏底层 Token</strong>：附加模板、一键托管、AI Review、协作 —— 把变现单位从"算力"抬升到"成果与确定性"。<br/>
+        <strong>4）用作品与社区做飞轮</strong>：学员作品 → 展示/模板市场 → 吸引新学员 → 网络效应。<br/>
+        <strong>5）北极星 = 付费用户净毛利 × 留存</strong>，而非注册量。先把单元经济跑正，再加科目、加人群。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. ROADMAP ============ -->
+<section id="roadmap" class="anchor">
+  <div class="wrap">
+    <div class="sec-no">09 / 落地路线图</div>
+    <h2 class="sec">从想法到验证：未来 12 个月</h2>
+    <p class="sec-sub">不追求一步到位，追求尽快用最小成本证伪/证实关键假设。</p>
+
+    <div class="tl">
+      <div class="item"><div class="ph">0–4 周 · 假设与拆解</div><h4>把生死假设写下来并定义验证指标</h4><p>明确三大杠杆的目标值（付费转化、月耗、毛利、CAC、留存）；选定首个垂直场景；完成竞品定价拆解，确定 Credits 单价模型与免费额度卡点。</p></div>
+      <div class="item"><div class="ph">1–3 月 · MVP 与冷启动</div><h4>跑通一个"边学边造"的最小闭环</h4><p>1 条精品免费学习路径 + 内嵌创作环境 + Credits 充值。多模型路由 + 实时用量计费 + 风控。冷启动 100–500 名种子用户（社区/自媒体/口碑，零买量）。</p></div>
+      <div class="item"><div class="ph">3–6 月 · 验证单元经济</div><h4>让 LTV:CAC 跑到 ≥ 3:1</h4><p>用真实数据替换 Exhibit 5 的假设；定位并放大"重度创作者"画像；优化免费额度卡点与付费转化；确认毛利路径（B→C）。Go / No-Go 决策点。</p></div>
+      <div class="item"><div class="ph">6–9 月 · 飞轮启动</div><h4>作品展示 + 模板市场 + 社区</h4><p>把学员作品变成获客资产与第二曲线；建立创作者激励；用自然流量进一步压低 CAC，验证净留存 &gt;100%。</p></div>
+      <div class="item"><div class="ph">9–12 月 · 规模化</div><h4>横向扩科目 / 人群，开放融资叙事</h4><p>复制已验证的垂直闭环到第二、三场景；规模化获客；以"教育驱动的 AI 消费平台、净留存为王"作为对合伙人/投资人的核心叙事。</p></div>
+    </div>
+
+    <div class="grid g3" style="margin-top:10px">
+      <div class="card"><h4>30 天要回答</h4><p>首个垂直场景是什么？Credits 单价与免费额度卡点定在哪？验证指标的目标值？</p></div>
+      <div class="card"><h4>90 天要证明</h4><p>免费用户会不会充值？重度创作者长什么样？内容能不能把 CAC 压下来？</p></div>
+      <div class="card"><h4>180 天的 Go/No-Go</h4><p>真实 LTV:CAC ≥ 3:1 吗？毛利能不能脱离原始 Token 成本？留存是否随创作上升？</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. SCENARIOS ============ -->
+<section id="scenario" class="alt anchor">
+  <div class="wrap">
+    <div class="sec-no">10 / 财务情景</div>
+    <h2 class="sec">三种未来：把不确定性可视化</h2>
+    <p class="sec-sub">基于 Exhibit 5 的假设外推，呈现量级与形态，<strong>非财务预测</strong>。</p>
+
+    <div class="exhibit">
+      <div class="ex-head"><span class="ex-no">EXHIBIT 10</span><span class="ex-title">12 个月毛利情景（示意，单位：千美元）</span></div>
+      <div class="chart-box"><canvas id="chScenario"></canvas></div>
+      <div class="ex-foot">差距主要由"付费转化 × 留存 × 毛利率"的复利效应放大。这说明早期资源应聚焦于<strong>提升这三个比率</strong>，而非盲目扩大漏斗顶端。</div>
+    </div>
+
+    <div class="grid g3">
+      <div class="stat"><div class="num" style="color:var(--red)">Bear</div><div class="lab">低转化 + 低留存 + 纯转售毛利 → 单元经济为负，应及时转向或止损。<strong>这是必须先排除的情景。</strong></div></div>
+      <div class="stat"><div class="num" style="color:var(--blue)">Base</div><div class="lab">3:1 的 LTV:CAC、净留存接近 100% → 可融资、可规模化的健康生意。</div></div>
+      <div class="stat"><div class="num" style="color:var(--green)">Bull</div><div class="lab">飞轮转动 + 走通成果计费 + 高留存 → 高毛利、强网络效应的平台级机会。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. APPENDIX ============ -->
+<section id="appendix" class="anchor">
+  <div class="wrap">
+    <div class="sec-no">11 / 附录</div>
+    <h2 class="sec">关键假设清单 · 给合伙人的讨论问题</h2>
+
+    <div class="grid g2">
+      <div>
+        <h3>待验证的关键假设（务必逐条压测）</h3>
+        <ol>
+          <li>免费内容能把 CAC 压到 <strong>$20–35/付费用户</strong> 区间</li>
+          <li>免费→付费转化率可达 <strong>≥ 8%</strong></li>
+          <li>付费用户月均充值 <strong>≥ $25</strong>，且存在重度"鲸鱼"</li>
+          <li>Credits 毛利率可维持 <strong>≥ 55%</strong>（走 B/C 路径）</li>
+          <li>付费留存 <strong>≥ 10 个月</strong>，净留存趋近/超过 100%</li>
+          <li>选定的垂直场景具备<strong>高 Token 强度 + 高用户价值</strong></li>
+        </ol>
+      </div>
+      <div>
+        <h3>给合伙人的 6 个决策问题</h3>
+        <ol>
+          <li>我们做的是教育公司，还是 AI 消费平台？（定位决定一切）</li>
+          <li>首个垂直场景押哪个？为什么是它？</li>
+          <li>我们有没有能力/意愿构建 Credits 抽象层（而非转售）？</li>
+          <li>冷启动靠什么自然流量？谁来做内容/社区？</li>
+          <li>需要多少启动资金跑到 180 天的 Go/No-Go？</li>
+          <li>如果 Bear 情景出现，止损线与 Plan B 是什么？</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="callout insight">
+      <h4>◆ 一页纸总结（给合伙人看的电梯版）</h4>
+      <p>我们用<strong>免费的 Vibe Coding 教育</strong>低成本获客，把学习者转化为<strong>持续消费 AI Credits 的创作者</strong>。收入与用户创造的价值正相关、无订阅天花板。胜负手不是"卖便宜 Token"，而是用<strong>教育闭环换取定价权</strong>，把变现从算力抬升到成果。下一步：选一个垂直场景做 MVP，用 180 天证明 LTV:CAC ≥ 3:1，再规模化。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <b style="font-family:'Noto Serif SC';font-size:16px">Vibe<span style="color:var(--cyan)">Labs</span> · 战略评估报告</b>
+      <p style="margin:8px 0 0;max-width:520px">用免费学习换 Token 消费 —— 商业可行性、单位经济学与战略路径。供创始团队与合伙人内部讨论。</p>
+    </div>
+    <div style="text-align:right">
+      <p style="margin:0"><b>方法论</b><br/>金字塔结构 · MECE · 情景测算 · 红队证伪</p>
+      <p style="margin:10px 0 0"><b>日期</b> 2026 年 6 月</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="disclaimer">
+      免责声明：本报告中的所有市场规模、增速、转化率、毛利率、CAC、LTV 等数值均为<strong>示意性假设（illustrative）</strong>，用于揭示商业逻辑与敏感变量，<strong>不构成财务预测或投资建议</strong>。正式决策前，须以一手用户调研、竞品实测与试点真实数据进行校验。图表数据为说明性质，非精确市场份额。
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- Global Chart.js styling ----
+Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.color = '#5B6B78';
+const NAVY='#051C2C', CYAN='#00A9F4', BLUE='#2251FF', TEAL='#0BA39A', AMBER='#F2A900', RED='#E1383C', GREEN='#1E9E62', SLATE='#9FB0BC';
+const gridc='rgba(91,107,120,.12)';
+const baseScale = (yTitle)=>({
+  x:{grid:{display:false},ticks:{}},
+  y:{grid:{color:gridc},title:{display:!!yTitle,text:yTitle,color:'#5B6B78'},ticks:{}}
+});
+
+// EX1 — Market crossover
+new Chart(document.getElementById('chMarket'),{
+  type:'line',
+  data:{labels:['2022','2023','2024','2025','2026E','2027E','2028E'],
+    datasets:[
+      {label:'AI / Vibe Coding 采用度（指数）',data:[8,18,38,62,80,92,100],borderColor:CYAN,backgroundColor:'rgba(0,169,244,.12)',fill:true,tension:.4,borderWidth:3,pointRadius:3},
+      {label:'传统订阅教育 增长动能（指数）',data:[70,72,68,60,52,46,42],borderColor:SLATE,backgroundColor:'transparent',borderDash:[6,5],tension:.4,borderWidth:2.5,pointRadius:3}
+    ]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:baseScale('相对指数（示意）')}
+});
+
+// EX3 — Cost curves: subscription vs consumption
+const usage=['极轻','轻','中','偏重','重','超重'];
+new Chart(document.getElementById('chCost'),{
+  type:'line',
+  data:{labels:usage,datasets:[
+    {label:'固定订阅（$25/月）',data:[25,25,25,25,25,25],borderColor:SLATE,borderDash:[6,5],borderWidth:2.5,tension:0,pointRadius:0,fill:false},
+    {label:'消费制（用户月成本）',data:[4,10,22,38,62,95],borderColor:BLUE,backgroundColor:'rgba(34,81,255,.10)',borderWidth:3,tension:.35,fill:true,pointRadius:3}
+  ]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y}}},
+    scales:{x:{grid:{display:false},title:{display:true,text:'用户使用强度'}},y:{grid:{color:gridc},title:{display:true,text:'月成本 (USD)'},ticks:{callback:v=>'$'+v}}}}
+});
+
+// EX4 — Power-law revenue
+new Chart(document.getElementById('chPower'),{
+  type:'bar',
+  data:{labels:['免费(0付费)','偶尔充值','常规创作者','活跃创作者','鲸鱼用户'],
+    datasets:[
+      {label:'用户占比 %',data:[72,16,8,3,1],backgroundColor:'rgba(159,176,188,.5)',borderRadius:4,yAxisID:'y'},
+      {label:'收入贡献 %',data:[0,8,17,30,45],backgroundColor:TEAL,borderRadius:4,yAxisID:'y'}
+    ]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},
+    scales:{x:{grid:{display:false}},y:{grid:{color:gridc},title:{display:true,text:'%'},ticks:{callback:v=>v+'%'}}}}
+});
+
+// EX6 — Sensitivity (tornado-ish) around base LTV:CAC = 3.9
+new Chart(document.getElementById('chSens'),{
+  type:'bar',
+  data:{labels:['留存月数 ±50%','毛利率 ±20pt','付费转化 ±50%','月均充值 ±40%'],
+    datasets:[
+      {label:'下行（变量恶化）',data:[-2.0,-1.4,-1.95,-1.55],backgroundColor:'rgba(225,56,60,.75)',borderRadius:4},
+      {label:'上行（变量改善）',data:[2.0,1.4,1.95,1.55],backgroundColor:'rgba(30,158,98,.8)',borderRadius:4}
+    ]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{position:'bottom'},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': LTV:CAC '+(3.9+c.parsed.x).toFixed(1)+':1'}}},
+    scales:{x:{grid:{color:gridc},title:{display:true,text:'对 LTV:CAC 的偏移（基准 3.9:1）'},ticks:{callback:v=>(3.9+v).toFixed(1)}},y:{grid:{display:false}}}}
+});
+
+// EX7 — Competitive positioning bubble
+new Chart(document.getElementById('chMap'),{
+  type:'bubble',
+  data:{datasets:[
+    {label:'本产品（目标卡位）',data:[{x:8.2,y:8.5,r:16}],backgroundColor:'rgba(11,163,154,.85)',borderColor:'#fff',borderWidth:2},
+    {label:'Cursor',data:[{x:3.5,y:7.5,r:18}],backgroundColor:'rgba(34,81,255,.6)'},
+    {label:'Lovable/bolt/v0',data:[{x:3,y:7,r:14}],backgroundColor:'rgba(0,169,244,.6)'},
+    {label:'Replit',data:[{x:5,y:6.5,r:16}],backgroundColor:'rgba(242,169,0,.65)'},
+    {label:'Codecademy/Scrimba',data:[{x:8,y:2,r:13}],backgroundColor:'rgba(159,176,188,.7)'},
+    {label:'freeCodeCamp',data:[{x:7.5,y:0.8,r:15}],backgroundColor:'rgba(159,176,188,.5)'},
+    {label:'YouTube 教程',data:[{x:5.5,y:0.5,r:17}],backgroundColor:'rgba(120,120,120,.4)'}
+  ]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},
+      tooltip:{callbacks:{label:c=>c.dataset.label}}},
+    scales:{
+      x:{min:0,max:10,grid:{color:gridc},title:{display:true,text:'教育 / 引导深度 →'}},
+      y:{min:0,max:10,grid:{color:gridc},title:{display:true,text:'消费式变现强度 →'}}
+    }}
+});
+
+// EX10 — Scenario grouped bars (12-month cumulative gross profit, $k, illustrative)
+new Chart(document.getElementById('chScenario'),{
+  type:'bar',
+  data:{labels:['Q1','Q2','Q3','Q4'],datasets:[
+    {label:'Bear',data:[2,3,3,4],backgroundColor:'rgba(225,56,60,.8)',borderRadius:4},
+    {label:'Base',data:[8,22,45,80],backgroundColor:'rgba(34,81,255,.8)',borderRadius:4},
+    {label:'Bull',data:[20,75,180,360],backgroundColor:'rgba(30,158,98,.85)',borderRadius:4}
+  ]},
+  options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': $'+c.parsed.y+'k'}}},
+    scales:{x:{grid:{display:false}},y:{grid:{color:gridc},title:{display:true,text:'累计毛利 ($k, 示意)'},ticks:{callback:v=>'$'+v+'k'}}}}
+});
+</script>
+</body>
+</html>
