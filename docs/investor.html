@@ -486,7 +486,7 @@
   <div class="wrap">
     <div class="head reveal"><div class="eyebrow">07 / 财务展望</div><h2 class="t">五年增长、盈利路径与资金用途</h2><p>关键指标 + 完整损益（含<b>细化的运营成本</b>）+ <b>本轮资金用途</b>。中国 / 美国两版。需要的话可在底部"调整假设"自行压力测试，或导出 CSV 供尽调。</p></div>
 
-    <div class="callout warm reveal" style="margin-top:0"><h4>▶ 这是「假设驱动」的示意沙盘，非财务预测</h4><p>默认值为示意性假设，用于展示经济结构与敏感性，<b>非承诺、非预测</b>。真实的转化、续费、CAC、各档价格/占比、成本须以 MVP 试点数据替换。把它当成"和投资人一起调参的沙盘"。</p></div>
+    <div class="callout warm reveal" style="margin-top:0"><h4>▶ 这是「假设驱动」的示意沙盘，非财务预测</h4><p>默认值为示意性假设（已上调价格、并计入<b>其他收入</b>，呈现 5 年内转正的路径），用于展示经济结构与敏感性，<b>非承诺、非预测</b>。真实数据须以 MVP 试点替换。<b>合规提示</b>：其他收入中的"竞赛"在中国须为教育部白名单内的<b>非学科类</b>赛事；考级/营/硬件/2B 亦须各自合规。</p></div>
 
     <div class="reveal">
     <div class="modeltabs">
@@ -519,6 +519,9 @@
         <div class="field"><label>② 占比</label><div class="inp"><input id="cn-m2" type="number" value="35"><span class="suf">%</span></div></div>
         <div class="field"><label>③ 家庭版 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p3" type="number" value="299"><span class="suf">/月</span></div></div>
         <div class="field"><label>③ 占比</label><div class="inp"><input id="cn-m3" type="number" value="15"><span class="suf">%</span></div></div>
+        <div class="isub">其他收入（竞赛/考级/营/硬件/2B · 须合规）</div>
+        <div class="field"><label>年人均其他收入（活跃付费）</label><div class="inp"><span class="pre">¥</span><input id="cn-anc" type="number" value="400"><span class="suf">/年</span></div></div>
+        <div class="field"><label>其他收入毛利率</label><div class="inp"><input id="cn-ancgm" type="number" value="60"><span class="suf">%</span></div></div>
         <div class="isub">成本</div>
         <div class="field"><label>毛利率（会员费−算力）</label><div class="inp"><input id="cn-gm" type="number" value="55"><span class="suf">%</span></div></div>
         <div class="field" data-only="funnel"><label>免费用户月均算力成本</label><div class="inp"><span class="pre">¥</span><input id="cn-freecost" type="number" value="5"><span class="suf">/月·人</span></div></div>
@@ -556,6 +559,9 @@
         <div class="field"><label>② 占比</label><div class="inp"><input id="us-m2" type="number" value="35"><span class="suf">%</span></div></div>
         <div class="field"><label>③ Family 价格</label><div class="inp"><span class="pre">$</span><input id="us-p3" type="number" value="39"><span class="suf">/月</span></div></div>
         <div class="field"><label>③ 占比</label><div class="inp"><input id="us-m3" type="number" value="15"><span class="suf">%</span></div></div>
+        <div class="isub">其他收入（竞赛/考级/营/硬件/2B）</div>
+        <div class="field"><label>年人均其他收入（活跃付费）</label><div class="inp"><span class="pre">$</span><input id="us-anc" type="number" value="100"><span class="suf">/年</span></div></div>
+        <div class="field"><label>其他收入毛利率</label><div class="inp"><input id="us-ancgm" type="number" value="65"><span class="suf">%</span></div></div>
         <div class="isub">成本</div>
         <div class="field"><label>毛利率（会员费−算力）</label><div class="inp"><input id="us-gm" type="number" value="60"><span class="suf">%</span></div></div>
         <div class="field" data-only="funnel"><label>免费用户月均算力成本</label><div class="inp"><span class="pre">$</span><input id="us-freecost" type="number" value="1"><span class="suf">/月·人</span></div></div>
@@ -650,15 +656,16 @@ Chart.defaults.font.family="'Noto Sans SC', sans-serif";
 Chart.defaults.font.size=12;Chart.defaults.color='#5C6B7A';
 const TEAL='#0FB5A6',BLUE='#2F6BFF',SLATE='#8FA0AE',gridc='rgba(92,107,122,.12)';
 
-const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m3','gm','freecost','freelife','opex','opexg'];
+const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m3','gm','anc','ancgm','freecost','freelife','opex','opexg'];
+// 基准情景（已上调价格、加入其他收入，呈现 5 年内转正的盈利路径）
 const DEF={
-  cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:120,p1:99,m1:50,p2:199,m2:35,p3:299,m3:15,gm:55,freecost:5,freelife:3,opex:3000000,opexg:1.5,cur:'¥'},
-  us:{mode:'funnel',newfree:20000,growth:1.8,conv:6,life:14,cac:40,p1:15,m1:50,p2:25,m2:35,p3:39,m3:15,gm:60,freecost:1,freelife:3,opex:800000,opexg:1.6,cur:'$'}
+  cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:120,p1:129,m1:45,p2:259,m2:35,p3:429,m3:20,gm:58,anc:400,ancgm:60,freecost:3,freelife:2,opex:4500000,opexg:1.4,cur:'¥'},
+  us:{mode:'funnel',newfree:20000,growth:1.8,conv:6,life:16,cac:45,p1:25,m1:45,p2:45,m2:35,p3:69,m3:20,gm:65,anc:100,ancgm:65,freecost:0.8,freelife:2,opex:1000000,opexg:1.45,cur:'$'}
 };
 // 保守情景：低转化/高 CAC/低增长/短留存——用于压力测试可信度
 const CONS={
-  cn:{mode:'funnel',newfree:30000,growth:1.5,conv:3,life:10,cac:200,p1:79,m1:60,p2:159,m2:30,p3:259,m3:10,gm:50,freecost:6,freelife:3,opex:3000000,opexg:1.5,cur:'¥'},
-  us:{mode:'funnel',newfree:12000,growth:1.5,conv:4,life:10,cac:70,p1:12,m1:60,p2:22,m2:30,p3:34,m3:10,gm:55,freecost:1.5,freelife:3,opex:800000,opexg:1.6,cur:'$'}
+  cn:{mode:'funnel',newfree:30000,growth:1.5,conv:3,life:10,cac:200,p1:99,m1:55,p2:199,m2:30,p3:359,m3:15,gm:52,anc:200,ancgm:55,freecost:4,freelife:3,opex:4500000,opexg:1.45,cur:'¥'},
+  us:{mode:'funnel',newfree:12000,growth:1.5,conv:4,life:11,cac:80,p1:19,m1:55,p2:35,m2:30,p3:55,m3:15,gm:58,anc:50,ancgm:60,freecost:1,freelife:3,opex:1000000,opexg:1.5,cur:'$'}
 };
 const charts={};
 function applyMode(r){
@@ -685,13 +692,13 @@ function readInputs(r){
   const arpu=(g('p1')*m1+g('p2')*m2+g('p3')*m3)/ms;
   const mode=document.getElementById(r+'-mode').value;
   return {mode,newfree:g('newfree'),growth:g('growth'),conv:g('conv')/100,life:Math.max(1,g('life')),cac:g('cac'),
-          arpu,gm:g('gm')/100,freecost:g('freecost'),freelife:Math.max(1,g('freelife')),opex:g('opex'),opexg:g('opexg'),
+          arpu,gm:g('gm')/100,anc:g('anc'),ancgm:g('ancgm')/100,freecost:g('freecost'),freelife:Math.max(1,g('freelife')),opex:g('opex'),opexg:g('opexg'),
           tiers:[[g('p1'),m1],[g('p2'),m2],[g('p3'),m3]]};
 }
 function project(p){
   const months=60, gmM=Math.pow(p.growth,1/12), churn=1/p.life, direct=p.mode==='direct';
   let active=0, freePool=0, acqM=p.newfree/12, cum=0;
-  const yr=Array.from({length:5},()=>({newFree:0,newPaid:0,end:0,rev:0,cogs:0,gp:0,cac:0,freeCost:0,opex:0,op:0,cumEnd:0}));
+  const yr=Array.from({length:5},()=>({newFree:0,newPaid:0,end:0,memRev:0,ancRev:0,rev:0,cogs:0,gp:0,cac:0,freeCost:0,opex:0,op:0,cumEnd:0}));
   let peak=0, beYear=0;
   for(let m=0;m<months;m++){
     const y=Math.floor(m/12);
@@ -699,13 +706,17 @@ function project(p){
     active=active*(1-churn)+newPaid;
     let freeCost=0;
     if(!direct){ freePool=freePool*(1-1/p.freelife)+acqM*(1-p.conv); freeCost=freePool*p.freecost; }
-    const rev=active*p.arpu;
-    const cogs=rev*(1-p.gm), gp=rev*p.gm, cacSpend=newPaid*p.cac;
+    const memRev=active*p.arpu;              // 会员收入
+    const ancRev=active*(p.anc/12);          // 其他收入（竞赛/考级/营/硬件/2B）
+    const cogs=memRev*(1-p.gm)+ancRev*(1-p.ancgm);
+    const gp=memRev*p.gm+ancRev*p.ancgm;
+    const rev=memRev+ancRev;
+    const cacSpend=newPaid*p.cac;
     const opexM=(p.opex*Math.pow(p.opexg,y))/12;
     const op=gp-cacSpend-freeCost-opexM;
     cum+=op; if(cum<peak)peak=cum;
     const Y=yr[y];
-    Y.newFree+=direct?0:acqM; Y.newPaid+=newPaid; Y.end=active; Y.rev+=rev; Y.cogs+=cogs; Y.gp+=gp; Y.cac+=cacSpend; Y.freeCost+=freeCost; Y.opex+=opexM; Y.op+=op; Y.cumEnd=cum;
+    Y.newFree+=direct?0:acqM; Y.newPaid+=newPaid; Y.end=active; Y.memRev+=memRev; Y.ancRev+=ancRev; Y.rev+=rev; Y.cogs+=cogs; Y.gp+=gp; Y.cac+=cacSpend; Y.freeCost+=freeCost; Y.opex+=opexM; Y.op+=op; Y.cumEnd=cum;
     acqM*=gmM;
   }
   for(let y=0;y<5;y++){ if(yr[y].op>0){beYear=y+1;break;} }
@@ -723,27 +734,32 @@ function render(r){
   const beTxt=beYear?('第 '+beYear+' 年'):'5 年内未转正';
   const beCls=beYear&&beYear<=3?'ok':(beYear?'':'bad');
   const raise=peakBurn*1.3;
+  const totRev=yr.reduce((s,y)=>s+y.rev,0), totGp=yr.reduce((s,y)=>s+y.gp,0);
+  const effGm=totRev>0?(totGp/totRev*100):0;
   // assumptions summary (read-only)
   document.getElementById(r+'-assum').innerHTML=
-    '<span class="ch">混合 ARPU <b>'+fmtMoney(p.arpu,cur)+'/月</b></span>'+
+    '<span class="ch">混合会员 ARPU <b>'+fmtMoney(p.arpu,cur)+'/月</b></span>'+
     (direct?'<span class="ch">获客 <b>低价直付</b></span>':'<span class="ch">付费转化 <b>'+(p.conv*100).toFixed(0)+'%</b></span>')+
     '<span class="ch">续费 <b>'+p.life+' 月</b></span>'+
-    '<span class="ch">毛利率 <b>'+(p.gm*100).toFixed(0)+'%</b></span>'+
+    '<span class="ch">其他收入 <b>'+fmtMoney(p.anc,cur)+'/人·年</b></span>'+
+    '<span class="ch">综合毛利 <b>'+effGm.toFixed(0)+'%</b></span>'+
     '<span class="ch">CAC <b>'+fmtMoney(p.cac,cur)+'</b></span>'+
     '<span class="ch">获客增长 <b>'+p.growth+'×/年</b></span>';
   // headline metrics
   document.getElementById(r+'-metrics').innerHTML=
     `<div class="metric"><div class="v">${fmtMoney(yr[4].rev,cur)}</div><div class="k">第 5 年营收</div></div>`+
-    `<div class="metric"><div class="v">${(p.gm*100).toFixed(0)}%</div><div class="k">毛利率</div></div>`+
-    `<div class="metric"><div class="v ${rc}">${ratio.toFixed(1)} : 1</div><div class="k">LTV : CAC（健康 ≥3）</div></div>`+
+    `<div class="metric"><div class="v">${effGm.toFixed(0)}%</div><div class="k">综合毛利率</div></div>`+
+    `<div class="metric"><div class="v ${rc}">${ratio.toFixed(1)} : 1</div><div class="k">LTV : CAC（会员口径，≥3）</div></div>`+
     `<div class="metric"><div class="v ${pc}">${payback.toFixed(1)} 月</div><div class="k">CAC 回收期（理想 &lt;12）</div></div>`+
     `<div class="metric"><div class="v ${beCls}">${beTxt}</div><div class="k">经营现金流转正</div></div>`+
     `<div class="metric"><div class="v bad">${fmtMoney(peakBurn,cur)}</div><div class="k">峰值现金缺口</div></div>`;
-  // P&L with itemized opex
+  // P&L with revenue lines + itemized opex
   const rows=[
     ['付费用户（年末活跃）',yr.map(y=>fmtInt(y.end)),''],
-    ['年营收',yr.map(y=>fmtMoney(y.rev,cur)),'b'],
-    ['− 算力成本（COGS）',yr.map(y=>fmtMoney(y.cogs,cur)),''],
+    ['会员收入',yr.map(y=>fmtMoney(y.memRev,cur)),''],
+    ['其他收入（竞赛/考级/营/硬件/2B）',yr.map(y=>fmtMoney(y.ancRev,cur)),''],
+    ['= 总营收',yr.map(y=>fmtMoney(y.rev,cur)),'b'],
+    ['− 营业成本（算力 + 业务）',yr.map(y=>fmtMoney(y.cogs,cur)),''],
     ['= 毛利',yr.map(y=>fmtMoney(y.gp,cur)),'b'],
     ['− 获客投入（CAC）',yr.map(y=>fmtMoney(y.cac,cur)),''],
     !direct&&['− 免费用户算力成本',yr.map(y=>fmtMoney(y.freeCost,cur)),'sub'],
@@ -777,11 +793,12 @@ function exportCSV(r){
   const p=readInputs(r),cur=DEF[r].cur,{yr,peakBurn,beYear}=project(p);
   const L=[['损益('+cur+')','第1年','第2年','第3年','第4年','第5年']];
   const push=(k,f)=>L.push([k,...yr.map(y=>Math.round(f(y)))]);
-  push('新增免费用户',y=>y.newFree);push('新增付费家庭',y=>y.newPaid);push('年末活跃付费',y=>y.end);
-  push('年营收',y=>y.rev);push('算力成本COGS',y=>y.cogs);push('毛利',y=>y.gp);
-  push('获客投入CAC',y=>y.cac);push('免费用户算力成本',y=>y.freeCost);push('运营成本',y=>y.opex);push('经营盈亏',y=>y.op);push('累计经营现金流',y=>y.cumEnd);
-  L.push([]);L.push(['关键指标','混合ARPU',Math.round(p.arpu),'LTV:CAC',(p.cac>0?(p.arpu*p.gm*p.life/p.cac).toFixed(1):''),'峰值现金缺口',Math.round(peakBurn),'转正年',beYear||'>5']);
-  L.push(['假设','新增免费/年',p.newfree,'增长×',p.growth,'转化%',(p.conv*100),'续费月',p.life,'CAC',p.cac,'毛利%',(p.gm*100)]);
+  push('年末活跃付费',y=>y.end);
+  push('会员收入',y=>y.memRev);push('其他收入',y=>y.ancRev);push('总营收',y=>y.rev);
+  push('营业成本',y=>y.cogs);push('毛利',y=>y.gp);
+  push('获客投入CAC',y=>y.cac);push('免费用户算力成本',y=>y.freeCost);push('运营成本',y=>y.opex);push('经营盈亏EBITDA',y=>y.op);push('累计经营现金流',y=>y.cumEnd);
+  L.push([]);L.push(['关键指标','混合ARPU',Math.round(p.arpu),'LTV:CAC',(p.cac>0?(p.arpu*p.gm*p.life/p.cac).toFixed(1):''),'峰值现金缺口',Math.round(peakBurn),'建议融资',Math.round(peakBurn*1.3),'转正年',beYear||'>5']);
+  L.push(['假设','新增免费/年',p.newfree,'增长×',p.growth,'转化%',(p.conv*100),'续费月',p.life,'CAC',p.cac,'会员毛利%',(p.gm*100),'其他收入/人年',p.anc,'其他毛利%',(p.ancgm*100)]);
   L.push(['档位','档1价',p.tiers[0][0],'档1占比%',p.tiers[0][1],'档2价',p.tiers[1][0],'档2占比%',p.tiers[1][1],'档3价',p.tiers[2][0],'档3占比%',p.tiers[2][1]]);
   L.push(['成本','年运营成本Y1',p.opex,'运营增长×',p.opexg]);
   const csv='﻿'+L.map(row=>row.join(',')).join('\n');
@@ -810,6 +827,8 @@ document.querySelectorAll('.mtab').forEach(b=>b.addEventListener('click',()=>{
   render(id);
   if(charts[id])charts[id].resize();
 }));
+// load base defaults into fields on startup (DEF is the single source of truth)
+['cn','us'].forEach(r=>{const d=DEF[r];FIELDS.forEach(id=>document.getElementById(r+'-'+id).value=d[id]);document.getElementById(r+'-mode').value=d.mode;applyMode(r);});
 render('cn');render('us');
 </script>
 </body>
