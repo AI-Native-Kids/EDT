@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>落地清单 Playbooks · 阶段0架构 + 美国 COPPA 合规</title>
+<meta name="description" content="两份可勾选的研究清单：Phase 0 最小可行公司架构、美国 COPPA 合规落地。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#051C2C;--ink:#1A1A1A;--slate:#5B6B78;--line:#E3E8EC;--paper:#FFFFFF;--mist:#F4F7F9;
+    --cyan:#00A9F4;--blue:#2251FF;--teal:#0BA39A;--amber:#F2A900;--red:#E1383C;--green:#1E9E62;--maxw:1000px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--mist);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-family:"Noto Serif SC","Noto Sans SC",serif;color:var(--navy);line-height:1.3}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* header */
+  header.top{background:radial-gradient(900px 400px at 85% -20%,rgba(0,169,244,.18),transparent 60%),var(--navy);color:#EAF2F7;padding:34px 0 26px}
+  header.top .kicker{color:var(--cyan);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:10px}
+  header.top h1{color:#fff;font-size:clamp(22px,4vw,32px);margin:0 0 8px;font-weight:900}
+  header.top p{color:#C9DAE6;margin:0;font-size:15px;font-weight:300;max-width:760px}
+  header.top .back{display:inline-block;margin-top:16px;color:#AEC2CE;font-size:13px;border:1px solid rgba(255,255,255,.2);padding:6px 12px;border-radius:20px}
+  header.top .back:hover{color:#fff;background:rgba(255,255,255,.08);text-decoration:none}
+
+  /* tabs */
+  .tabbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 1px 8px rgba(5,28,44,.05)}
+  .tabbar .wrap{display:flex;gap:6px;flex-wrap:wrap}
+  .tabbtn{appearance:none;background:transparent;border:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:700;color:var(--slate);padding:16px 18px;border-bottom:3px solid transparent;transition:.15s}
+  .tabbtn:hover{color:var(--navy)}
+  .tabbtn.active{color:var(--navy);border-bottom-color:var(--cyan)}
+  .tabbtn .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--mist);color:var(--slate);font-size:12px;margin-right:8px}
+  .tabbtn.active .n{background:var(--cyan);color:#fff}
+
+  /* panels */
+  main{padding:30px 0 60px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .lead{border-left:4px solid var(--cyan);background:#fff;padding:16px 20px;margin:8px 0 24px;font-size:16px;color:var(--navy);font-weight:500;border-radius:0 8px 8px 0;box-shadow:0 1px 0 var(--line)}
+  h3.blk{font-size:20px;margin:30px 0 6px;padding-top:6px}
+  .sub{color:var(--slate);font-size:14.5px;margin:0 0 14px}
+
+  /* checklist */
+  .chk{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0}
+  .chk .row{display:flex;gap:12px;padding:14px 16px;border-top:1px solid var(--line);align-items:flex-start}
+  .chk .row:first-child{border-top:none}
+  .chk .row:hover{background:var(--mist)}
+  .chk input[type=checkbox]{appearance:none;-webkit-appearance:none;min-width:22px;height:22px;border:2px solid #C3CDD5;border-radius:6px;margin-top:1px;cursor:pointer;position:relative;transition:.15s;flex:0 0 auto}
+  .chk input[type=checkbox]:checked{background:var(--teal);border-color:var(--teal)}
+  .chk input[type=checkbox]:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .chk label{cursor:pointer;font-size:14.5px}
+  .chk label b{color:var(--navy)}
+  .chk .row.done label{color:#90A0AC;text-decoration:line-through}
+  .chk .row.done label b{color:#90A0AC}
+  .chk .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
+  .tag.now{background:#FDECEC;color:var(--red)}
+  .tag.soon{background:#FEF6E0;color:#B07D00}
+  .tag.later{background:#E6F6EE;color:var(--green)}
+  .tag.ask{background:#EAF2FB;color:var(--blue)}
+  .note{display:block;font-size:12.5px;color:var(--slate);margin-top:3px}
+
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--navy);color:#fff;font-weight:500;font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:14px}
+  .callout h4{margin:0 0 6px;font-size:14.5px}
+  .callout p{margin:0;color:#33454F}
+  .callout.risk{background:#FDF0F0;border-color:#F6CFCF}.callout.risk h4{color:#B92E32}
+  .callout.insight{background:#EAF7FE;border-color:#BfE6FB}.callout.insight h4{color:#0270A8}
+  .callout.action{background:#EAF8F0;border-color:#C6E9D4}.callout.action h4{color:#157C49}
+
+  .progress{display:flex;align-items:center;gap:10px;margin:10px 0 22px;font-size:13px;color:var(--slate)}
+  .bar{flex:1;height:8px;background:#E3E8EC;border-radius:20px;overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--teal));transition:width .3s}
+  .reset{appearance:none;border:1px solid var(--line);background:#fff;color:var(--slate);font-size:12px;padding:4px 10px;border-radius:16px;cursor:pointer;font-family:inherit}
+  .reset:hover{color:var(--red);border-color:#F6CFCF}
+
+  footer{background:var(--navy);color:#9FB6C4;padding:30px 0;font-size:12.5px;margin-top:20px}
+  footer b{color:#fff}
+  .src{font-size:12px;color:#90A0AC}
+  ul.tight{margin:8px 0;padding-left:20px}ul.tight li{margin:5px 0;font-size:14px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="kicker">落地清单 · Research Playbooks</div>
+    <h1>阶段0最小架构 · 美国 COPPA 合规</h1>
+    <p>两份可勾选的研究清单（进度自动保存在本地浏览器）。用于自查与对接律师/顾问——所有费用为示意（2024 量级）、法规会更新，最终以官方与专业顾问为准。</p>
+    <a class="back" href="index.html">← 返回战略评估报告</a>
+  </div>
+</header>
+
+<nav class="tabbar">
+  <div class="wrap">
+    <button class="tabbtn active" data-tab="t1"><span class="n">1</span>阶段0 最小可行架构</button>
+    <button class="tabbtn" data-tab="t2"><span class="n">2</span>美国 COPPA 合规落地</button>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- ===================== TAB 1 ===================== -->
+<section class="panel active" id="t1">
+  <div class="lead">核心原则：<strong>融资前不要过度搭建</strong>。阶段 0 只立两样东西——「<strong>能拿钱的主体</strong>」和「<strong>护住 IP 与股权的协议</strong>」。香港中间控股、中国 WFOE、VIE、区域实体等，<strong>等中国业务或融资明确后再搭</strong>，否则白烧设立与维护费。</div>
+
+  <div class="progress"><span id="p1lab">进度 0 / 0</span><span class="bar"><i id="p1bar"></i></span><button class="reset" data-reset="t1">清空本页勾选</button></div>
+
+  <h3 class="blk">A · 现在就做（融资前必做）</h3>
+  <p class="sub">这几项几乎零成本或低成本，但漏掉任何一项都可能在尽调时暴雷。</p>
+  <div class="chk" data-list="t1a">
+    <div class="row"><input type="checkbox" id="t1-a1"><label for="t1-a1"><b>确定顶层主体方案</b><span class="tag now">现在</span><span class="note">两条路（见 D 节对比）：① 先注册 Delaware C-Corp（省钱、美 VC 友好，日后再"翻转"开曼）；② 直接开曼 TopCo（保留中国/全球，避免日后翻转成本）。先做决定，别悬而未决。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-a2"><label for="t1-a2"><b>注册主体并取得基础设施</b><span class="tag now">现在</span><span class="note">注册代理(registered agent)、EIN(美国税号)、公司章程/细则、股权登记簿(cap table)、银行账户。可用 Clerky / Stripe Atlas / 律师套餐。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-a3"><label for="t1-a3"><b>创始人股权 + Vesting</b><span class="tag now">现在</span><span class="note">创始人之间书面约定股权比例；设 4 年 vesting / 1 年 cliff，防止合伙人中途离场带走大量股权。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-a4"><label for="t1-a4"><b>IP 全部归集到公司（最重要、最便宜）</b><span class="tag now">现在</span><span class="note">所有创始人、早期员工、外包/兼职都签 IP 转让与保密协议(PIIA)，把代码、内容、商标、域名权属转给公司主体。<strong>IP 不在公司名下＝融资/并购直接吹单。</strong></span></label></div>
+    <div class="row"><input type="checkbox" id="t1-a5"><label for="t1-a5"><b>83(b) 选择（美国主体 + 有 vesting 时）</b><span class="tag now">现在·限时</span><span class="note">创始人取得受限股后 <strong>30 天内</strong>向 IRS 提交 83(b)，错过无法补救、未来税负可能巨大。务必盯死时限。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-a6"><label for="t1-a6"><b>预留 ESOP 期权池</b><span class="tag soon">尽早</span><span class="note">规划 10–15% 期权池用于早期招聘；融资时投资人通常要求在投前预留（会稀释创始人，早规划更主动）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-a7"><label for="t1-a7"><b>基础法律文件</b><span class="tag soon">尽早</span><span class="note">创始人协议、保密协议(NDA)、顾问协议(含股权)、用对主体签所有合同（别用个人或错误实体签约）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-a8"><label for="t1-a8"><b>商标与域名</b><span class="tag soon">尽早</span><span class="note">主要市场（美/中）注册商标，锁定品牌域名与社媒账号，权属登记在公司名下。</span></label></div>
+  </div>
+
+  <h3 class="blk">B · 可以延后（等业务/融资明确再搭）</h3>
+  <div class="chk" data-list="t1b">
+    <div class="row"><input type="checkbox" id="t1-b1"><label for="t1-b1"><b>香港中间控股 + 中国 WFOE</b><span class="tag later">延后</span><span class="note">等中国业务正式落地、或融资结构需要时再设；过早设立徒增维护与审计成本。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-b2"><label for="t1-b2"><b>VIE / 境内运营实体</b><span class="tag later">延后</span><span class="note">仅当中国 C 端需外资不能直接持有的牌照（ICP/教育）时才搭；教育 VIE 审查趋严，务必先论证。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-b3"><label for="t1-b3"><b>欧盟/其他区域实体</b><span class="tag later">延后</span><span class="note">进入该市场前再设，配套当地数据栈与合规。</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-b4"><label for="t1-b4"><b>开曼"翻转"（若先用 Delaware 起步）</b><span class="tag later">按需</span><span class="note">若日后需要容纳中国/全球结构，再做 flip——但要赶在重大融资/IP 积累前，越晚越贵。</span></label></div>
+  </div>
+
+  <h3 class="blk">C · 关键决策：Delaware-first vs 开曼-first</h3>
+  <table>
+    <thead><tr><th>维度</th><th>先 Delaware C-Corp</th><th>直接开曼 TopCo</th></tr></thead>
+    <tbody>
+      <tr><td>设立/维护成本</td><td>最低（套餐可 ~$500 起）</td><td>较高（设立 + 年维护/审计）</td></tr>
+      <tr><td>美国 VC 偏好</td><td>最高（硅谷标配）</td><td>可接受，个别早期基金略偏好纯 Delaware</td></tr>
+      <tr><td>容纳中国/全球</td><td>需日后翻转</td><td>原生支持，免翻转</td></tr>
+      <tr><td>未来上市</td><td>美股顺</td><td>港股/美股皆可</td></tr>
+      <tr><td>适合谁</td><td>短期主攻美国、想省钱、弱化中国</td><td>保留中国 + 融资未定（你的情况）</td></tr>
+    </tbody>
+  </table>
+  <div class="callout insight"><h4>◆ 给你的建议</h4><p>你是"<strong>保留中国 + 融资未定</strong>"——倾向<strong>直接开曼 TopCo</strong>以免日后翻转成本；但若现金极紧、想先极低成本起步，可 Delaware-first 并<strong>明确把"翻转"列入路线图、赶在首轮 priced round 前完成</strong>。两条都行，<strong>关键是别悬而不决、别在拿钱后才补结构。</strong></p></div>
+
+  <h3 class="blk">D · 粗略成本与时间（示意 · 务必向顾问核实）</h3>
+  <table>
+    <thead><tr><th>项目</th><th>粗略成本</th><th>时间</th></tr></thead>
+    <tbody>
+      <tr><td>Delaware C-Corp（自助/套餐如 Atlas/Clerky）</td><td>~$500–1,000 + 代理 ~$100–300/yr</td><td>数天</td></tr>
+      <tr><td>Delaware C-Corp（律师全包）</td><td>~$2,000–5,000</td><td>1–2 周</td></tr>
+      <tr><td>开曼 TopCo 设立</td><td>~$3,000–8,000 + ~$3,000–5,000/yr 维护</td><td>1–3 周</td></tr>
+      <tr><td>香港控股 + 中国 WFOE</td><td>视情况，数千~上万美元 + 年维护</td><td>数周~数月</td></tr>
+      <tr><td>开曼"翻转"重组</td><td>~$10,000–30,000+ 法税费用</td><td>数周~数月</td></tr>
+    </tbody>
+  </table>
+  <p class="src">数字为 2024 量级示意，因服务商/复杂度差异很大，请以顾问报价为准。</p>
+
+  <h3 class="blk">E · 常见坑（尽调暴雷点）</h3>
+  <ul class="tight">
+    <li>IP 没归集到公司（外包/前同事还持有权属）→ 头号吹单原因</li>
+    <li>创始人没设 vesting → 合伙人离场带走大股</li>
+    <li>错过 83(b) 30 天时限 → 未来税负暴增</li>
+    <li>用个人或错误实体签合同 → 权属/责任混乱</li>
+    <li>过早搭开曼/WFOE/VIE → 白烧设立与维护费</li>
+    <li>拿钱后才补结构 / 翻转 → 成本翻倍、拖延交割</li>
+  </ul>
+
+  <h3 class="blk">F · 给律师/顾问的问题清单</h3>
+  <div class="chk" data-list="t1f">
+    <div class="row"><input type="checkbox" id="t1-f1"><label for="t1-f1">以"保留中国 + 融资未定"，我应 Delaware-first 还是开曼-first？翻转的触发点与成本？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-f2"><label for="t1-f2">中国研发的 IP 如何合法归集到境外主体？是否触及技术出口/数据出境？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-f3"><label for="t1-f3">开曼实体若由中国实际管理，会否被认定中国税务居民？如何规避？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-f4"><label for="t1-f4">期权池比例、ESOP 在哪个主体发、税务如何处理（中美员工）？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t1-f5"><label for="t1-f5">中国 C 端若需 ICP/教育牌照，是否必须 VIE？非学科定位能否直接 FIE 持牌？<span class="tag ask">问顾问</span></label></div>
+  </div>
+</section>
+
+<!-- ===================== TAB 2 ===================== -->
+<section class="panel" id="t2">
+  <div class="lead"><strong>COPPA</strong>（美国《儿童在线隐私保护法》，FTC 执法）适用于「面向 13 岁以下儿童」或「明知有 13 岁以下用户」并收集其个人信息的在线服务。<strong>K-12 学习平台几乎必然适用</strong>——这是美国上线的头号合规与尽调项，违规罚款按每名儿童每次违规计，可达天价。</div>
+
+  <div class="progress"><span id="p2lab">进度 0 / 0</span><span class="bar"><i id="p2bar"></i></span><button class="reset" data-reset="t2">清空本页勾选</button></div>
+
+  <h3 class="blk">A · 第一步：判定是否适用</h3>
+  <div class="chk" data-list="t2a">
+    <div class="row"><input type="checkbox" id="t2-a1"><label for="t2-a1"><b>判定"是否面向儿童"</b><span class="tag now">先做</span><span class="note">按内容、视觉、受众、营销等综合判断；K-12 产品基本属"面向儿童"或"混合受众"。混合受众可用年龄门(age gate)区分。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-a2"><label for="t2-a2"><b>盘点收集的"个人信息"</b><span class="tag now">先做</span><span class="note">姓名、邮箱、语音、照片、地理位置、持久标识符(cookie/设备ID)、聊天内容等都算。AI 对话/语音尤其敏感。</span></label></div>
+  </div>
+
+  <h3 class="blk">B · 核心合规要求（逐项落地）</h3>
+  <div class="chk" data-list="t2b">
+    <div class="row"><input type="checkbox" id="t2-b1"><label for="t2-b1"><b>儿童隐私政策</b><span class="note">清晰、单独的儿童隐私政策：收集什么、如何使用、是否向第三方披露、家长权利与联系方式。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b2"><label for="t2-b2"><b>收集前"直接通知家长"</b><span class="note">在收集儿童个人信息前，直接告知家长收集行为与目的。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b3"><label for="t2-b3"><b>可验证家长同意（VPC）—— COPPA 核心</b><span class="tag now">关键</span><span class="note">收集前取得可验证同意。方法：信用卡/小额支付验证、签名表单、视频通话、政府 ID、知识问答(KBA)等。"同意"必须可验证，不能只打勾。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b4"><label for="t2-b4"><b>数据最小化</b><span class="note">只收集功能必需的信息；不得以"披露超必要信息"作为孩子参与的条件。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b5"><label for="t2-b5"><b>家长权利通道</b><span class="note">家长可查看、删除孩子数据，撤回同意，拒绝继续收集——需提供可操作入口与流程。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b6"><label for="t2-b6"><b>数据保留与删除政策</b><span class="note">仅保留达成目的所需时长；到期安全删除。需有书面保留政策（2025 修订强化此项）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b7"><label for="t2-b7"><b>合理的数据安全措施</b><span class="note">建立并书面化数据安全计划，保护儿童信息（2025 修订强化）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b8"><label for="t2-b8"><b>第三方 / SDK 合规</b><span class="note">分析、客服、广告等第三方 SDK 也须合规；对"向第三方披露"可能需单独同意（2025 修订）。逐个清点你的 SDK。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b9"><label for="t2-b9"><b>禁止对儿童行为定向广告</b><span class="note">不得基于儿童数据做行为定向广告；如有广告须严格隔离。</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-b10"><label for="t2-b10"><b>员工培训与问责</b><span class="note">让产品/工程/运营理解 COPPA 红线；指定合规负责人。</span></label></div>
+  </div>
+
+  <h3 class="blk">C · Safe Harbor 认证（强烈建议）</h3>
+  <div class="chk" data-list="t2c">
+    <div class="row"><input type="checkbox" id="t2-c1"><label for="t2-c1"><b>加入 FTC 批准的 Safe Harbor 项目</b><span class="tag soon">建议</span><span class="note">如 kidSAFE、iKeepSafe、PRIVO 等。通过认证可降低执法风险、增强家长与投资人信任，是很好的尽调背书。</span></label></div>
+  </div>
+
+  <div class="callout risk"><h4>▶ 2025 COPPA 规则修订（重要提示）</h4><p>FTC 于 <strong>2025 年初通过 COPPA 规则修订</strong>，新增/强化了若干要求（如：向第三方披露的<strong>单独同意</strong>、书面<strong>数据保留政策</strong>、<strong>数据安全计划</strong>、对生物识别等的处理）。<strong>具体条款与合规生效期限以 FTC 官方为准，请向顾问确认最新版本</strong>——这是不断演进的领域。</p></div>
+
+  <div class="callout insight"><h4>◆ AI 产品特别注意</h4><p>面向儿童的 <strong>AI 对话 / 语音 / 头像</strong>会收集语音、对话内容等敏感数据，且监管与公众关注度高。务必：内容安全护栏、对话数据最小化与脱敏、不用于对外模型训练、明确告知家长。把"AI 安全 + 儿童隐私"做成产品卖点。</p></div>
+
+  <h3 class="blk">D · 相邻法规（一并规划）</h3>
+  <table>
+    <thead><tr><th>法规</th><th>何时适用</th><th>要点</th></tr></thead>
+    <tbody>
+      <tr><td>FERPA</td><td>向美国学校/学区销售（B2B2C）</td><td>学生教育记录保护；学校作为数据控制方，你常为"学校官方代表"，需配套协议</td></tr>
+      <tr><td>各州法</td><td>各州</td><td>加州 SOPIPA（禁止学生数据商用/定向广告）、各州"年龄适配设计法(AADC)"陆续出台</td></tr>
+      <tr><td>欧盟 GDPR-K</td><td>进入欧盟</td><td>同意年龄 13–16 因国而异；英国《儿童年龄适配设计准则》</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="blk">E · 官方信源（供你研究）</h3>
+  <ul class="tight">
+    <li><a href="https://www.ftc.gov/business-guidance/privacy-security/childrens-privacy" target="_blank" rel="noopener">FTC · Children's Privacy（官方主页）</a></li>
+    <li><a href="https://www.ftc.gov/business-guidance/resources/complying-coppa-frequently-asked-questions" target="_blank" rel="noopener">FTC · COPPA 合规 FAQ（最实用的逐条解读）</a></li>
+    <li><a href="https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-312" target="_blank" rel="noopener">COPPA 规则原文（16 CFR Part 312）</a></li>
+    <li><a href="https://www.ftc.gov/business-guidance/privacy-security/childrens-privacy/safe-harbor-program" target="_blank" rel="noopener">FTC · COPPA Safe Harbor 项目列表</a></li>
+    <li><a href="https://studentprivacy.ed.gov/" target="_blank" rel="noopener">美国教育部 · 学生隐私(FERPA)</a></li>
+  </ul>
+
+  <h3 class="blk">F · 给律师 / 隐私顾问(DPO)的问题清单</h3>
+  <div class="chk" data-list="t2f">
+    <div class="row"><input type="checkbox" id="t2-f1"><label for="t2-f1">我们的产品被认定为"面向儿童"还是"混合受众"？年龄门怎么设？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-f2"><label for="t2-f2">哪种 VPC（可验证家长同意）方式最适合我们的流程与转化？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-f3"><label for="t2-f3">2025 修订对我们的具体新增义务与生效时限是什么？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-f4"><label for="t2-f4">AI 对话/语音数据如何处理才合规？能否用于改进自有模型？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-f5"><label for="t2-f5">若进校（FERPA），需要哪些协议与数据处理条款？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t2-f6"><label for="t2-f6">该加入哪个 Safe Harbor？认证周期与成本？<span class="tag ask">问顾问</span></label></div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>落地清单 Playbooks</b> · 配套《中国 K-12 AI 科技素质教育平台 · 战略评估报告》<a href="index.html" style="color:var(--cyan)">（返回报告）</a><br/>
+    <span class="src">免责声明：本页为研究与自查清单，<strong>非法律/税务意见</strong>。费用为示意（2024 量级），COPPA 等法规持续更新，最终以 FTC/官方与专业顾问为准。勾选进度仅保存在你本地浏览器。</span>
+  </div>
+</footer>
+
+<script>
+// ---- Tabs ----
+const btns = document.querySelectorAll('.tabbtn');
+const panels = document.querySelectorAll('.panel');
+btns.forEach(b=>b.addEventListener('click',()=>{
+  btns.forEach(x=>x.classList.remove('active'));
+  panels.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.getElementById(b.dataset.tab).classList.add('active');
+  try{localStorage.setItem('pb_tab',b.dataset.tab);}catch(e){}
+}));
+try{const lt=localStorage.getItem('pb_tab');if(lt){const tb=document.querySelector('.tabbtn[data-tab="'+lt+'"]');if(tb)tb.click();}}catch(e){}
+
+// ---- Checkbox persistence + progress ----
+const KEY='pb_checks_v1';
+let saved={};
+try{saved=JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){saved={};}
+const boxes=document.querySelectorAll('.chk input[type=checkbox]');
+function rowState(cb){cb.closest('.row').classList.toggle('done',cb.checked);}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}}
+function updateProgress(){
+  [['t1','p1bar','p1lab'],['t2','p2bar','p2lab']].forEach(([t,barId,labId])=>{
+    const sc=document.querySelectorAll('#'+t+' .chk input[type=checkbox]');
+    const done=[...sc].filter(c=>c.checked).length;
+    const bar=document.getElementById(barId), lab=document.getElementById(labId);
+    if(bar)bar.style.width=(sc.length?Math.round(done/sc.length*100):0)+'%';
+    if(lab)lab.textContent='进度 '+done+' / '+sc.length;
+  });
+}
+boxes.forEach(cb=>{
+  if(saved[cb.id]){cb.checked=true;}
+  rowState(cb);
+  cb.addEventListener('change',()=>{saved[cb.id]=cb.checked;rowState(cb);save();updateProgress();});
+});
+document.querySelectorAll('.reset').forEach(r=>r.addEventListener('click',()=>{
+  const t=r.dataset.reset;
+  document.querySelectorAll('#'+t+' .chk input[type=checkbox]').forEach(cb=>{cb.checked=false;saved[cb.id]=false;rowState(cb);});
+  save();updateProgress();
+}));
+updateProgress();
+</script>
+</body>
+</html>
