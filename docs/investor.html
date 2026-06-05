@@ -79,6 +79,8 @@
   .field .inp{display:flex;align-items:center;gap:4px}
   .field .pre{color:#90A0AC;font-size:14px}
   .field input{width:100%;border:none;outline:none;font-family:inherit;font-size:16px;font-weight:700;color:var(--navy);background:transparent;font-variant-numeric:tabular-nums}
+  .field select{width:100%;border:none;outline:none;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--navy);background:transparent;cursor:pointer}
+  .field.off{opacity:.35;pointer-events:none}
   .field .suf{color:#90A0AC;font-size:13px}
   .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
   @media(max-width:820px){.metrics{grid-template-columns:repeat(2,1fr)}}
@@ -169,21 +171,24 @@
     <!-- CN -->
     <div class="mpanel active" id="m-cn">
       <div class="inputs">
-        <div class="isub">获客与转化</div>
-        <div class="field"><label>第1年新增免费用户</label><div class="inp"><input id="cn-newfree" type="number" value="50000"><span class="suf">人/年</span></div></div>
-        <div class="field"><label>免费获客年增长</label><div class="inp"><input id="cn-growth" type="number" step="0.1" value="1.9"><span class="suf">×/年</span></div></div>
-        <div class="field"><label>免费→付费转化率</label><div class="inp"><input id="cn-conv" type="number" step="0.1" value="5"><span class="suf">%</span></div></div>
+        <div class="isub">获客模式与转化</div>
+        <div class="field"><label>获客模式</label><div class="inp"><select id="cn-mode"><option value="funnel">免费漏斗（免费→转化）</option><option value="direct">低价直付（无免费）</option></select></div></div>
+        <div class="field"><label id="cn-newfree-lbl">第1年新增免费用户</label><div class="inp"><input id="cn-newfree" type="number" value="50000"><span class="suf">人/年</span></div></div>
+        <div class="field"><label>获客年增长</label><div class="inp"><input id="cn-growth" type="number" step="0.1" value="1.9"><span class="suf">×/年</span></div></div>
+        <div class="field" data-only="funnel"><label>免费→付费转化率</label><div class="inp"><input id="cn-conv" type="number" step="0.1" value="5"><span class="suf">%</span></div></div>
         <div class="field"><label>平均续费时长</label><div class="inp"><input id="cn-life" type="number" value="14"><span class="suf">月</span></div></div>
         <div class="field"><label>获客成本 CAC</label><div class="inp"><span class="pre">¥</span><input id="cn-cac" type="number" value="120"><span class="suf">/付费</span></div></div>
         <div class="isub">会员档位（价格 × 付费用户占比）</div>
-        <div class="field"><label>① 单科 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p1" type="number" value="99"><span class="suf">/月</span></div></div>
-        <div class="field"><label>① 单科 占比</label><div class="inp"><input id="cn-m1" type="number" value="50"><span class="suf">%</span></div></div>
+        <div class="field"><label>① 单科/低价 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p1" type="number" value="99"><span class="suf">/月</span></div></div>
+        <div class="field"><label>① 占比</label><div class="inp"><input id="cn-m1" type="number" value="50"><span class="suf">%</span></div></div>
         <div class="field"><label>② 全科 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p2" type="number" value="199"><span class="suf">/月</span></div></div>
-        <div class="field"><label>② 全科 占比</label><div class="inp"><input id="cn-m2" type="number" value="35"><span class="suf">%</span></div></div>
+        <div class="field"><label>② 占比</label><div class="inp"><input id="cn-m2" type="number" value="35"><span class="suf">%</span></div></div>
         <div class="field"><label>③ 家庭版 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p3" type="number" value="299"><span class="suf">/月</span></div></div>
-        <div class="field"><label>③ 家庭版 占比</label><div class="inp"><input id="cn-m3" type="number" value="15"><span class="suf">%</span></div></div>
+        <div class="field"><label>③ 占比</label><div class="inp"><input id="cn-m3" type="number" value="15"><span class="suf">%</span></div></div>
         <div class="isub">成本</div>
         <div class="field"><label>毛利率（会员费−算力）</label><div class="inp"><input id="cn-gm" type="number" value="55"><span class="suf">%</span></div></div>
+        <div class="field" data-only="funnel"><label>免费用户月均算力成本</label><div class="inp"><span class="pre">¥</span><input id="cn-freecost" type="number" value="5"><span class="suf">/月·人</span></div></div>
+        <div class="field" data-only="funnel"><label>免费用户活跃月数</label><div class="inp"><input id="cn-freelife" type="number" value="3"><span class="suf">月</span></div></div>
         <div class="field"><label>年运营成本（团队/研发/G&amp;A，第1年）</label><div class="inp"><span class="pre">¥</span><input id="cn-opex" type="number" value="3000000"></div></div>
         <div class="field"><label>运营成本年增长</label><div class="inp"><input id="cn-opexg" type="number" step="0.1" value="1.5"><span class="suf">×/年</span></div></div>
         <div class="field"><label>—</label><div class="inp"><button class="btn" data-reset="cn">↺ 恢复默认</button></div></div>
@@ -197,21 +202,24 @@
     <!-- US -->
     <div class="mpanel" id="m-us">
       <div class="inputs">
-        <div class="isub">获客与转化</div>
-        <div class="field"><label>第1年新增免费用户</label><div class="inp"><input id="us-newfree" type="number" value="20000"><span class="suf">人/年</span></div></div>
-        <div class="field"><label>免费获客年增长</label><div class="inp"><input id="us-growth" type="number" step="0.1" value="1.8"><span class="suf">×/年</span></div></div>
-        <div class="field"><label>免费→付费转化率</label><div class="inp"><input id="us-conv" type="number" step="0.1" value="6"><span class="suf">%</span></div></div>
+        <div class="isub">获客模式与转化</div>
+        <div class="field"><label>获客模式</label><div class="inp"><select id="us-mode"><option value="funnel">免费漏斗（免费→转化）</option><option value="direct">低价直付（无免费）</option></select></div></div>
+        <div class="field"><label id="us-newfree-lbl">第1年新增免费用户</label><div class="inp"><input id="us-newfree" type="number" value="20000"><span class="suf">人/年</span></div></div>
+        <div class="field"><label>获客年增长</label><div class="inp"><input id="us-growth" type="number" step="0.1" value="1.8"><span class="suf">×/年</span></div></div>
+        <div class="field" data-only="funnel"><label>免费→付费转化率</label><div class="inp"><input id="us-conv" type="number" step="0.1" value="6"><span class="suf">%</span></div></div>
         <div class="field"><label>平均续费时长</label><div class="inp"><input id="us-life" type="number" value="14"><span class="suf">月</span></div></div>
         <div class="field"><label>获客成本 CAC</label><div class="inp"><span class="pre">$</span><input id="us-cac" type="number" value="40"><span class="suf">/付费</span></div></div>
         <div class="isub">会员档位（价格 × 付费用户占比）</div>
-        <div class="field"><label>① Basic 价格</label><div class="inp"><span class="pre">$</span><input id="us-p1" type="number" value="15"><span class="suf">/月</span></div></div>
-        <div class="field"><label>① Basic 占比</label><div class="inp"><input id="us-m1" type="number" value="50"><span class="suf">%</span></div></div>
+        <div class="field"><label>① Basic/低价 价格</label><div class="inp"><span class="pre">$</span><input id="us-p1" type="number" value="15"><span class="suf">/月</span></div></div>
+        <div class="field"><label>① 占比</label><div class="inp"><input id="us-m1" type="number" value="50"><span class="suf">%</span></div></div>
         <div class="field"><label>② Pro 价格</label><div class="inp"><span class="pre">$</span><input id="us-p2" type="number" value="25"><span class="suf">/月</span></div></div>
-        <div class="field"><label>② Pro 占比</label><div class="inp"><input id="us-m2" type="number" value="35"><span class="suf">%</span></div></div>
+        <div class="field"><label>② 占比</label><div class="inp"><input id="us-m2" type="number" value="35"><span class="suf">%</span></div></div>
         <div class="field"><label>③ Family 价格</label><div class="inp"><span class="pre">$</span><input id="us-p3" type="number" value="39"><span class="suf">/月</span></div></div>
-        <div class="field"><label>③ Family 占比</label><div class="inp"><input id="us-m3" type="number" value="15"><span class="suf">%</span></div></div>
+        <div class="field"><label>③ 占比</label><div class="inp"><input id="us-m3" type="number" value="15"><span class="suf">%</span></div></div>
         <div class="isub">成本</div>
         <div class="field"><label>毛利率（会员费−算力）</label><div class="inp"><input id="us-gm" type="number" value="60"><span class="suf">%</span></div></div>
+        <div class="field" data-only="funnel"><label>免费用户月均算力成本</label><div class="inp"><span class="pre">$</span><input id="us-freecost" type="number" value="1"><span class="suf">/月·人</span></div></div>
+        <div class="field" data-only="funnel"><label>免费用户活跃月数</label><div class="inp"><input id="us-freelife" type="number" value="3"><span class="suf">月</span></div></div>
         <div class="field"><label>年运营成本（团队/研发/G&amp;A，第1年）</label><div class="inp"><span class="pre">$</span><input id="us-opex" type="number" value="800000"></div></div>
         <div class="field"><label>运营成本年增长</label><div class="inp"><input id="us-opexg" type="number" step="0.1" value="1.6"><span class="suf">×/年</span></div></div>
         <div class="field"><label>—</label><div class="inp"><button class="btn" data-reset="us">↺ 恢复默认</button></div></div>
@@ -222,7 +230,7 @@
       <div class="btnrow"><button class="btn primary" data-csv="us">⬇ 导出 CSV</button></div>
     </div>
 
-    <div class="callout insight"><h4>◆ 怎么读这个模型</h4><p>对投资人，盯五个数：<strong>混合 ARPU</strong>（多档加权）、<strong>LTV:CAC ≥ 3</strong>、<strong>回收期 &lt; 12 月</strong>、<strong>现金流转正年</strong>、<strong>峰值现金缺口</strong>（≈ 这一程要烧/要融的量级）。调"档位占比"看产品组合，调"运营成本/增长"看团队扩张对烧钱的影响——这正是投资人会追问的两件事。</p></div>
+    <div class="callout insight"><h4>◆ 怎么读这个模型</h4><p>顶部「<strong>获客模式</strong>」可切换 <strong>免费漏斗 ⇄ 低价直付</strong>：选「免费漏斗」会多出一条 <strong>「免费用户算力成本」</strong>（免费用户也烧 AI、却不付钱——这是免费模式的隐性成本）；选「低价直付」则把"新增免费用户"改为"<strong>新增付费用户</strong>"、无免费烧钱。<strong>切换两种模式，对比"现金流转正年"和"峰值现金缺口"，就能看出哪种打法更省钱。</strong> 其余盯五个数：混合 ARPU、LTV:CAC≥3、回收期&lt;12月、转正年、峰值缺口（≈这一程要融的量级）。</p></div>
   </div>
 </section>
 
@@ -274,12 +282,17 @@ Chart.defaults.font.family="'Noto Sans SC', sans-serif";
 Chart.defaults.font.size=12;Chart.defaults.color='#5B6B78';
 const TEAL='#0BA39A',BLUE='#2251FF',SLATE='#9FB0BC',gridc='rgba(91,107,120,.12)';
 
-const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m3','gm','opex','opexg'];
+const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m3','gm','freecost','freelife','opex','opexg'];
 const DEF={
-  cn:{newfree:50000,growth:1.9,conv:5,life:14,cac:120,p1:99,m1:50,p2:199,m2:35,p3:299,m3:15,gm:55,opex:3000000,opexg:1.5,cur:'¥'},
-  us:{newfree:20000,growth:1.8,conv:6,life:14,cac:40,p1:15,m1:50,p2:25,m2:35,p3:39,m3:15,gm:60,opex:800000,opexg:1.6,cur:'$'}
+  cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:120,p1:99,m1:50,p2:199,m2:35,p3:299,m3:15,gm:55,freecost:5,freelife:3,opex:3000000,opexg:1.5,cur:'¥'},
+  us:{mode:'funnel',newfree:20000,growth:1.8,conv:6,life:14,cac:40,p1:15,m1:50,p2:25,m2:35,p3:39,m3:15,gm:60,freecost:1,freelife:3,opex:800000,opexg:1.6,cur:'$'}
 };
 const charts={};
+function applyMode(r){
+  const direct=document.getElementById(r+'-mode').value==='direct';
+  document.querySelectorAll('#m-'+r+' .field[data-only="funnel"]').forEach(f=>f.classList.toggle('off',direct));
+  document.getElementById(r+'-newfree-lbl').textContent=direct?'第1年新增付费用户':'第1年新增免费用户';
+}
 
 function fmtMoney(v,cur){
   const a=Math.abs(v),s=v<0?'-':'';
@@ -299,33 +312,37 @@ function readInputs(r){
   const g=id=>parseFloat(document.getElementById(r+'-'+id).value)||0;
   const m1=g('m1'),m2=g('m2'),m3=g('m3'),ms=(m1+m2+m3)||1;
   const arpu=(g('p1')*m1+g('p2')*m2+g('p3')*m3)/ms; // blended monthly ARPU
-  return {newfree:g('newfree'),growth:g('growth'),conv:g('conv')/100,life:Math.max(1,g('life')),cac:g('cac'),
-          arpu,gm:g('gm')/100,opex:g('opex'),opexg:g('opexg'),
+  const mode=document.getElementById(r+'-mode').value;
+  return {mode,newfree:g('newfree'),growth:g('growth'),conv:g('conv')/100,life:Math.max(1,g('life')),cac:g('cac'),
+          arpu,gm:g('gm')/100,freecost:g('freecost'),freelife:Math.max(1,g('freelife')),opex:g('opex'),opexg:g('opexg'),
           tiers:[[g('p1'),m1],[g('p2'),m2],[g('p3'),m3]]};
 }
 function project(p){
-  const months=60, gmM=Math.pow(p.growth,1/12), churn=1/p.life;
-  let active=0, freeM=p.newfree/12, cum=0;
-  const yr=Array.from({length:5},()=>({newFree:0,newPaid:0,end:0,rev:0,cogs:0,gp:0,cac:0,opex:0,op:0,cumEnd:0}));
+  const months=60, gmM=Math.pow(p.growth,1/12), churn=1/p.life, direct=p.mode==='direct';
+  let active=0, freePool=0, acqM=p.newfree/12, cum=0;
+  const yr=Array.from({length:5},()=>({newFree:0,newPaid:0,end:0,rev:0,cogs:0,gp:0,cac:0,freeCost:0,opex:0,op:0,cumEnd:0}));
   let peak=0, beYear=0;
   for(let m=0;m<months;m++){
     const y=Math.floor(m/12);
-    const newPaid=freeM*p.conv;
+    const newPaid=direct?acqM:acqM*p.conv;           // direct: every acquired user pays
     active=active*(1-churn)+newPaid;
+    // free (non-paying) pool only exists in funnel mode; they burn AI compute
+    let freeCost=0;
+    if(!direct){ freePool=freePool*(1-1/p.freelife)+acqM*(1-p.conv); freeCost=freePool*p.freecost; }
     const rev=active*p.arpu;
     const cogs=rev*(1-p.gm), gp=rev*p.gm, cacSpend=newPaid*p.cac;
     const opexM=(p.opex*Math.pow(p.opexg,y))/12;
-    const op=gp-cacSpend-opexM;
+    const op=gp-cacSpend-freeCost-opexM;
     cum+=op; if(cum<peak)peak=cum;
     const Y=yr[y];
-    Y.newFree+=freeM; Y.newPaid+=newPaid; Y.end=active; Y.rev+=rev; Y.cogs+=cogs; Y.gp+=gp; Y.cac+=cacSpend; Y.opex+=opexM; Y.op+=op; Y.cumEnd=cum;
-    freeM*=gmM;
+    Y.newFree+=direct?0:acqM; Y.newPaid+=newPaid; Y.end=active; Y.rev+=rev; Y.cogs+=cogs; Y.gp+=gp; Y.cac+=cacSpend; Y.freeCost+=freeCost; Y.opex+=opexM; Y.op+=op; Y.cumEnd=cum;
+    acqM*=gmM;
   }
   for(let y=0;y<5;y++){ if(yr[y].op>0){beYear=y+1;break;} }
-  return {yr,peakBurn:-peak,beYear};
+  return {yr,peakBurn:-peak,beYear,direct};
 }
 function render(r){
-  const p=readInputs(r), cur=DEF[r].cur, {yr,peakBurn,beYear}=project(p);
+  const p=readInputs(r), cur=DEF[r].cur, {yr,peakBurn,beYear,direct}=project(p);
   const ltv=p.arpu*p.gm*p.life;
   const ratio=p.cac>0?ltv/p.cac:0;
   const payback=p.arpu*p.gm>0?p.cac/(p.arpu*p.gm):0;
@@ -341,17 +358,18 @@ function render(r){
     `<div class="metric"><div class="v ${beCls}">${beTxt}</div><div class="k">经营现金流转正</div></div>`+
     `<div class="metric"><div class="v bad">${fmtMoney(peakBurn,cur)}</div><div class="k">峰值现金缺口（≈ 融资需求）</div></div>`;
   const rows=[
-    ['新增免费用户',yr.map(y=>fmtInt(y.newFree)),''],
-    ['新增付费家庭',yr.map(y=>fmtInt(y.newPaid)),''],
+    !direct&&['新增免费用户',yr.map(y=>fmtInt(y.newFree)),''],
+    ['新增付费用户',yr.map(y=>fmtInt(y.newPaid)),''],
     ['年末活跃付费',yr.map(y=>fmtInt(y.end)),''],
     ['年营收',yr.map(y=>fmtMoney(y.rev,cur)),'b'],
     ['− 算力成本(COGS)',yr.map(y=>fmtMoney(y.cogs,cur)),''],
     ['= 毛利',yr.map(y=>fmtMoney(y.gp,cur)),''],
     ['− 获客投入(CAC)',yr.map(y=>fmtMoney(y.cac,cur)),''],
+    !direct&&['− 免费用户算力成本',yr.map(y=>fmtMoney(y.freeCost,cur)),''],
     ['− 运营成本(团队/研发/G&A)',yr.map(y=>fmtMoney(y.opex,cur)),''],
     ['= 经营盈亏',yr.map(y=>fmtMoney(y.op,cur)),'b'],
     ['累计经营现金流',yr.map(y=>fmtMoney(y.cumEnd,cur)),'']
-  ];
+  ].filter(Boolean);
   let html='<thead><tr><th>损益（P&amp;L）</th><th class="num">第1年</th><th class="num">第2年</th><th class="num">第3年</th><th class="num">第4年</th><th class="num">第5年</th></tr></thead><tbody>';
   rows.forEach(([k,vals,b])=>{const st=b?' style="font-weight:700"':'';html+='<tr'+st+'><td>'+k+'</td>'+vals.map(v=>'<td class="num">'+v+'</td>').join('')+'</tr>';});
   html+='</tbody>';
@@ -373,7 +391,7 @@ function exportCSV(r){
   const push=(k,f)=>L.push([k,...yr.map(y=>Math.round(f(y)))]);
   push('新增免费用户',y=>y.newFree);push('新增付费家庭',y=>y.newPaid);push('年末活跃付费',y=>y.end);
   push('年营收',y=>y.rev);push('算力成本COGS',y=>y.cogs);push('毛利',y=>y.gp);
-  push('获客投入CAC',y=>y.cac);push('运营成本',y=>y.opex);push('经营盈亏',y=>y.op);push('累计经营现金流',y=>y.cumEnd);
+  push('获客投入CAC',y=>y.cac);push('免费用户算力成本',y=>y.freeCost);push('运营成本',y=>y.opex);push('经营盈亏',y=>y.op);push('累计经营现金流',y=>y.cumEnd);
   L.push([]);L.push(['关键指标','混合ARPU',Math.round(p.arpu),'LTV:CAC',(p.cac>0?(p.arpu*p.gm*p.life/p.cac).toFixed(1):''),'峰值现金缺口',Math.round(peakBurn),'转正年',beYear||'>5']);
   L.push(['假设','新增免费/年',p.newfree,'增长×',p.growth,'转化%',(p.conv*100),'续费月',p.life,'CAC',p.cac,'毛利%',(p.gm*100)]);
   L.push(['档位','档1价',p.tiers[0][0],'档1占比%',p.tiers[0][1],'档2价',p.tiers[1][0],'档2占比%',p.tiers[1][1],'档3价',p.tiers[2][0],'档3占比%',p.tiers[2][1]]);
@@ -386,11 +404,13 @@ function exportCSV(r){
 // wire
 ['cn','us'].forEach(r=>{
   FIELDS.forEach(id=>document.getElementById(r+'-'+id).addEventListener('input',()=>render(r)));
+  document.getElementById(r+'-mode').addEventListener('change',()=>{applyMode(r);render(r);});
   document.querySelector('[data-reset="'+r+'"]').addEventListener('click',()=>{
     const d=DEF[r];FIELDS.forEach(id=>document.getElementById(r+'-'+id).value=d[id]);
-    render(r);
+    document.getElementById(r+'-mode').value=d.mode;applyMode(r);render(r);
   });
   document.querySelector('[data-csv="'+r+'"]').addEventListener('click',()=>exportCSV(r));
+  applyMode(r);
 });
 document.querySelectorAll('.mtab').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.mtab').forEach(x=>x.classList.remove('active'));
