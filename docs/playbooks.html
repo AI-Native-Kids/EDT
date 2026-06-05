@@ -98,7 +98,7 @@
   <div class="wrap">
     <div class="kicker">落地清单 · Research Playbooks</div>
     <h1>阶段0最小架构 · 美国 COPPA 合规</h1>
-    <p>三份可勾选的研究清单（进度自动保存在本地浏览器）。用于自查与对接律师/顾问——所有费用为示意（2024 量级）、法规会更新，最终以官方与专业顾问为准。</p>
+    <p>四份可勾选的清单（进度自动保存在本地浏览器）：三份合规/架构自查 + 一份「两周需求验证」行动计划。费用为示意（2024 量级）、法规会更新，最终以官方与专业顾问为准。</p>
     <a class="back" href="index.html">← 返回战略评估报告</a>
   </div>
 </header>
@@ -108,6 +108,7 @@
     <button class="tabbtn active" data-tab="t1"><span class="n">1</span>阶段0 最小可行架构</button>
     <button class="tabbtn" data-tab="t2"><span class="n">2</span>美国 COPPA 合规落地</button>
     <button class="tabbtn" data-tab="t3"><span class="n">3</span>中国侧合规落地</button>
+    <button class="tabbtn" data-tab="t4"><span class="n">4</span>两周需求验证 Sprint</button>
   </div>
 </nav>
 
@@ -321,12 +322,92 @@
   </div>
 </section>
 
+<!-- ===================== TAB 4 ===================== -->
+<section class="panel" id="t4">
+  <div class="lead">战略已经够清楚了，<strong>接下来 90% 的价值在"去验证"</strong>。这份计划用<strong>两周、几乎零成本</strong>回答一个问题：<strong>中国家长会不会为孩子的 AI 科技素养会员真金白银地付钱？</strong> 用真实用户的<strong>行为</strong>（不是嘴上说），给你一个 go / 调整 / no-go 信号。</div>
+
+  <div class="progress"><span id="p4lab">进度 0 / 0</span><span class="bar"><i id="p4bar"></i></span><button class="reset" data-reset="t4">清空本页勾选</button></div>
+
+  <div class="callout insight"><h4>◆ 三条铁律（决定验证有没有用）</h4><p><strong>① 问过去的具体行为，不问未来的假设</strong>（"你会用吗/会付钱吗"毫无价值）。<strong>② 让对方真的承诺</strong>——留资、预约、付定金才是真信号，点头不算。<strong>③ 不找朋友家人测</strong>（他们会出于客气骗你），找真实陌生目标家长。</p></div>
+
+  <h3 class="blk">A · 先定成功标准（提前定，别事后找借口）</h3>
+  <table>
+    <thead><tr><th>环节</th><th>及格线（示意，可自调）</th></tr></thead>
+    <tbody>
+      <tr><td>家长访谈</td><td>≥ 60% 受访家长能清楚说出一个<strong>真实、当下、愿花钱解决</strong>的痛点</td></tr>
+      <tr><td>预售落地页</td><td>留资率 ≥ 10%；留资→付定金/预约 ≥ 20–30%（如 100 访客 → 10 留资 → 2–3 付费意向）</td></tr>
+      <tr><td>Concierge 试跑</td><td>5–10 个孩子中 ≥ 70% 完成首个"哇时刻"，且 ≥ 半数家长<strong>主动</strong>问"能不能继续"</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="blk">B · 两周冲刺计划（按天勾）</h3>
+  <div class="chk" data-list="t4b">
+    <div class="row"><input type="checkbox" id="t4-b1"><label for="t4-b1"><b>D1–2 · 准备</b><span class="note">列 30 个目标家长名单（陌生为主）；定稿访谈脚本（见 C 节）；用建站工具做一页最简落地页（见 D 节）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-b2"><label for="t4-b2"><b>D3–5 · 访谈</b><span class="note">完成 15–20 个家长访谈（微信视频/电话，每个 20–30 分钟）。当天记录，别拖。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-b3"><label for="t4-b3"><b>D6–7 · 落地页上线 + 引流</b><span class="note">落地页上线；用家长群/小红书/朋友圈做 1–2 条真实内容引流（先不投付费广告）；整理第一周访谈结论。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-b4"><label for="t4-b4"><b>D8–10 · 启动预售 + 招募试跑</b><span class="note">在落地页加"早鸟内测·可退定金/限量预约"；从访谈与留资中招募 5–10 个孩子做 concierge 试跑。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-b5"><label for="t4-b5"><b>D11–13 · Concierge 手动陪练</b><span class="note">用现成 AI 工具 + 你设计的 1 条编程学习路径，手动陪孩子做出第一个能展示的小作品；每次课后给家长一份成长小结。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-b6"><label for="t4-b6"><b>D14 · 复盘与决策</b><span class="note">对照 A 节及格线与 F 节判定框架，做 go / 调整 / no-go 决定。</span></label></div>
+  </div>
+
+  <h3 class="blk">C · 家长访谈脚本（可直接用 · Mom Test 风格）</h3>
+  <p class="sub">目标是挖出"真实付费行为与痛点"，不是推销你的想法。多问"为什么、然后呢、上次是什么时候"。</p>
+  <div class="chk" data-list="t4c">
+    <div class="row"><input type="checkbox" id="t4-c1"><label for="t4-c1"><b>暖场</b><span class="note">"能聊聊你家孩子平时怎么学习、怎么玩的吗？"</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-c2"><label for="t4-c2"><b>真实付费行为（最关键）</b><span class="note">"过去一年给孩子报过哪些班 / 买过哪些 App 或学习硬件？大概花了多少钱？" —— 挖出真金白银花在哪。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-c3"><label for="t4-c3"><b>痛点与流失</b><span class="note">"哪件事最让你头疼或失望？有没有买了又停掉的？为什么停？"</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-c4"><label for="t4-c4"><b>AI 态度</b><span class="note">"孩子用过 AI 类产品吗（豆包/学习机）？你最担心什么？最希望它帮上什么？"</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-c5"><label for="t4-c5"><b>编程/素养定位</b><span class="note">"对孩子学编程 / AI 素养怎么看？是'必须学'还是'有更好'？" —— 判断是止痛药还是维生素。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-c6"><label for="t4-c6"><b>价值与钱</b><span class="note">"每月在孩子教育上大概花多少？什么样的结果会让你觉得'这钱花得值'？"</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-c7"><label for="t4-c7"><b>转介绍（验证传播）</b><span class="note">"你身边还有谁也有同样的需求？方便帮我引荐一两个吗？" —— 愿不愿意介绍是强信号。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-c8"><label for="t4-c8"><b>❌ 不要问的</b><span class="note">"你会为一个 AI 编程会员每月付 X 元吗？" —— 假设性问题，答案全是噪音，删掉。</span></label></div>
+  </div>
+
+  <h3 class="blk">D · 预售落地页要点（一页就够）</h3>
+  <div class="chk" data-list="t4d">
+    <div class="row"><input type="checkbox" id="t4-d1"><label for="t4-d1"><b>一句话价值主张（对家长）</b><span class="note">安全 + 看得见进步 + 面向未来的能力。3 屏内讲清"给谁、解决什么、怎么用"。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-d2"><label for="t4-d2"><b>明确的"行动召唤"</b><span class="note">限量内测预约 / 早鸟可退定金 / 留手机——<strong>一定要有"掏钱或承诺"的动作</strong>，不要只放介绍。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-d3"><label for="t4-d3"><b>信任元素</b><span class="note">安全合规、教研/师资背景、真实作品样例。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-d4"><label for="t4-d4"><b>埋点</b><span class="note">访问量、留资率、预约/定金转化——这三个数就是你的验证结果。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-d5"><label for="t4-d5"><b>引流（先零付费）</b><span class="note">家长社群、小红书/抖音 1–2 条真实内容、朋友圈；先靠口碑跑通，别一上来烧广告。</span></label></div>
+  </div>
+
+  <h3 class="blk">E · Concierge MVP 怎么跑（不写一行代码）</h3>
+  <div class="chk" data-list="t4e">
+    <div class="row"><input type="checkbox" id="t4-e1"><label for="t4-e1"><b>用现成工具手动交付</b><span class="note">现成 AI（豆包/GPT 等）+ 你设计的 1 条编程学习路径 + 微信/腾讯会议，手动陪 5–10 个孩子。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-e2"><label for="t4-e2"><b>一次"哇时刻"</b><span class="note">第一次课就让孩子做出一个能展示、能被夸的小作品（time-to-first-win 越短越好）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-e3"><label for="t4-e3"><b>每次给家长一份"成长小结"</b><span class="note">验证你最核心的假设之一：家长是否吃"看得见进步"这一套。</span></label></div>
+    <div class="row"><input type="checkbox" id="t4-e4"><label for="t4-e4"><b>记录关键反应</b><span class="note">完成率、孩子兴奋度、<strong>家长是否主动问"下次什么时候 / 能不能继续付费"</strong>。</span></label></div>
+  </div>
+
+  <h3 class="blk">F · 两周后的决定（绿/黄/红）</h3>
+  <table>
+    <thead><tr><th>信号</th><th>判定</th><th>下一步</th></tr></thead>
+    <tbody>
+      <tr><td><strong style="color:var(--green)">绿灯</strong></td><td>痛点强 + 有人真付钱 + 孩子愿继续</td><td>进入精益 MVP 开发 + 准备 pre-seed/天使；把这批真实数据写进 pitch</td></tr>
+      <tr><td><strong style="color:#B07D00">黄灯</strong></td><td>部分信号，但转化/留存不够</td><td>调整定位/人群/品类/定价，再来一轮短验证——别急着开发</td></tr>
+      <tr><td><strong style="color:var(--red)">红灯</strong></td><td>没人愿付、孩子不留</td><td>别硬做。换假设或转向——省下的时间和钱就是最大收益</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="blk">G · 常见错误（别犯）</h3>
+  <ul class="tight">
+    <li>引导性提问、只听好话——你会得到"骗你的赞美"</li>
+    <li>找朋友/家人测——样本有偏，结论不可信</li>
+    <li>太早动手建产品——先验证需求，再写代码</li>
+    <li>把"礼貌的称赞"当成需求——只认"掏钱/承诺/转介绍"</li>
+    <li>没提前定成功标准——事后容易自我安慰</li>
+  </ul>
+
+  <div class="callout action"><h4>▶ 一句话</h4><p>两周后，无论绿黄红，你都会比现在<strong>更接近真相</strong>——而且手里多了能打动投资人的真实信号。<strong>现在就把第一个家长访谈约出来。</strong></p></div>
+</section>
+
 </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <b>落地清单 Playbooks</b>（阶段0架构 · 美国 COPPA · 中国合规）· 配套《中国 K-12 AI 科技素质教育平台 · 战略评估报告》<a href="index.html" style="color:var(--cyan)">（返回报告）</a><br/>
+    <b>落地清单 Playbooks</b>（阶段0架构 · 美国 COPPA · 中国合规 · 两周需求验证）· 配套《中国 K-12 AI 科技素质教育平台 · 战略评估报告》<a href="index.html" style="color:var(--cyan)">（返回报告）</a><br/>
     <span class="src">免责声明：本页为研究与自查清单，<strong>非法律/税务意见</strong>。费用为示意（2024 量级），COPPA 等法规持续更新，最终以 FTC/官方与专业顾问为准。勾选进度仅保存在你本地浏览器。</span>
   </div>
 </footer>
@@ -352,7 +433,7 @@ const boxes=document.querySelectorAll('.chk input[type=checkbox]');
 function rowState(cb){cb.closest('.row').classList.toggle('done',cb.checked);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}}
 function updateProgress(){
-  [['t1','p1bar','p1lab'],['t2','p2bar','p2lab'],['t3','p3bar','p3lab']].forEach(([t,barId,labId])=>{
+  [['t1','p1bar','p1lab'],['t2','p2bar','p2lab'],['t3','p3bar','p3lab'],['t4','p4bar','p4lab']].forEach(([t,barId,labId])=>{
     const sc=document.querySelectorAll('#'+t+' .chk input[type=checkbox]');
     const done=[...sc].filter(c=>c.checked).length;
     const bar=document.getElementById(barId), lab=document.getElementById(labId);
