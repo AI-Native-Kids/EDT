@@ -90,6 +90,35 @@
   footer b{color:#fff}
   .src{font-size:12px;color:#90A0AC}
   ul.tight{margin:8px 0;padding-left:20px}ul.tight li{margin:5px 0;font-size:14px}
+
+  /* horizontal-scroll wrapper for wide tables (added via JS) */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;border-radius:10px}
+  .tscroll table{margin:0}
+
+  /* ====================== MOBILE ====================== */
+  @media(max-width:680px){
+    body{font-size:15px}
+    .wrap{padding:0 16px}
+    header.top{padding:26px 0 22px}
+    /* tab bar: one horizontally scrollable row instead of wrapping */
+    .tabbar .wrap{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .tabbar .wrap::-webkit-scrollbar{display:none}
+    .tabbtn{white-space:nowrap;font-size:13.5px;padding:13px 11px;flex:0 0 auto}
+    .tabbtn .n{width:19px;height:19px;margin-right:6px}
+    main{padding:22px 0 48px}
+    h3.blk{font-size:18px}
+    .lead{padding:14px 16px;font-size:15px}
+    .chk .row{padding:12px 13px}
+    .chk label{font-size:14px}
+    table{font-size:13px}
+    th,td{padding:9px 10px}
+    .tscroll table{min-width:480px}
+    .progress{flex-wrap:wrap}
+  }
+  @media(max-width:400px){
+    .tabbtn{font-size:12.5px;padding:12px 9px}
+    h1{font-size:21px}
+  }
 </style>
 </head>
 <body>
@@ -452,6 +481,13 @@ document.querySelectorAll('.reset').forEach(r=>r.addEventListener('click',()=>{
   save();updateProgress();
 }));
 updateProgress();
+
+// wrap wide tables so they scroll horizontally on small screens
+document.querySelectorAll('table').forEach(t=>{
+  if(t.parentElement && t.parentElement.classList.contains('tscroll')) return;
+  const w=document.createElement('div'); w.className='tscroll';
+  t.parentNode.insertBefore(w,t); w.appendChild(t);
+});
 </script>
 </body>
 </html>

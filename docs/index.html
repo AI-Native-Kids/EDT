@@ -46,7 +46,13 @@
   nav.top .links{display:flex;gap:4px;flex-wrap:wrap}
   nav.top .links a{color:#AEC2CE;font-size:13px;padding:6px 10px;border-radius:6px;transition:.15s}
   nav.top .links a:hover{color:#fff;background:rgba(255,255,255,.08)}
-  @media(max-width:860px){nav.top .links{display:none}}
+  @media(max-width:860px){
+    nav.top .wrap{flex-direction:column;align-items:stretch;height:auto;gap:6px;padding-top:9px;padding-bottom:9px}
+    nav.top .brand{font-size:14px}
+    nav.top .links{display:flex;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:2px;padding-bottom:2px;scrollbar-width:none}
+    nav.top .links::-webkit-scrollbar{display:none}
+    nav.top .links a{white-space:nowrap;font-size:12px;padding:6px 9px;flex:0 0 auto}
+  }
 
   /* ---- Hero ---- */
   .hero{background:
@@ -172,6 +178,47 @@
   @media(max-width:720px){.twocol{columns:1}}
   .src{font-size:12px;color:#90A0AC}
   hr.soft{border:none;border-top:1px solid var(--line);margin:30px 0}
+
+  /* ---- horizontal-scroll wrapper for wide tables (added via JS) ---- */
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:22px 0;border-radius:8px}
+  .tscroll table{margin:0}
+
+  /* ====================== MOBILE ====================== */
+  @media(max-width:680px){
+    body{font-size:15px}
+    .wrap{padding:0 16px}
+    section{padding:40px 0}
+    .anchor{scroll-margin-top:104px}
+    .hero{padding:48px 0 40px}
+    .hero .meta{gap:16px 22px;margin-top:24px}
+    h2.sec{font-size:23px}
+    .lead-answer{padding:14px 16px;font-size:15.5px}
+    .exhibit{padding:18px 16px;border-radius:12px}
+    .exhibit .ex-head{gap:8px}
+    .exhibit .ex-title{font-size:15px}
+    .chart-box{height:300px}
+    .chart-box.tall{height:360px}
+    .stat{padding:18px}
+    .stat .num{font-size:30px}
+    .card{padding:18px}
+    .callout{padding:16px}
+    table{font-size:13px}
+    th,td{padding:9px 10px}
+    /* keep wide tables readable by allowing horizontal scroll */
+    .tscroll table{min-width:540px}
+    /* org-chart (Exhibit 17): stack the two branches, shrink ASCII connectors */
+    #structure .exhibit > div[style*="flex-direction:column"] > div[style*="display:flex"]{flex-direction:column}
+    #structure .exhibit div[style*="┌"]{font-size:12px !important;letter-spacing:-1px}
+    .tl{padding-left:24px}
+    .opt{padding:18px}
+    footer .wrap{flex-direction:column}
+    footer div[style*="text-align:right"]{text-align:left !important}
+  }
+  @media(max-width:400px){
+    h1{font-size:27px}
+    .stat .num{font-size:26px}
+    .tscroll table{min-width:480px}
+  }
 </style>
 </head>
 <body>
@@ -1113,6 +1160,13 @@ new Chart(document.getElementById('chDataVal'),{
     {label:'信任资产：品牌+渠道+成效（复利累积）',data:[5,16,40,78,130],borderColor:TEAL,backgroundColor:'rgba(11,163,154,.13)',fill:true,borderWidth:3,tension:.4,pointRadius:3}
   ]},
   options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:baseScale('相对价值（示意）')}
+});
+
+// wrap wide tables so they scroll horizontally on small screens
+document.querySelectorAll('table').forEach(t=>{
+  if(t.parentElement && t.parentElement.classList.contains('tscroll')) return;
+  const w=document.createElement('div'); w.className='tscroll';
+  t.parentNode.insertBefore(w,t); w.appendChild(t);
 });
 </script>
 </body>
