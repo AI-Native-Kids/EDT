@@ -26,7 +26,7 @@
 | 14 | **全球公司架构与跨境合规** | **开曼 TopCo + 美国 Delaware + 香港 + 中国 WFOE/VIE 架构图、分区域合规栈、搭建顺序、高风险清单** |
 | 15 | 附录 | 关键假设清单 + 给合伙人的决策问题 |
 
-**配套交互清单**：[`docs/playbooks.html`](docs/playbooks.html) —— 带 tab 的可勾选研究清单（进度存本地浏览器）：① 阶段0 最小可行架构（注册哪些主体、IP/股权/83(b)、成本时间、Delaware vs 开曼）；② 美国 COPPA 合规落地（VPC、隐私政策、2025 修订、Safe Harbor、官方信源）。
+**配套交互清单**：[`docs/playbooks.html`](docs/playbooks.html) —— 带 tab 的可勾选研究清单（进度存本地浏览器）：① 阶段0 最小可行架构（注册哪些主体、IP/股权/83(b)、成本时间、Delaware vs 开曼）；② 美国 COPPA 合规落地（VPC、隐私政策、2025 修订、Safe Harbor、官方信源）；③ 中国侧合规落地（双减非学科自查、预收费上限、PIPL/未成年人、算法备案/未成年人模式、牌照与 VIE，附 .gov.cn 一手信源）。
 
 > 💡 变现包装：产品对用户**只呈现分层家长会员费（membership）**，AI 算力消耗封装在会员额度内、对用户不可见。
 >

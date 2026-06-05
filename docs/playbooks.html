@@ -98,7 +98,7 @@
   <div class="wrap">
     <div class="kicker">落地清单 · Research Playbooks</div>
     <h1>阶段0最小架构 · 美国 COPPA 合规</h1>
-    <p>两份可勾选的研究清单（进度自动保存在本地浏览器）。用于自查与对接律师/顾问——所有费用为示意（2024 量级）、法规会更新，最终以官方与专业顾问为准。</p>
+    <p>三份可勾选的研究清单（进度自动保存在本地浏览器）。用于自查与对接律师/顾问——所有费用为示意（2024 量级）、法规会更新，最终以官方与专业顾问为准。</p>
     <a class="back" href="index.html">← 返回战略评估报告</a>
   </div>
 </header>
@@ -107,6 +107,7 @@
   <div class="wrap">
     <button class="tabbtn active" data-tab="t1"><span class="n">1</span>阶段0 最小可行架构</button>
     <button class="tabbtn" data-tab="t2"><span class="n">2</span>美国 COPPA 合规落地</button>
+    <button class="tabbtn" data-tab="t3"><span class="n">3</span>中国侧合规落地</button>
   </div>
 </nav>
 
@@ -251,12 +252,81 @@
   </div>
 </section>
 
+<!-- ===================== TAB 3 ===================== -->
+<section class="panel" id="t3">
+  <div class="lead">中国侧的<strong>头号生死线是「双减」</strong>：必须证明自己<strong>完全是非学科类（科技素养）</strong>，且会员收费不是变相预收费。再叠加 <strong>PIPL（未成年人数据）+ 生成式 AI 办法 + 算法备案 + 未成年人模式</strong>。本清单条目均对应一手监管文件（教育部/网信办，见 E 节链接）。</div>
+
+  <div class="progress"><span id="p3lab">进度 0 / 0</span><span class="bar"><i id="p3bar"></i></span><button class="reset" data-reset="t3">清空本页勾选</button></div>
+
+  <h3 class="blk">A · 双减红线自查（最重要）</h3>
+  <p class="sub">分类按"目的/内容/方式/评价"四维度、依国家课程标准的<strong>实质</strong>判定——改课程名无法规避。</p>
+  <div class="chk" data-list="t3a">
+    <div class="row"><input type="checkbox" id="t3-a1"><label for="t3-a1"><b>全部内容确认为非学科类（科技素养）</b><span class="tag now">红线</span><span class="note">只做编程/机器人/科学探究/AI 素养/创客等；<strong>绝不触及 9 个学科类科目</strong>：道德与法治、语文、历史、地理、数学、外语、物理、化学、生物。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-a2"><label for="t3-a2"><b>AI/虚拟教师也不讲授学科内容</b><span class="tag now">红线</span><span class="note">教育部《分类鉴别指南》明确把"用虚拟者、人工智能等讲授学科内容"认定为<strong>学科类方式</strong>——AI 家教教数学/英语照样违规。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-a3"><label for="t3-a3"><b>营销话术去"应试/提分/补习"化</b><span class="tag now">红线</span><span class="note">对外口径强调能力素养培养，不出现"提分、押题、同步辅导、补习"等应试导向表述。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-a4"><label for="t3-a4"><b>不以"素质/思维训练"等名义包装学科内容</b><span class="note">改名不自动违法，但若实际教学科内容仍按学科类查处（实质重于形式）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-a5"><label for="t3-a5"><b>四维度可自证</b><span class="tag soon">备查</span><span class="note">就培训目的、内容、方式、评价四个维度，准备好能自证"非学科"的材料，以应对核查。</span></label></div>
+  </div>
+
+  <h3 class="blk">B · 预收费合规</h3>
+  <div class="chk" data-list="t3b">
+    <div class="row"><input type="checkbox" id="t3-b1"><label for="t3-b1"><b>收费不跨 3 个月 / 60 课时，单笔 ≤ 5000 元</b><span class="tag now">红线</span><span class="note">非学科类预收费上限，<strong>明确包含"充值、次卡"形式</strong>。你"会员内含 AI 额度"的设计有被认定变相预收费的风险。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-b2"><label for="t3-b2"><b>采用月付/短周期，定性为软件订阅</b><span class="tag soon">缓解</span><span class="note">避免大额年费"充值"话术；尽量把产品定性为 AI 学习软件订阅而非培训课时预收费。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-b3"><label for="t3-b3"><b>退费政策与（如适用）资金存管</b><span class="note">清晰的退费规则；按当地要求考虑预收费资金存管。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-b4"><label for="t3-b4"><b>确认线上 AI SaaS 的执法口径</b><span class="tag ask">问顾问</span><span class="note">上述上限主要针对线下培训机构；对纯线上 AI 会员是否同等执法是<strong>开放问题</strong>——务必让顾问就你的形态出具意见。</span></label></div>
+  </div>
+
+  <h3 class="blk">C · PIPL + 未成年人数据合规</h3>
+  <div class="chk" data-list="t3c">
+    <div class="row"><input type="checkbox" id="t3-c1"><label for="t3-c1"><b>处理未成年人信息取得监护人同意</b><span class="tag now">关键</span><span class="note">不满 14 周岁未成年人的个人信息按<strong>敏感个人信息</strong>处理，需取得监护人单独同意（PIPL）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-c2"><label for="t3-c2"><b>制定专门的未成年人个人信息处理规则</b><span class="note">单独的处理规则/隐私政策，明确收集、使用、存储、删除与监护人权利。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-c3"><label for="t3-c3"><b>数据最小化 + 单独同意</b><span class="note">只收必要信息；敏感信息、对外提供、跨境等需单独同意。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-c4"><label for="t3-c4"><b>数据境内存储，出境走安全评估/标准合同</b><span class="tag now">关键</span><span class="note">个人信息境内本地化；确需出境的，按数据安全法/PIPL 完成安全评估或标准合同备案（儿童数据尤其敏感）。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-c5"><label for="t3-c5"><b>删除与撤回机制</b><span class="note">提供查询、更正、删除、撤回同意、注销账号的可操作入口。</span></label></div>
+  </div>
+
+  <h3 class="blk">D · 生成式 AI + 算法备案 + 未成年人模式</h3>
+  <div class="chk" data-list="t3d">
+    <div class="row"><input type="checkbox" id="t3-d1"><label for="t3-d1"><b>完成算法备案</b><span class="tag now">必做</span><span class="note">具有舆论属性或社会动员能力的算法推荐/生成式服务须在互联网信息服务算法备案系统备案。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-d2"><label for="t3-d2"><b>生成式 AI 服务安全评估/备案</b><span class="tag now">必做</span><span class="note">依《生成式人工智能服务管理暂行办法》（2023-08-15 施行）完成安全评估与备案。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-d3"><label for="t3-d3"><b>内容安全 + 训练数据合法来源</b><span class="note">内容须合法合规、不生成违法不良信息；训练数据来源合法、尊重知识产权。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-d4"><label for="t3-d4"><b>AI 生成内容标识（深度合成）</b><span class="note">按规定对 AI 生成/合成内容进行标识。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-d5"><label for="t3-d5"><b>未成年人模式 / 防沉迷</b><span class="tag now">必做</span><span class="note">依未成年人保护法 +《未成年人网络保护条例》(2024-01-01 施行)：未成年人模式、时长/时段管理、防沉迷、适龄内容；生成式 AI 办法也要求防未成年人过度依赖。</span></label></div>
+  </div>
+
+  <h3 class="blk">E · 资质牌照（视业务）</h3>
+  <div class="chk" data-list="t3e">
+    <div class="row"><input type="checkbox" id="t3-e1"><label for="t3-e1"><b>ICP 备案 / 经营许可</b><span class="tag now">必做</span><span class="note">网站/App 需 ICP 备案；经营性增值电信业务需 ICP 经营许可——<strong>增值电信外资受限，是是否需要 VIE 的典型动因。</strong></span></label></div>
+    <div class="row"><input type="checkbox" id="t3-e2"><label for="t3-e2"><b>其他相关资质</b><span class="tag ask">问顾问</span><span class="note">视内容形态可能涉及网络文化经营许可、出版/视听等；非学科类培训资质要求按地方政策确认。</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-e3"><label for="t3-e3"><b>外资准入与 VIE 必要性论证</b><span class="tag ask">问顾问</span><span class="note">逐项确认你需要的牌照外资能否直接持有；不能则评估 VIE（教育行业审查趋严，须谨慎）。</span></label></div>
+  </div>
+
+  <h3 class="blk">F · 官方信源（供你研究 · 一手 .gov.cn）</h3>
+  <ul class="tight">
+    <li><a href="http://www.moe.gov.cn/srcsite/A29/202107/t20210730_547807.html" target="_blank" rel="noopener">教育部 · 学科类范围（教监管厅函〔2021〕3号）</a></li>
+    <li><a href="http://www.moe.gov.cn/srcsite/A29/202111/t20211112_579358.html" target="_blank" rel="noopener">教育部 · 义务教育阶段校外培训项目分类鉴别指南（含"人工智能/虚拟者"条款）</a></li>
+    <li><a href="http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202212/t20221229_1036965.html" target="_blank" rel="noopener">十三部门意见 · 非学科类管理（含预收费上限）</a></li>
+    <li><a href="http://www.moe.gov.cn/jyb_xwfb/gzdt_gzdt/s5987/202309/t20230912_1079790.html" target="_blank" rel="noopener">校外培训行政处罚暂行办法</a></li>
+    <li><a href="https://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm" target="_blank" rel="noopener">网信办 · 生成式人工智能服务管理暂行办法</a></li>
+    <li><a href="https://www.cac.gov.cn/2023-10/24/c_1699806932316206.htm" target="_blank" rel="noopener">国务院 · 未成年人网络保护条例</a></li>
+  </ul>
+
+  <h3 class="blk">G · 给中国律师的问题清单</h3>
+  <div class="chk" data-list="t3g">
+    <div class="row"><input type="checkbox" id="t3-g1"><label for="t3-g1">我们的产品/内容能否稳妥认定为"非学科类"？有哪些边界要避开？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-g2"><label for="t3-g2">"会员内含 AI 额度"如何设计才不被认定变相预收费？月付方案是否够？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-g3"><label for="t3-g3">算法备案 + 生成式 AI 备案的具体范围、材料与周期？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-g4"><label for="t3-g4">未成年人数据的同意、本地化与出境（与海外架构衔接）如何合规？<span class="tag ask">问顾问</span></label></div>
+    <div class="row"><input type="checkbox" id="t3-g5"><label for="t3-g5">我们需要哪些牌照？外资能否直接持有，还是必须 VIE？<span class="tag ask">问顾问</span></label></div>
+  </div>
+</section>
+
 </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <b>落地清单 Playbooks</b> · 配套《中国 K-12 AI 科技素质教育平台 · 战略评估报告》<a href="index.html" style="color:var(--cyan)">（返回报告）</a><br/>
+    <b>落地清单 Playbooks</b>（阶段0架构 · 美国 COPPA · 中国合规）· 配套《中国 K-12 AI 科技素质教育平台 · 战略评估报告》<a href="index.html" style="color:var(--cyan)">（返回报告）</a><br/>
     <span class="src">免责声明：本页为研究与自查清单，<strong>非法律/税务意见</strong>。费用为示意（2024 量级），COPPA 等法规持续更新，最终以 FTC/官方与专业顾问为准。勾选进度仅保存在你本地浏览器。</span>
   </div>
 </footer>
@@ -282,7 +352,7 @@ const boxes=document.querySelectorAll('.chk input[type=checkbox]');
 function rowState(cb){cb.closest('.row').classList.toggle('done',cb.checked);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}}
 function updateProgress(){
-  [['t1','p1bar','p1lab'],['t2','p2bar','p2lab']].forEach(([t,barId,labId])=>{
+  [['t1','p1bar','p1lab'],['t2','p2bar','p2lab'],['t3','p3bar','p3lab']].forEach(([t,barId,labId])=>{
     const sc=document.querySelectorAll('#'+t+' .chk input[type=checkbox]');
     const done=[...sc].filter(c=>c.checked).length;
     const bar=document.getElementById(barId), lab=document.getElementById(labId);
