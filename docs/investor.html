@@ -4,165 +4,370 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>投资人简版 · K-12 AI 科技素养学习系统</title>
-<meta name="description" content="投资人简版：产品简述 + 可交互财务预期模型（中国/美国）+ 出海能力。AI 科技素养学习系统（产品起步、平台为长期愿景）。" />
+<meta name="description" content="投资人简版：产品 + 可交互财务模型（中国/美国）+ 出海能力。AI 科技素养学习系统（产品起步、平台为长期愿景）。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-  :root{--navy:#051C2C;--ink:#1A1A1A;--slate:#5B6B78;--line:#E3E8EC;--paper:#FFFFFF;--mist:#F4F7F9;
-    --cyan:#00A9F4;--blue:#2251FF;--teal:#0BA39A;--amber:#F2A900;--red:#E1383C;--green:#1E9E62;--maxw:1040px;}
+  :root{
+    --ink:#0B1B2E;--ink2:#13283D;--paper:#FFFFFF;--mist:#F5F8FB;--mist2:#EEF3F8;
+    --line:#E5ECF2;--slate:#5C6B7A;--faint:#8FA0AE;
+    --blue:#2F6BFF;--blue-d:#1B4BD6;--teal:#0FB5A6;--coral:#FF7A45;--amber:#F5A623;
+    --red:#E1383C;--green:#1E9E62;
+    --r:16px;--rs:11px;--maxw:1120px;
+    --shadow:0 18px 50px -22px rgba(11,27,46,.30);
+    --shadow-s:0 6px 20px -10px rgba(11,27,46,.22);
+  }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
-  h1,h2,h3,h4{font-family:"Noto Serif SC","Noto Sans SC",serif;color:var(--navy);line-height:1.3;font-weight:700}
+  h1,h2,h3,h4{font-family:"Noto Serif SC","Noto Sans SC",serif;color:var(--ink);line-height:1.22;font-weight:700;letter-spacing:-.01em}
   a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
   .mono{font-variant-numeric:tabular-nums}
 
+  /* scroll progress */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--teal),var(--coral));z-index:100;transition:width .12s linear}
+
+  /* nav */
+  nav.bar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.82);backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--line)}
+  nav.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+  nav.bar .brand{font-family:"Noto Serif SC",serif;font-weight:900;font-size:16px;color:var(--ink);white-space:nowrap}
+  nav.bar .brand i{color:var(--coral);font-style:normal}
+  nav.bar .links{display:flex;gap:2px;align-items:center;overflow-x:auto;scrollbar-width:none}
+  nav.bar .links::-webkit-scrollbar{display:none}
+  nav.bar .links a{color:var(--slate);font-size:13px;padding:7px 11px;border-radius:8px;white-space:nowrap;font-weight:500}
+  nav.bar .links a:hover{color:var(--ink);background:var(--mist);text-decoration:none}
+  nav.bar .cta{background:var(--ink);color:#fff;padding:8px 15px;border-radius:30px;font-size:13px;font-weight:700;white-space:nowrap}
+  nav.bar .cta:hover{background:var(--blue);text-decoration:none}
+  @media(max-width:920px){nav.bar .links{display:none}}
+
+  /* reveal */
+  .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.22,.7,.2,1),transform .7s cubic-bezier(.22,.7,.2,1)}
+  .js .reveal.in{opacity:1;transform:none}
+
   /* hero */
-  header.hero{background:radial-gradient(1100px 500px at 80% -10%,rgba(0,169,244,.20),transparent 60%),radial-gradient(800px 400px at 5% 110%,rgba(34,81,255,.16),transparent 55%),var(--navy);color:#EAF2F7;padding:54px 0 44px}
-  header.hero .kicker{color:var(--cyan);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:14px}
-  header.hero h1{color:#fff;font-size:clamp(26px,4.6vw,44px);margin:0 0 14px;font-weight:900;letter-spacing:-.01em}
-  header.hero .lede{color:#C9DAE6;font-size:clamp(15px,2vw,18px);font-weight:300;max-width:780px}
-  header.hero .row{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
-  header.hero .chip{background:rgba(11,163,154,.16);border:1px solid rgba(11,163,154,.5);color:#7FE3D9;padding:7px 14px;border-radius:30px;font-size:13px;font-weight:500}
-  header.hero .links{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;font-size:13px}
-  header.hero .links a{color:#AEC2CE;border:1px solid rgba(255,255,255,.2);padding:6px 12px;border-radius:20px}
-  header.hero .links a:hover{color:#fff;background:rgba(255,255,255,.08);text-decoration:none}
+  .hero{position:relative;overflow:hidden;color:#EAF2F9;
+    background:
+      radial-gradient(1200px 600px at 82% -8%,rgba(47,107,255,.34),transparent 58%),
+      radial-gradient(900px 520px at 6% 108%,rgba(15,181,166,.26),transparent 55%),
+      radial-gradient(700px 400px at 50% 120%,rgba(255,122,69,.16),transparent 60%),
+      linear-gradient(180deg,#0A1A2C,#0B1B2E)}
+  .hero:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:46px 46px;mask:radial-gradient(900px 500px at 70% 0%,#000,transparent 75%);opacity:.6}
+  .hero .wrap{position:relative;padding:64px 26px 56px}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#9FE9E0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+  .eyebrow:before{content:"";width:22px;height:2px;background:var(--coral);border-radius:2px}
+  .hero h1{color:#fff;font-size:clamp(30px,5.4vw,56px);font-weight:900;margin:20px 0 18px;max-width:18ch;letter-spacing:-.02em}
+  .hero h1 .hl{background:linear-gradient(120deg,#5EE7DB,#7FA8FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .lede{color:#C5D6E5;font-size:clamp(16px,2vw,20px);font-weight:300;max-width:62ch}
+  .hero .lede b{color:#fff;font-weight:600}
+  .hero .ctas{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+  .btnp{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink);font-weight:700;font-size:15px;padding:12px 22px;border-radius:32px}
+  .btnp:hover{text-decoration:none;transform:translateY(-1px)}
+  .btng{display:inline-flex;align-items:center;gap:8px;color:#EAF2F9;font-weight:600;font-size:15px;padding:12px 20px;border-radius:32px;border:1px solid rgba(255,255,255,.28)}
+  .btng:hover{text-decoration:none;background:rgba(255,255,255,.08)}
+  .hstats{margin-top:42px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;border-top:1px solid rgba(255,255,255,.14);padding-top:26px}
+  .hstats .hs .n{font-family:"Noto Serif SC";font-size:clamp(22px,3vw,30px);font-weight:900;color:#fff;line-height:1}
+  .hstats .hs .n s{text-decoration:none;color:#5EE7DB;font-size:.6em}
+  .hstats .hs .l{color:#90A6B8;font-size:12.5px;margin-top:7px}
+  @media(max-width:720px){.hstats{grid-template-columns:repeat(2,1fr);gap:18px 14px}}
 
-  section{padding:48px 0;border-bottom:1px solid var(--line)}
-  section.alt{background:var(--mist)}
-  .sec-no{color:var(--cyan);font-weight:700;font-size:12.5px;letter-spacing:.14em}
-  h2.sec{font-size:clamp(22px,3.2vw,30px);margin:6px 0 10px;font-weight:900}
-  .sub{color:var(--slate);font-size:16px;max-width:760px;margin-bottom:8px}
+  /* sections */
+  section.s{padding:74px 0;border-bottom:1px solid var(--line)}
+  section.s.alt{background:var(--mist)}
+  section.s.dark{background:var(--ink);border-color:#16304a}
+  .head{max-width:760px;margin-bottom:30px}
+  .head .eyebrow{color:var(--blue)}
+  .head .eyebrow:before{background:var(--coral)}
+  section.dark .head .eyebrow{color:#7FE3D9}
+  h2.t{font-size:clamp(25px,3.6vw,38px);margin:14px 0 12px;font-weight:900;letter-spacing:-.02em}
+  section.dark h2.t,section.dark p,section.dark h3,section.dark h4{color:#EAF2F9}
+  .head p{color:var(--slate);font-size:17px;margin:0}
+  section.dark .head p{color:#A9C0D2}
 
-  .grid{display:grid;gap:16px;margin:22px 0}
+  /* thesis band */
+  .thesis{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center}
+  @media(max-width:840px){.thesis{grid-template-columns:1fr;gap:20px}}
+  .thesis .big{font-family:"Noto Serif SC";font-size:clamp(20px,2.6vw,28px);font-weight:700;line-height:1.4;color:var(--ink)}
+  .thesis .big em{font-style:normal;color:var(--blue);border-bottom:3px solid rgba(47,107,255,.25)}
+  .thesis ul{margin:0;padding:0;list-style:none}
+  .thesis li{position:relative;padding:12px 0 12px 30px;border-top:1px solid var(--line);font-size:15px;color:var(--slate)}
+  .thesis li:first-child{border-top:none}
+  .thesis li:before{content:"";position:absolute;left:4px;top:19px;width:9px;height:9px;border-radius:50%;background:var(--teal)}
+  .thesis li b{color:var(--ink)}
+
+  /* grids & cards */
+  .grid{display:grid;gap:18px}
   .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
-  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
-  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
-  .card h4{margin:0 0 7px;font-size:16px}
+  @media(max-width:840px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:transform .25s,box-shadow .25s}
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+  .card .ic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px;background:var(--mist);color:var(--blue)}
+  .card .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--coral);margin-bottom:9px}
+  .card h4{margin:0 0 8px;font-size:17px}
   .card p{margin:0;font-size:14.5px;color:var(--slate)}
-  .card .lab{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+  section.alt .card{background:#fff}
 
-  .stat{background:linear-gradient(160deg,#fff,#F7FAFC);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:left}
-  .stat .num{font-family:"Noto Serif SC";font-size:30px;font-weight:900;color:var(--navy);line-height:1}
-  .stat .num small{font-size:15px;color:var(--cyan)}
-  .stat .lab{margin-top:9px;font-size:13px;color:var(--slate)}
+  /* problem/solution split */
+  .ps{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:760px){.ps{grid-template-columns:1fr}}
+  .ps .box{border-radius:var(--r);padding:26px;border:1px solid var(--line)}
+  .ps .p{background:linear-gradient(180deg,#FFF6F2,#fff);border-color:#F6D9CC}
+  .ps .s{background:linear-gradient(180deg,#EFF8FF,#fff);border-color:#CFE6F8}
+  .ps h3{font-size:19px;margin:0 0 14px;display:flex;align-items:center;gap:10px}
+  .ps .p h3 span{color:var(--coral)}.ps .s h3 span{color:var(--blue)}
+  .ps ul{margin:0;padding-left:20px}.ps li{margin:9px 0;font-size:15px;color:#33454F}
 
-  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:14.5px}
-  .callout h4{margin:0 0 6px;font-size:15px}.callout p{margin:0;color:#33454F}
-  .callout.insight{background:#EAF7FE;border-color:#BfE6FB}.callout.insight h4{color:#0270A8}
-  .callout.risk{background:#FDF0F0;border-color:#F6CFCF}.callout.risk h4{color:#B92E32}
-  .callout.action{background:#EAF8F0;border-color:#C6E9D4}.callout.action h4{color:#157C49}
+  /* how it works steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:st;margin-top:10px}
+  @media(max-width:760px){.steps{grid-template-columns:1fr;gap:14px}}
+  .step{position:relative;padding:26px 22px;border:1px solid var(--line);background:#fff;border-right:none}
+  .steps .step:first-child{border-radius:var(--r) 0 0 var(--r)}
+  .steps .step:last-child{border-radius:0 var(--r) var(--r) 0;border-right:1px solid var(--line)}
+  @media(max-width:760px){.step,.steps .step:first-child,.steps .step:last-child{border-radius:var(--r);border-right:1px solid var(--line)}}
+  .step .num{counter-increment:st;font-family:"Noto Serif SC";font-weight:900;font-size:15px;color:#fff;background:var(--ink);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .step .num:before{content:counter(st)}
+  .step h4{margin:0 0 6px;font-size:17px}
+  .step p{margin:0;color:var(--slate);font-size:14px}
+  .step .ar{position:absolute;right:-11px;top:38px;z-index:2;width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--blue);font-size:12px}
+  @media(max-width:760px){.step .ar{display:none}}
+
+  /* market band (dark) */
+  .mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  @media(max-width:760px){.mkt{grid-template-columns:repeat(2,1fr);gap:26px 18px}}
+  .mkt .m .n{font-family:"Noto Serif SC";font-size:clamp(28px,4vw,42px);font-weight:900;color:#fff;line-height:1}
+  .mkt .m .n s{text-decoration:none;font-size:.5em;color:#7FE3D9}
+  .mkt .m .l{color:#A9C0D2;font-size:13.5px;margin-top:8px}
+
+  /* tiers */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:760px){.tiers{grid-template-columns:1fr}}
+  .tier{border:1px solid var(--line);border-radius:var(--r);padding:24px;background:#fff;position:relative}
+  .tier.feat{border:2px solid var(--blue);box-shadow:var(--shadow-s)}
+  .tier .badge{position:absolute;top:-11px;left:22px;background:var(--blue);color:#fff;font-size:11px;font-weight:800;padding:4px 11px;border-radius:20px}
+  .tier .nm{font-weight:800;color:var(--ink);font-size:15px}
+  .tier .pr{font-family:"Noto Serif SC";font-size:30px;font-weight:900;margin:8px 0 2px}
+  .tier .pr small{font-size:14px;color:var(--faint);font-weight:400}
+  .tier .ds{color:var(--slate);font-size:13.5px;margin-top:6px}
+
+  /* callouts */
+  .callout{border-radius:var(--r);padding:20px 22px;margin:22px 0;border:1px solid;font-size:14.5px}
+  .callout h4{margin:0 0 7px;font-size:15px}.callout p{margin:0;color:#33454F}
+  .callout.insight{background:#EFF7FF;border-color:#CFE6F8}.callout.insight h4{color:var(--blue-d)}
+  .callout.warm{background:#FFF6F2;border-color:#F6D9CC}.callout.warm h4{color:#C2541F}
+  .callout.good{background:#EEFAF4;border-color:#C7EAD7}.callout.good h4{color:#157C49}
+  section.dark .callout{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14)}
+  section.dark .callout h4,section.dark .callout p{color:#EAF2F9}
+
+  /* ask box */
+  .askbox{background:linear-gradient(135deg,var(--ink),#17324c);color:#EAF2F9;border-radius:22px;padding:34px;box-shadow:var(--shadow)}
+  .askbox h3{color:#fff;font-size:22px;margin:0 0 6px}
+  .askbox .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  @media(max-width:760px){.askbox .grid3{grid-template-columns:1fr}}
+  .askbox .ab{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:13px;padding:18px}
+  .askbox .ab .k{color:#7FE3D9;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;margin-bottom:7px}
+  .askbox .ab h4{color:#fff;font-size:16px;margin:0 0 5px}
+  .askbox .ab p{color:#B7CCDD;font-size:13.5px;margin:0}
+
+  .src{font-size:12px;color:var(--faint)}
+
+  /* ===== financial model (preserved classes, restyled) ===== */
+  .modeltabs{display:inline-flex;gap:6px;margin:6px 0 18px;background:var(--mist2);padding:5px;border-radius:32px}
+  .mtab{appearance:none;border:none;background:transparent;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;color:var(--slate);padding:9px 18px;border-radius:24px;transition:.15s}
+  .mtab.active{background:#fff;color:var(--ink);box-shadow:var(--shadow-s)}
+  .mpanel{display:none}.mpanel.active{display:block}
+  .console{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow-s)}
+  .inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+  @media(max-width:820px){.inputs{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.inputs{grid-template-columns:1fr}}
+  .isub{grid-column:1/-1;font-size:11px;font-weight:800;letter-spacing:.07em;color:var(--coral);text-transform:uppercase;margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line)}
+  .isub:first-child{border-top:none;padding-top:0;margin-top:0}
+  .field{background:var(--mist);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
+  .field label{display:block;font-size:11.5px;color:var(--slate);margin-bottom:4px}
+  .field .inp{display:flex;align-items:center;gap:4px}
+  .field .pre{color:var(--faint);font-size:14px}
+  .field input{width:100%;border:none;outline:none;font-family:inherit;font-size:16px;font-weight:700;color:var(--ink);background:transparent;font-variant-numeric:tabular-nums}
+  .field select{width:100%;border:none;outline:none;font-family:inherit;font-size:14px;font-weight:700;color:var(--ink);background:transparent;cursor:pointer}
+  .field .suf{color:var(--faint);font-size:13px}
+  .field.off{opacity:.32;pointer-events:none}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+  @media(max-width:760px){.metrics{grid-template-columns:repeat(2,1fr)}}
+  .metric{background:linear-gradient(160deg,#fff,var(--mist));border:1px solid var(--line);border-radius:13px;padding:15px 16px}
+  .metric .v{font-family:"Noto Serif SC";font-size:25px;font-weight:900;color:var(--ink);line-height:1.05}
+  .metric .v.ok{color:var(--green)}.metric .v.bad{color:var(--red)}
+  .metric .k{font-size:12px;color:var(--slate);margin-top:6px}
+  .chart-box{position:relative;height:320px;margin:14px 0}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--ink);font-family:inherit;font-size:13px;font-weight:700;padding:9px 16px;border-radius:24px;cursor:pointer}
+  .btn:hover{border-color:var(--blue);color:var(--blue)}
+  .btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.primary:hover{color:#fff;background:var(--blue-d)}
 
   table{width:100%;border-collapse:collapse;margin:0;font-size:13.5px}
   th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
-  th{background:var(--navy);color:#fff;font-weight:500;font-size:12.5px}
+  th{background:var(--ink);color:#fff;font-weight:500;font-size:12.5px}
   td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   tr:nth-child(even) td{background:var(--mist)}
-  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;margin:16px 0}
-  .src{font-size:12px;color:#90A0AC}
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:12px;margin:14px 0}
 
-  /* ---- financial model ---- */
-  .modeltabs{display:flex;gap:8px;margin:6px 0 18px}
-  .mtab{appearance:none;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--slate);padding:10px 18px;border-radius:30px;transition:.15s}
-  .mtab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-  .mpanel{display:none}.mpanel.active{display:block}
-  .inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
-  @media(max-width:820px){.inputs{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:460px){.inputs{grid-template-columns:1fr}}
-  .isub{grid-column:1/-1;font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--cyan);text-transform:uppercase;margin:8px 0 -2px;padding-top:8px;border-top:1px dashed var(--line)}
-  .isub:first-child{border-top:none;padding-top:0;margin-top:0}
-  .field{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-  .field label{display:block;font-size:12px;color:var(--slate);margin-bottom:5px}
-  .field .inp{display:flex;align-items:center;gap:4px}
-  .field .pre{color:#90A0AC;font-size:14px}
-  .field input{width:100%;border:none;outline:none;font-family:inherit;font-size:16px;font-weight:700;color:var(--navy);background:transparent;font-variant-numeric:tabular-nums}
-  .field select{width:100%;border:none;outline:none;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--navy);background:transparent;cursor:pointer}
-  .field.off{opacity:.35;pointer-events:none}
-  .field .suf{color:#90A0AC;font-size:13px}
-  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-  @media(max-width:820px){.metrics{grid-template-columns:repeat(2,1fr)}}
-  .metric{background:linear-gradient(160deg,#fff,#F4F7F9);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-  .metric .v{font-family:"Noto Serif SC";font-size:24px;font-weight:900;color:var(--navy);line-height:1.1}
-  .metric .v.ok{color:var(--green)}.metric .v.bad{color:var(--red)}
-  .metric .k{font-size:12px;color:var(--slate);margin-top:6px}
-  .chart-box{position:relative;height:300px;margin:14px 0}
-  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-  .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--navy);font-family:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:20px;cursor:pointer}
-  .btn:hover{border-color:var(--cyan);color:var(--cyan)}
-  .btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}.btn.primary:hover{color:#fff;opacity:.92}
-
-  footer{background:var(--navy);color:#9FB6C4;padding:34px 0;font-size:12.5px;margin-top:0}
-  footer b{color:#fff}footer a{color:var(--cyan)}
-  .disclaimer{font-size:12px;color:#6E889A;border-top:1px solid rgba(255,255,255,.1);padding-top:14px;margin-top:14px;line-height:1.6}
-  ul.tight{margin:10px 0;padding-left:20px}ul.tight li{margin:6px 0;font-size:14.5px}
+  footer{background:var(--ink);color:#90A6B8;padding:44px 0;font-size:13px}
+  footer b{color:#fff}footer a{color:#7FE3D9}
+  .disclaimer{font-size:12px;color:#6E889A;border-top:1px solid rgba(255,255,255,.1);padding-top:16px;margin-top:18px;line-height:1.65}
+  ul.tight{margin:10px 0;padding-left:20px}ul.tight li{margin:7px 0;font-size:14.5px;color:var(--slate)}
 
   @media(max-width:680px){
-    .wrap{padding:0 16px}section{padding:36px 0}
-    header.hero{padding:42px 0 34px}
-    .stat .num{font-size:26px}.metric .v{font-size:21px}
-    .tscroll table{min-width:560px}
+    .wrap{padding:0 18px}section.s{padding:52px 0}
+    .hero .wrap{padding:48px 18px 44px}
+    .metric .v{font-size:21px}.tscroll table{min-width:560px}
+    .askbox{padding:24px}
+  }
+  @media print{
+    nav.bar,#progress,.ctas,.btnrow,.modeltabs{display:none!important}
+    .hero{color:#000;background:#fff}.hero h1,.hero .lede,.hero .lede b{color:#000}
+    section.dark{background:#fff}section.dark *{color:#000!important}
+    .mpanel{display:block!important}.card:hover{transform:none;box-shadow:none}
+    .js .reveal{opacity:1!important;transform:none!important}
   }
 </style>
 </head>
 <body>
+<div id="progress"></div>
 
+<nav class="bar">
+  <div class="wrap">
+    <div class="brand">AI-Native <i>Kids</i></div>
+    <div class="links">
+      <a href="#thesis">看点</a>
+      <a href="#problem">问题</a>
+      <a href="#product">产品</a>
+      <a href="#market">市场</a>
+      <a href="#model-sec">财务模型</a>
+      <a href="#global">出海</a>
+      <a href="#ask">融资</a>
+    </div>
+    <a class="cta" href="index.html">完整报告 ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
 <header class="hero">
   <div class="wrap">
-    <div class="kicker">投资人简版 · Investor Brief</div>
-    <h1>给孩子的 AI 原生「科技素养」学习伙伴</h1>
-    <p class="lede">面向 K-12 的 <strong>AI 科技素养学习系统</strong>——孩子的 AI 学习伙伴：以 AI 编程为旗舰，覆盖机器人 / 科学 / AI 素养 / 创客。<strong>免费内容获客，家长会员变现</strong>（AI 算力隐于会员额度）。中国起步、为全球而建。<span style="opacity:.8">（产品起步，平台为长期愿景。）</span></p>
-    <div class="row">
-      <span class="chip">AI 渗透仅 ~7% 的 ¥3000 亿+ 市场</span>
-      <span class="chip">双减允许的非学科赛道</span>
-      <span class="chip">合规即护城河</span>
-      <span class="chip">中国造 · 可出海</span>
+    <div class="eyebrow">投资人简版 · Seed / 天使</div>
+    <h1>在 AI 几乎还没进入的市场，<br/>做孩子的 <span class="hl">AI 学习伙伴</span>。</h1>
+    <p class="lede">面向 K-12 的 <b>AI 科技素养学习系统</b>——以 AI 编程为旗舰，覆盖机器人 / 科学 / AI 素养 / 创客。<b>免费或低价获客，家长会员变现</b>（AI 算力隐于会员额度）。<b>合规即护城河，中国起步、为全球而建。</b></p>
+    <div class="ctas">
+      <a class="btnp" href="#model-sec">▶ 打开财务模型</a>
+      <a class="btng" href="#thesis">为什么现在 →</a>
     </div>
-    <div class="links">
-      <a href="index.html">← 完整战略报告（15 章）</a>
-      <a href="playbooks.html">落地清单 Playbooks</a>
-      <a href="#model">↓ 财务预期模型</a>
+    <div class="hstats">
+      <div class="hs"><div class="n">¥3466<s>亿</s></div><div class="l">2024 中国教育科技市场</div></div>
+      <div class="hs"><div class="n">~7<s>%</s></div><div class="l">AI 在教育的渗透率（留白巨大）</div></div>
+      <div class="hs"><div class="n">&gt;90<s>%</s></div><div class="l">市场在 C 端（家庭付费）</div></div>
+      <div class="hs"><div class="n">双减<s>✓</s></div><div class="l">非学科科技素养 = 政策允许赛道</div></div>
     </div>
   </div>
 </header>
 
-<!-- 1 · PRODUCT -->
-<section id="product">
+<!-- 1 · THESIS -->
+<section class="s" id="thesis">
   <div class="wrap">
-    <div class="sec-no">01 / 产品简述</div>
-    <h2 class="sec">一屏读懂</h2>
-    <div class="grid g3">
-      <div class="card"><div class="lab">问题</div><h4>家长焦虑、好教育稀缺</h4><p>家长为"AI 时代孩子的学习力"焦虑；优质科技素养教育贵、不个性化；学科补习又受双减限制。</p></div>
-      <div class="card"><div class="lab">方案</div><h4>AI 个性化科技素养</h4><p>AI 一对一辅导 + 系统化科技素养课程（编程为旗舰），安全合规、看得见成效、可负担。</p></div>
-      <div class="card"><div class="lab">为什么是现在</div><h4>AI 让 1:1 可负担</h4><p>AI 把个性化辅导边际成本压到极低；中国 AI 教育渗透仅 ~7%；科技素养是政策鼓励方向。</p></div>
-      <div class="card"><div class="lab">商业模式</div><h4>免费 → 家长会员</h4><p>免费内容做漏斗，家长分层会员变现（月付、合规）；AI 算力封装在会员额度内、对用户不可见。</p></div>
-      <div class="card"><div class="lab">护城河</div><h4>合规 × 成效 × AI</h4><p>双减合规深耕 + 系统化教研 + AI 个性化 + 家长信任/口碑闭环——大厂有 AI 但不一定愿做细分合规。</p></div>
-      <div class="card"><div class="lab">为什么是我们</div><h4>编程基因 + 中美团队</h4><p>编程教育起家（coding.minds），中美两地团队，兼顾产品力、合规与出海。</p></div>
+    <div class="head reveal"><div class="eyebrow">01 / 投资看点</div><h2 class="t">三句话，为什么这门生意成立</h2></div>
+    <div class="thesis reveal">
+      <div class="big">我们用 <em>AI 一对一辅导</em>，让每个孩子在编程与科技素养上<em>真的有进步</em>、让每位家长<em>看得见</em>——并把它做成一门<em>合规、可复利、能出海</em>的生意。</div>
+      <ul>
+        <li><b>时机：</b>AI 让"一对一因材施教"首次可负担，而教育的 AI 渗透率还不到 7%。</li>
+        <li><b>赛道：</b>双减重塑后，科技素养（编程/科学/AI）是政策鼓励、资本回流的安全地带。</li>
+        <li><b>壁垒：</b>合规深耕 + 系统化教研 + 家长信任，是大厂通用 AI 抄不快的东西。</li>
+      </ul>
     </div>
-
-    <div class="grid g4" style="margin-top:6px">
-      <div class="stat"><div class="num">¥3466<small>亿</small></div><div class="lab">2024 中国教育科技市场（艾瑞）<span class="src">高可信</span></div></div>
-      <div class="stat"><div class="num">~7%<small>AI 渗透</small></div><div class="lab">AI 占教育收入比例，留白巨大<span class="src">高可信</span></div></div>
-      <div class="stat"><div class="num">&gt;90%<small>C 端</small></div><div class="lab">市场以家庭付费为主，契合会员模式<span class="src">高可信</span></div></div>
-      <div class="stat"><div class="num">全球<small>普世需求</small></div><div class="lab">科技素养跨文化通用，利于出海</div></div>
-    </div>
-    <p class="src">数据见<a href="index.html#china">完整报告第 13 章</a>（含教育部/网信办/艾瑞/国信一手信源）。</p>
-
-    <div class="callout insight"><h4>◆ 定位用词（刻意分层）</h4><p><strong>产品/合规层：</strong>AI 科技素养<strong>学习系统/产品</strong>（自研教研 + AI 个性化，有壁垒；也最贴合非学科类合规定性）。<strong>投资愿景层：</strong>产品起步，长期成长为科技素养<strong>平台/生态</strong>。<strong>家长/孩子层：</strong>孩子的 <strong>AI 学习伙伴</strong>（要温度，不喊"系统/平台"）。—— 同一项目，三层话术对三类受众。</p></div>
   </div>
 </section>
 
-<!-- 2 · FINANCIAL MODEL -->
-<section id="model" class="alt">
+<!-- 2 · PROBLEM / SOLUTION -->
+<section class="s alt" id="problem">
   <div class="wrap">
-    <div class="sec-no">02 / 财务预期模型</div>
-    <h2 class="sec">可交互模型：调整假设，实时测算（中国 / 美国）</h2>
-    <p class="sub">所有假设<strong>均可编辑</strong>。模型按月模拟 5 年（含留存衰减），支持<strong>多档会员</strong>与<strong>完整成本</strong>，自动算出营收、毛利、LTV:CAC、回收期、<strong>经营盈亏与峰值现金缺口（≈融资需求）</strong>。</p>
+    <div class="head reveal"><div class="eyebrow">02 / 问题与方案</div><h2 class="t">家长很焦虑，好的科技教育却很稀缺</h2></div>
+    <div class="ps reveal">
+      <div class="box p">
+        <h3><span>◆</span> 问题</h3>
+        <ul>
+          <li>家长为"AI 时代孩子的学习力"高度焦虑，愿意持续付费</li>
+          <li>优质科技素养教育贵、不个性化、师资难规模化</li>
+          <li>学科补习受双减限制；市面 AI 产品多为单点工具或硬件，体验割裂</li>
+        </ul>
+      </div>
+      <div class="box s">
+        <h3><span>◆</span> 方案</h3>
+        <ul>
+          <li>AI 一对一个性化辅导 + 系统化科技素养课程（编程为旗舰）</li>
+          <li>安全合规、看得见成效、可负担——把昂贵的 1v1 变成人人可及</li>
+          <li>免费/低价获客 → 家长分层会员变现（AI 算力对用户不可见）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="grid g3 reveal" style="margin-top:18px">
+      <div class="card"><div class="tag">为什么是现在</div><h4>个性化可负担</h4><p>AI 把一对一辅导的边际成本压到极低——这是录播课和大班给不了的。</p></div>
+      <div class="card"><div class="tag">为什么是现在</div><h4>家长焦虑 → 付费</h4><p>家长为"看得见的进步"持续买单；关键是让进步可视化。</p></div>
+      <div class="card"><div class="tag">为什么是现在</div><h4>政策与留白</h4><p>科技素养是双减允许且鼓励的方向；"系统化 + AI 个性化"仍是空白。</p></div>
+    </div>
+  </div>
+</section>
 
-    <div class="callout risk" style="margin-top:4px"><h4>▶ 重要：这是「假设驱动」的示意模型，非财务预测</h4><p>默认值为<strong>示意性假设</strong>，用于展示经济结构与敏感性，<strong>非承诺、非预测</strong>。真实的转化、续费、CAC、各档价格/占比、成本须以 MVP 试点数据替换（见<a href="playbooks.html">两周验证 Sprint</a>）。把它当成"和投资人一起调参的沙盘"。</p></div>
+<!-- 3 · PRODUCT -->
+<section class="s" id="product">
+  <div class="wrap">
+    <div class="head reveal"><div class="eyebrow">03 / 产品</div><h2 class="t">学 → 做 → 看见进步</h2><p>孩子在产品里边学边创作；家长收到成长报告。一个闭环，三方都满意。</p></div>
+    <div class="steps reveal">
+      <div class="step"><div class="num"></div><h4>学</h4><p>AI 个性化课程，按孩子节奏与薄弱点因材施教，10 分钟内拿到第一个小成果。</p><div class="ar">→</div></div>
+      <div class="step"><div class="num"></div><h4>做</h4><p>边学边用 AI 编程/创作出能展示的作品——成就感驱动留存。</p><div class="ar">→</div></div>
+      <div class="step"><div class="num"></div><h4>看见</h4><p>定期成长报告与能力诊断给家长——"看得见进步"是续费与口碑的命门。</p></div>
+    </div>
+    <div class="head reveal" style="margin:42px 0 18px"><h2 class="t" style="font-size:24px">护城河：四环咬合</h2></div>
+    <div class="grid g4 reveal">
+      <div class="card"><div class="ic">🛡️</div><h4>合规深耕</h4><p>非学科定位 + 未成年人模式 + 算法备案——大厂不一定愿做的细分壁垒。</p></div>
+      <div class="card"><div class="ic">📈</div><h4>可验证成效</h4><p>成长报告与学习成果证据——家长信任与续费的基础。</p></div>
+      <div class="card"><div class="ic">🤖</div><h4>AI 原生</h4><p>个性化、轻资产、多语言可复制，天生比"硬件 + 录播"更进一步。</p></div>
+      <div class="card"><div class="ic">❤️</div><h4>家长信任</h4><p>安全口碑 + 社区 + 跨品类沉淀，形成转换成本与网络效应。</p></div>
+    </div>
+  </div>
+</section>
 
+<!-- 4 · MARKET (dark) -->
+<section class="s dark" id="market">
+  <div class="wrap">
+    <div class="head reveal"><div class="eyebrow">04 / 市场</div><h2 class="t">大、且几乎没被 AI 改造</h2></div>
+    <div class="mkt reveal">
+      <div class="m"><div class="n">¥3466<s>亿</s></div><div class="l">2024 中国教育科技市场（艾瑞）</div></div>
+      <div class="m"><div class="n">~7<s>%</s></div><div class="l">AI 占教育收入比例 → AI-native 的切入口</div></div>
+      <div class="m"><div class="n">¥190.6<s>亿</s></div><div class="l">2024 学习机销额（+37.6%）；硬件红海，软件切入</div></div>
+      <div class="m"><div class="n">全球<s>↗</s></div><div class="l">科技素养跨文化通用，利于出海</div></div>
+    </div>
+    <p class="src" style="margin-top:20px;color:#7E97A9">数据见 <a href="index.html#china">完整报告第 13 章</a>（教育部/网信办/艾瑞/国信一手信源；机构测算为方向性，融资前请以最新实数刷新）。</p>
+  </div>
+</section>
+
+<!-- 5 · BUSINESS MODEL -->
+<section class="s alt" id="bizmodel">
+  <div class="wrap">
+    <div class="head reveal"><div class="eyebrow">05 / 商业模式</div><h2 class="t">家长会员，AI 藏在会员里</h2><p>对用户只呈现分层会员费；AI 算力封装在会员额度内、对用户不可见——既保留订阅的可预测性，又让定价与算力成本脱钩。</p></div>
+    <div class="tiers reveal">
+      <div class="tier"><div class="nm">① 单科 / 低价入门</div><div class="pr">¥99<small>/月</small></div><div class="ds">单一科技素养品类（如编程）。低门槛获客、筛选意图。</div></div>
+      <div class="tier feat"><div class="badge">主力</div><div class="nm">② 全科</div><div class="pr">¥199<small>/月</small></div><div class="ds">编程 + 机器人 + 科学 + AI 素养，跨品类提高 ARPU 与留存。</div></div>
+      <div class="tier"><div class="nm">③ 家庭版</div><div class="pr">¥299<small>/月</small></div><div class="ds">多孩子家庭，最高 LTV、最强转换成本。</div></div>
+    </div>
+    <div class="callout insight reveal"><h4>◆ 两种获客打法（可在下方模型里切换对比）</h4><p><b>免费漏斗</b>：免费内容引流再转化——但免费用户也烧 AI 算力（隐性成本）。<b>低价直付</b>：无免费墙，每个用户都付费、无免费烧钱，但顶部漏斗更小。<b>下方财务模型可一键切换，直接对比两者的现金流转正年与峰值缺口。</b></p></div>
+  </div>
+</section>
+
+<!-- 6 · FINANCIAL MODEL -->
+<section class="s" id="model-sec">
+  <div class="wrap">
+    <div class="head reveal"><div class="eyebrow">06 / 财务预期模型</div><h2 class="t">可交互模型：调整假设，实时测算</h2><p>多档会员 + 完整 P&amp;L（营收→算力→毛利→获客→运营→经营盈亏→累计现金流），自动算 LTV:CAC、回收期、<b>现金流转正年与峰值现金缺口（≈融资需求）</b>。中国 / 美国两版，可导出 CSV。</p></div>
+
+    <div class="callout warm reveal" style="margin-top:0"><h4>▶ 这是「假设驱动」的示意沙盘，非财务预测</h4><p>默认值为示意性假设，用于展示经济结构与敏感性，<b>非承诺、非预测</b>。真实的转化、续费、CAC、各档价格/占比、成本须以 MVP 试点数据替换。把它当成"和投资人一起调参的沙盘"。</p></div>
+
+    <div class="reveal">
     <div class="modeltabs">
       <button class="mtab active" data-m="cn">🇨🇳 中国版（人民币）</button>
       <button class="mtab" data-m="us">🇺🇸 美国版（美元）</button>
@@ -170,6 +375,7 @@
 
     <!-- CN -->
     <div class="mpanel active" id="m-cn">
+      <div class="console">
       <div class="inputs">
         <div class="isub">获客模式与转化</div>
         <div class="field"><label>获客模式</label><div class="inp"><select id="cn-mode"><option value="funnel">免费漏斗（免费→转化）</option><option value="direct">低价直付（无免费）</option></select></div></div>
@@ -197,10 +403,12 @@
       <div class="chart-box"><canvas id="cn-chart"></canvas></div>
       <div class="tscroll"><table id="cn-table"></table></div>
       <div class="btnrow"><button class="btn primary" data-csv="cn">⬇ 导出 CSV</button></div>
+      </div>
     </div>
 
     <!-- US -->
     <div class="mpanel" id="m-us">
+      <div class="console">
       <div class="inputs">
         <div class="isub">获客模式与转化</div>
         <div class="field"><label>获客模式</label><div class="inp"><select id="us-mode"><option value="funnel">免费漏斗（免费→转化）</option><option value="direct">低价直付（无免费）</option></select></div></div>
@@ -228,59 +436,68 @@
       <div class="chart-box"><canvas id="us-chart"></canvas></div>
       <div class="tscroll"><table id="us-table"></table></div>
       <div class="btnrow"><button class="btn primary" data-csv="us">⬇ 导出 CSV</button></div>
+      </div>
     </div>
 
-    <div class="callout insight"><h4>◆ 怎么读这个模型</h4><p>顶部「<strong>获客模式</strong>」可切换 <strong>免费漏斗 ⇄ 低价直付</strong>：选「免费漏斗」会多出一条 <strong>「免费用户算力成本」</strong>（免费用户也烧 AI、却不付钱——这是免费模式的隐性成本）；选「低价直付」则把"新增免费用户"改为"<strong>新增付费用户</strong>"、无免费烧钱。<strong>切换两种模式，对比"现金流转正年"和"峰值现金缺口"，就能看出哪种打法更省钱。</strong> 其余盯五个数：混合 ARPU、LTV:CAC≥3、回收期&lt;12月、转正年、峰值缺口（≈这一程要融的量级）。</p></div>
+    <div class="callout insight"><h4>◆ 怎么读这个模型</h4><p>切换顶部「获客模式」对比 <b>免费漏斗 ⇄ 低价直付</b>，看哪种打法的"转正年"更早、"峰值缺口"更小。其余盯五个数：混合 ARPU、LTV:CAC≥3、回收期&lt;12月、转正年、峰值缺口（≈这一程要融的量级）。调"档位占比"看产品组合，调"运营成本/增长"看团队扩张对烧钱的影响。</p></div>
+    </div>
   </div>
 </section>
 
-<!-- 3 · GO GLOBAL -->
-<section id="global">
+<!-- 7 · GO GLOBAL -->
+<section class="s alt" id="global">
   <div class="wrap">
-    <div class="sec-no">03 / 出海能力</div>
-    <h2 class="sec">中国造、为全球而建</h2>
-    <p class="sub">为什么这个在中国做的项目，天生具备出海能力——而出海既是第二增长曲线，也是对中国监管的对冲。</p>
-
-    <div class="grid g3">
-      <div class="card"><div class="lab">优势 1</div><h4>科技素养是普世需求</h4><p>编程/AI 素养/STEAM 全球家长都焦虑、都买单；不像学科补习高度绑定本地课纲、语言与考试——<strong>内容跨文化迁移成本低</strong>。</p></div>
-      <div class="card"><div class="lab">优势 2</div><h4>AI 原生 = 低成本多语言</h4><p>AI 个性化辅导天然可多语言化，复制到新市场的边际成本，远低于真人/本地化课程。</p></div>
-      <div class="card"><div class="lab">优势 3</div><h4>中国工程与内容效率</h4><p>中国团队的工程速度、内容生产效率与成本结构，是出海的成本优势（参照 TikTok/Shein/游戏出海逻辑）。</p></div>
-      <div class="card"><div class="lab">优势 4</div><h4>监管对冲</h4><p>双减限制了中国学科类天花板；出海打开增长第二曲线，也分散单一监管体系的风险。</p></div>
-      <div class="card"><div class="lab">优势 5</div><h4>架构已为出海设计</h4><p>开曼控股 + 美国 Delaware + 全球数据栈（见<a href="index.html#structure">报告第 14 章</a>）本就是多法域出海的底座。</p></div>
-      <div class="card"><div class="lab">路径</div><h4>先英语高 ARPU 滩头</h4><p>美/加/澳 + 东南亚国际学校 + 中东 → 再做非英语本地化；D2C 家长会员为主，国际学校/海外华人社区可作 B2B2C 先锋。</p></div>
+    <div class="head reveal"><div class="eyebrow">07 / 出海能力</div><h2 class="t">中国造，为全球而建</h2><p>科技素养是普世需求，AI 原生让复制成本极低——出海既是第二增长曲线，也是对中国监管的对冲。</p></div>
+    <div class="grid g3 reveal">
+      <div class="card"><div class="tag">优势</div><h4>普世需求</h4><p>编程/AI 素养/STEAM 全球家长都买单，不像学科补习绑定本地课纲与语言，迁移成本低。</p></div>
+      <div class="card"><div class="tag">优势</div><h4>AI 原生 = 低成本多语言</h4><p>个性化辅导天然可多语言化，复制到新市场远低于真人/本地化课程。</p></div>
+      <div class="card"><div class="tag">优势</div><h4>中国工程效率</h4><p>工程速度、内容生产与成本结构，是出海的成本优势（参照 TikTok/Shein/游戏出海）。</p></div>
+      <div class="card"><div class="tag">优势</div><h4>监管对冲</h4><p>打开增长第二曲线，分散单一监管体系风险。</p></div>
+      <div class="card"><div class="tag">优势</div><h4>架构已就绪</h4><p>开曼 + 美国 Delaware + 全球数据栈（见<a href="index.html#structure">报告第 14 章</a>）本就是多法域底座。</p></div>
+      <div class="card"><div class="tag">路径</div><h4>先英语高 ARPU 滩头</h4><p>美/加/澳 + 东南亚国际学校 + 中东 → 再做非英语本地化。</p></div>
     </div>
-
-    <div class="callout risk"><h4>▶ 诚实面对出海的真实挑战</h4><p>① <strong>品牌信任不迁移</strong>——海外获客要从零建立；② 各国<strong>儿童隐私合规</strong>（COPPA/GDPR-K）有成本；③ <strong>本地化</strong>（语言、文化、家长心智）；④ 与本地玩家竞争。对标可参考中国教育/内容出海的成败案例（有道、字节 Gauth、以及更广义的 TikTok/Shein）。<strong>出海是第二曲线，不是第一战场——先在主场把单位经济跑通。</strong></p></div>
+    <div class="callout warm reveal"><h4>▶ 诚实面对挑战</h4><p>品牌信任不迁移、各国儿童隐私合规（COPPA/GDPR-K）、本地化与本地竞争。<b>出海是第二曲线，不是第一战场——先在主场把单位经济跑通。</b></p></div>
   </div>
 </section>
 
-<!-- 4 · ASK -->
-<section id="ask" class="alt">
+<!-- 8 · ASK -->
+<section class="s" id="ask">
   <div class="wrap">
-    <div class="sec-no">04 / 融资与里程碑</div>
-    <h2 class="sec">现在这一轮要做的事</h2>
-    <div class="grid g3">
-      <div class="card"><div class="lab">阶段</div><h4>Pre-seed / 天使</h4><p>尚无规模化运营数据，本轮用于<strong>验证 + 做出合规 MVP</strong>，再凭真实数据冲种子轮。金额按团队与目标设定（待定）。</p></div>
-      <div class="card"><div class="lab">资金用途</div><h4>MVP · 内容 · 合规</h4><p>合规科技素养 MVP、首条编程学习路径与内容、未成年人模式/算法备案等合规、早期获客实验。</p></div>
-      <div class="card"><div class="lab">180 天里程碑</div><h4>跑通单位经济</h4><p>证明 <strong>家长转化 + 续费</strong>、<strong>LTV:CAC ≥ 3</strong>、合规框架就位、可复用的"科技素养底座"。</p></div>
+    <div class="head reveal"><div class="eyebrow">08 / 融资与里程碑</div><h2 class="t">现在这一轮要做的事</h2></div>
+    <div class="askbox reveal">
+      <h3>Pre-seed / 天使：验证 + 合规 MVP</h3>
+      <p style="color:#B7CCDD;margin:0;max-width:60ch">尚无规模化运营数据，本轮用最小成本验证需求、做出合规 MVP，再凭真实数据冲种子轮。金额按团队与目标设定（待定，可用上方模型的"峰值现金缺口"反推）。</p>
+      <div class="grid3">
+        <div class="ab"><div class="k">资金用途</div><h4>MVP · 内容 · 合规</h4><p>合规科技素养 MVP、首条编程学习路径、未成年人模式/算法备案、早期获客实验。</p></div>
+        <div class="ab"><div class="k">180 天里程碑</div><h4>跑通单位经济</h4><p>证明家长转化与续费、LTV:CAC ≥ 3、合规框架就位、可复用"科技素养底座"。</p></div>
+        <div class="ab"><div class="k">为什么是我们</div><h4>编程基因 + 中美团队</h4><p>编程教育起家（coding.minds），中美两地团队，兼顾产品力、合规与出海。</p></div>
+      </div>
     </div>
-    <div class="callout action"><h4>▶ 一句话定位</h4><p>在一个 ¥3000 亿+、AI 渗透仅 ~7% 的市场，做<strong>合规、安全、有成效的 AI 科技素养学习系统</strong>（产品起步），<strong>长期成长为科技素养平台/生态</strong>；中国起步、为全球而建；<strong>合规是护城河，成效是复购，出海是第二曲线。</strong></p></div>
-    <p class="src" style="margin-top:14px">需要深度论证（市场/竞争/单位经济/退出/合规/架构）请见 <a href="index.html">完整战略评估报告（15 章）</a>；执行清单见 <a href="playbooks.html">Playbooks</a>。</p>
+    <div class="callout good reveal"><h4>▶ 一句话定位</h4><p>在一个 ¥3000 亿+、AI 渗透仅 ~7% 的市场，做<b>合规、安全、有成效的 AI 科技素养学习系统</b>（产品起步），长期成长为科技素养<b>平台/生态</b>；<b>合规是护城河，成效是复购，出海是第二曲线。</b></p></div>
+    <p class="src" style="margin-top:14px">深度论证（市场/竞争/单位经济/退出/合规/架构）见 <a href="index.html">完整战略评估报告（15 章）</a>；执行清单见 <a href="playbooks.html">Playbooks（4 tab）</a>。</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <b>投资人简版 · K-12 AI 科技素养学习系统</b> · 产品简述 + 财务模型（中/美）+ 出海能力<br/>
-    <a href="index.html">完整报告</a> · <a href="playbooks.html">落地清单</a>
-    <div class="disclaimer">免责声明：本页财务模型为<strong>假设驱动的示意沙盘，非财务预测或投资承诺</strong>；默认假设须以一手试点数据替换。市场数据见完整报告信源；合规结论须经专业顾问确认。供内部与投资沟通用。</div>
+    <b>投资人简版 · K-12 AI 科技素养学习系统</b> —— 产品 · 财务模型（中/美）· 出海能力<br/>
+    <a href="index.html">完整报告</a> · <a href="playbooks.html">落地清单</a> · <span class="src" style="color:#7E97A9">提示：浏览器「打印 → 另存为 PDF」可导出本页发送</span>
+    <div class="disclaimer">免责声明：本页财务模型为<b>假设驱动的示意沙盘，非财务预测或投资承诺</b>；默认假设须以一手试点数据替换。市场数据见完整报告信源；合规结论须经专业顾问确认。供内部与投资沟通用。</div>
   </div>
 </footer>
 
 <script>
+document.documentElement.classList.add('js');
+// scroll progress
+const prog=document.getElementById('progress');
+addEventListener('scroll',()=>{const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight||1);prog.style.width=(sc*100)+'%';},{passive:true});
+// reveal on scroll
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
 Chart.defaults.font.family="'Noto Sans SC', sans-serif";
-Chart.defaults.font.size=12;Chart.defaults.color='#5B6B78';
-const TEAL='#0BA39A',BLUE='#2251FF',SLATE='#9FB0BC',gridc='rgba(91,107,120,.12)';
+Chart.defaults.font.size=12;Chart.defaults.color='#5C6B7A';
+const TEAL='#0FB5A6',BLUE='#2F6BFF',SLATE='#8FA0AE',gridc='rgba(92,107,122,.12)';
 
 const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m3','gm','freecost','freelife','opex','opexg'];
 const DEF={
@@ -293,7 +510,6 @@ function applyMode(r){
   document.querySelectorAll('#m-'+r+' .field[data-only="funnel"]').forEach(f=>f.classList.toggle('off',direct));
   document.getElementById(r+'-newfree-lbl').textContent=direct?'第1年新增付费用户':'第1年新增免费用户';
 }
-
 function fmtMoney(v,cur){
   const a=Math.abs(v),s=v<0?'-':'';
   if(cur==='¥'){
@@ -307,11 +523,10 @@ function fmtMoney(v,cur){
   }
 }
 function fmtInt(v){return Math.round(v).toLocaleString();}
-
 function readInputs(r){
   const g=id=>parseFloat(document.getElementById(r+'-'+id).value)||0;
   const m1=g('m1'),m2=g('m2'),m3=g('m3'),ms=(m1+m2+m3)||1;
-  const arpu=(g('p1')*m1+g('p2')*m2+g('p3')*m3)/ms; // blended monthly ARPU
+  const arpu=(g('p1')*m1+g('p2')*m2+g('p3')*m3)/ms;
   const mode=document.getElementById(r+'-mode').value;
   return {mode,newfree:g('newfree'),growth:g('growth'),conv:g('conv')/100,life:Math.max(1,g('life')),cac:g('cac'),
           arpu,gm:g('gm')/100,freecost:g('freecost'),freelife:Math.max(1,g('freelife')),opex:g('opex'),opexg:g('opexg'),
@@ -324,9 +539,8 @@ function project(p){
   let peak=0, beYear=0;
   for(let m=0;m<months;m++){
     const y=Math.floor(m/12);
-    const newPaid=direct?acqM:acqM*p.conv;           // direct: every acquired user pays
+    const newPaid=direct?acqM:acqM*p.conv;
     active=active*(1-churn)+newPaid;
-    // free (non-paying) pool only exists in funnel mode; they burn AI compute
     let freeCost=0;
     if(!direct){ freePool=freePool*(1-1/p.freelife)+acqM*(1-p.conv); freeCost=freePool*p.freecost; }
     const rev=active*p.arpu;
@@ -376,8 +590,8 @@ function render(r){
   document.getElementById(r+'-table').innerHTML=html;
   const ctx=document.getElementById(r+'-chart');
   const data={labels:['第1年','第2年','第3年','第4年','第5年'],datasets:[
-    {type:'bar',label:'年营收',data:yr.map(y=>Math.round(y.rev)),backgroundColor:'rgba(34,81,255,.75)',borderRadius:4,order:2},
-    {type:'bar',label:'毛利',data:yr.map(y=>Math.round(y.gp)),backgroundColor:'rgba(11,163,154,.55)',borderRadius:4,order:2},
+    {type:'bar',label:'年营收',data:yr.map(y=>Math.round(y.rev)),backgroundColor:'rgba(47,107,255,.75)',borderRadius:4,order:2},
+    {type:'bar',label:'毛利',data:yr.map(y=>Math.round(y.gp)),backgroundColor:'rgba(15,181,166,.55)',borderRadius:4,order:2},
     {type:'line',label:'经营盈亏',data:yr.map(y=>Math.round(y.op)),borderColor:'#E1383C',backgroundColor:'rgba(225,56,60,.08)',borderWidth:3,tension:.3,fill:true,pointRadius:3,order:1}
   ]};
   const opt={maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtMoney(c.parsed.y,cur)}}},
@@ -400,8 +614,6 @@ function exportCSV(r){
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='财务模型_'+r+'.csv';a.click();
 }
-
-// wire
 ['cn','us'].forEach(r=>{
   FIELDS.forEach(id=>document.getElementById(r+'-'+id).addEventListener('input',()=>render(r)));
   document.getElementById(r+'-mode').addEventListener('change',()=>{applyMode(r);render(r);});
