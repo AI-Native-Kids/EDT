@@ -217,6 +217,28 @@
   .disclaimer{font-size:12px;color:#6E889A;border-top:1px solid rgba(255,255,255,.1);padding-top:16px;margin-top:18px;line-height:1.65}
   ul.tight{margin:10px 0;padding-left:20px}ul.tight li{margin:7px 0;font-size:14.5px;color:var(--slate)}
 
+  /* model: assumptions chips, use-of-funds, advanced collapsible */
+  .assum{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+  .assum .ch{background:var(--mist);border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-size:12.5px;color:var(--slate)}
+  .assum .ch b{color:var(--ink);font-weight:700}
+  .uof{margin:20px 0 4px;border-top:1px solid var(--line);padding-top:18px}
+  .uof .h{font-weight:800;font-size:14px;margin-bottom:4px}
+  .uof .h .raise{font-family:"Noto Serif SC";font-weight:900;color:var(--blue)}
+  .uof .sub{font-size:12px;color:var(--faint);margin-bottom:12px}
+  .uof .stack{display:flex;height:16px;border-radius:8px;overflow:hidden;margin-bottom:14px;border:1px solid var(--line)}
+  .uof .stack i{display:block;height:100%}
+  .uof .legend{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  @media(max-width:600px){.uof .legend{grid-template-columns:1fr 1fr}}
+  .uof .lg{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--slate)}
+  .uof .lg .dot{width:11px;height:11px;border-radius:3px;flex:0 0 auto}
+  .uof .lg b{color:var(--ink)}
+  .adv{margin-top:16px;border-top:1px dashed var(--line);padding-top:4px}
+  .adv summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--slate);padding:9px 0;list-style:none;user-select:none}
+  .adv summary::-webkit-details-marker{display:none}
+  .adv summary:hover{color:var(--blue)}
+  .adv .inputs{margin-top:12px}
+  .trow-sub td{color:var(--faint);font-size:12.5px;border-bottom-color:#F0F4F8}
+
   /* tear sheet */
   .tear{background:var(--ink);color:#EAF2F9}
   .tear .wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(255,255,255,.1);border-radius:0}
@@ -462,7 +484,7 @@
 <!-- 6 · FINANCIAL MODEL -->
 <section class="s" id="model-sec">
   <div class="wrap">
-    <div class="head reveal"><div class="eyebrow">07 / 财务预期模型</div><h2 class="t">可交互模型：调整假设，实时测算</h2><p>多档会员 + 完整 P&amp;L（营收→算力→毛利→获客→运营→经营盈亏→累计现金流），自动算 LTV:CAC、回收期、<b>现金流转正年与峰值现金缺口（≈融资需求）</b>。中国 / 美国两版，可导出 CSV。</p></div>
+    <div class="head reveal"><div class="eyebrow">07 / 财务展望</div><h2 class="t">五年增长、盈利路径与资金用途</h2><p>关键指标 + 完整损益（含<b>细化的运营成本</b>）+ <b>本轮资金用途</b>。中国 / 美国两版。需要的话可在底部"调整假设"自行压力测试，或导出 CSV 供尽调。</p></div>
 
     <div class="callout warm reveal" style="margin-top:0"><h4>▶ 这是「假设驱动」的示意沙盘，非财务预测</h4><p>默认值为示意性假设，用于展示经济结构与敏感性，<b>非承诺、非预测</b>。真实的转化、续费、CAC、各档价格/占比、成本须以 MVP 试点数据替换。把它当成"和投资人一起调参的沙盘"。</p></div>
 
@@ -475,6 +497,13 @@
     <!-- CN -->
     <div class="mpanel active" id="m-cn">
       <div class="console">
+      <div class="assum" id="cn-assum"></div>
+      <div class="metrics" id="cn-metrics"></div>
+      <div class="chart-box"><canvas id="cn-chart"></canvas></div>
+      <div class="tscroll"><table id="cn-table"></table></div>
+      <div class="uof" id="cn-uof"></div>
+      <div class="btnrow"><button class="btn" data-preset="cn">⚖ 套用保守假设</button><button class="btn primary" data-csv="cn">⬇ 导出 CSV（尽调用）</button></div>
+      <details class="adv"><summary>▸ 调整假设 / 自己调参（可选）</summary>
       <div class="inputs">
         <div class="isub">获客模式与转化</div>
         <div class="field"><label>获客模式</label><div class="inp"><select id="cn-mode"><option value="funnel">免费漏斗（免费→转化）</option><option value="direct">低价直付（无免费）</option></select></div></div>
@@ -498,16 +527,20 @@
         <div class="field"><label>运营成本年增长</label><div class="inp"><input id="cn-opexg" type="number" step="0.1" value="1.5"><span class="suf">×/年</span></div></div>
         <div class="field"><label>—</label><div class="inp"><button class="btn" data-reset="cn">↺ 恢复默认</button></div></div>
       </div>
-      <div class="metrics" id="cn-metrics"></div>
-      <div class="chart-box"><canvas id="cn-chart"></canvas></div>
-      <div class="tscroll"><table id="cn-table"></table></div>
-      <div class="btnrow"><button class="btn" data-preset="cn">⚖ 套用保守假设</button><button class="btn primary" data-csv="cn">⬇ 导出 CSV</button></div>
+      </details>
       </div>
     </div>
 
     <!-- US -->
     <div class="mpanel" id="m-us">
       <div class="console">
+      <div class="assum" id="us-assum"></div>
+      <div class="metrics" id="us-metrics"></div>
+      <div class="chart-box"><canvas id="us-chart"></canvas></div>
+      <div class="tscroll"><table id="us-table"></table></div>
+      <div class="uof" id="us-uof"></div>
+      <div class="btnrow"><button class="btn" data-preset="us">⚖ 套用保守假设</button><button class="btn primary" data-csv="us">⬇ 导出 CSV（尽调用）</button></div>
+      <details class="adv"><summary>▸ 调整假设 / 自己调参（可选）</summary>
       <div class="inputs">
         <div class="isub">获客模式与转化</div>
         <div class="field"><label>获客模式</label><div class="inp"><select id="us-mode"><option value="funnel">免费漏斗（免费→转化）</option><option value="direct">低价直付（无免费）</option></select></div></div>
@@ -531,14 +564,11 @@
         <div class="field"><label>运营成本年增长</label><div class="inp"><input id="us-opexg" type="number" step="0.1" value="1.6"><span class="suf">×/年</span></div></div>
         <div class="field"><label>—</label><div class="inp"><button class="btn" data-reset="us">↺ 恢复默认</button></div></div>
       </div>
-      <div class="metrics" id="us-metrics"></div>
-      <div class="chart-box"><canvas id="us-chart"></canvas></div>
-      <div class="tscroll"><table id="us-table"></table></div>
-      <div class="btnrow"><button class="btn" data-preset="us">⚖ 套用保守假设</button><button class="btn primary" data-csv="us">⬇ 导出 CSV</button></div>
+      </details>
       </div>
     </div>
 
-    <div class="callout insight"><h4>◆ 怎么读这个模型</h4><p>切换顶部「获客模式」对比 <b>免费漏斗 ⇄ 低价直付</b>，看哪种打法的"转正年"更早、"峰值缺口"更小。其余盯五个数：混合 ARPU、LTV:CAC≥3、回收期&lt;12月、转正年、峰值缺口（≈这一程要融的量级）。调"档位占比"看产品组合，调"运营成本/增长"看团队扩张对烧钱的影响。</p></div>
+    <div class="callout insight"><h4>◆ 重点看</h4><p><b>毛利率与 LTV:CAC</b>（单位经济是否健康）、<b>现金流转正年</b>（多久能自我造血）、<b>本轮所需资金与用途</b>（钱花在哪）。如需自行压力测试，可点「套用保守假设」，或在底部「调整假设」里改任意参数——但默认值已是我们与投资人沟通的基准。</p></div>
     </div>
   </div>
 </section>
@@ -681,6 +711,8 @@ function project(p){
   for(let y=0;y<5;y++){ if(yr[y].op>0){beYear=y+1;break;} }
   return {yr,peakBurn:-peak,beYear,direct};
 }
+const OPEX_ALLOC=[['团队 / 人力',.52],['产品 / 研发',.20],['内容 / 教研',.16],['AI / 基础设施',.07],['行政 / 合规',.05]];
+const UOF_ALLOC=[['团队 / 人力',.42,'#2F6BFF'],['产品 / 研发',.18,'#0FB5A6'],['内容 / 教研',.15,'#FF7A45'],['市场 / 获客',.12,'#F5A623'],['AI / 基础设施',.08,'#8FA0AE'],['储备 / 合规',.05,'#1E9E62']];
 function render(r){
   const p=readInputs(r), cur=DEF[r].cur, {yr,peakBurn,beYear,direct}=project(p);
   const ltv=p.arpu*p.gm*p.life;
@@ -690,30 +722,46 @@ function render(r){
   const pc=payback<=12?'ok':(payback>24?'bad':'');
   const beTxt=beYear?('第 '+beYear+' 年'):'5 年内未转正';
   const beCls=beYear&&beYear<=3?'ok':(beYear?'':'bad');
+  const raise=peakBurn*1.3;
+  // assumptions summary (read-only)
+  document.getElementById(r+'-assum').innerHTML=
+    '<span class="ch">混合 ARPU <b>'+fmtMoney(p.arpu,cur)+'/月</b></span>'+
+    (direct?'<span class="ch">获客 <b>低价直付</b></span>':'<span class="ch">付费转化 <b>'+(p.conv*100).toFixed(0)+'%</b></span>')+
+    '<span class="ch">续费 <b>'+p.life+' 月</b></span>'+
+    '<span class="ch">毛利率 <b>'+(p.gm*100).toFixed(0)+'%</b></span>'+
+    '<span class="ch">CAC <b>'+fmtMoney(p.cac,cur)+'</b></span>'+
+    '<span class="ch">获客增长 <b>'+p.growth+'×/年</b></span>';
+  // headline metrics
   document.getElementById(r+'-metrics').innerHTML=
-    `<div class="metric"><div class="v">${fmtMoney(p.arpu,cur)}</div><div class="k">混合月费 ARPU（多档加权）</div></div>`+
+    `<div class="metric"><div class="v">${fmtMoney(yr[4].rev,cur)}</div><div class="k">第 5 年营收</div></div>`+
+    `<div class="metric"><div class="v">${(p.gm*100).toFixed(0)}%</div><div class="k">毛利率</div></div>`+
     `<div class="metric"><div class="v ${rc}">${ratio.toFixed(1)} : 1</div><div class="k">LTV : CAC（健康 ≥3）</div></div>`+
     `<div class="metric"><div class="v ${pc}">${payback.toFixed(1)} 月</div><div class="k">CAC 回收期（理想 &lt;12）</div></div>`+
-    `<div class="metric"><div class="v">${fmtMoney(yr[4].rev,cur)}</div><div class="k">第 5 年营收</div></div>`+
     `<div class="metric"><div class="v ${beCls}">${beTxt}</div><div class="k">经营现金流转正</div></div>`+
-    `<div class="metric"><div class="v bad">${fmtMoney(peakBurn,cur)}</div><div class="k">峰值现金缺口（≈ 融资需求）</div></div>`;
+    `<div class="metric"><div class="v bad">${fmtMoney(peakBurn,cur)}</div><div class="k">峰值现金缺口</div></div>`;
+  // P&L with itemized opex
   const rows=[
-    !direct&&['新增免费用户',yr.map(y=>fmtInt(y.newFree)),''],
-    ['新增付费用户',yr.map(y=>fmtInt(y.newPaid)),''],
-    ['年末活跃付费',yr.map(y=>fmtInt(y.end)),''],
+    ['付费用户（年末活跃）',yr.map(y=>fmtInt(y.end)),''],
     ['年营收',yr.map(y=>fmtMoney(y.rev,cur)),'b'],
-    ['− 算力成本(COGS)',yr.map(y=>fmtMoney(y.cogs,cur)),''],
-    ['= 毛利',yr.map(y=>fmtMoney(y.gp,cur)),''],
-    ['− 获客投入(CAC)',yr.map(y=>fmtMoney(y.cac,cur)),''],
-    !direct&&['− 免费用户算力成本',yr.map(y=>fmtMoney(y.freeCost,cur)),''],
-    ['− 运营成本(团队/研发/G&A)',yr.map(y=>fmtMoney(y.opex,cur)),''],
-    ['= 经营盈亏',yr.map(y=>fmtMoney(y.op,cur)),'b'],
+    ['− 算力成本（COGS）',yr.map(y=>fmtMoney(y.cogs,cur)),''],
+    ['= 毛利',yr.map(y=>fmtMoney(y.gp,cur)),'b'],
+    ['− 获客投入（CAC）',yr.map(y=>fmtMoney(y.cac,cur)),''],
+    !direct&&['− 免费用户算力成本',yr.map(y=>fmtMoney(y.freeCost,cur)),'sub'],
+    ['− 运营成本',yr.map(y=>fmtMoney(y.opex,cur)),''],
+    ...OPEX_ALLOC.map(([nm,rt])=>['　· '+nm,yr.map(y=>fmtMoney(y.opex*rt,cur)),'sub']),
+    ['= 经营盈亏（EBITDA）',yr.map(y=>fmtMoney(y.op,cur)),'b'],
     ['累计经营现金流',yr.map(y=>fmtMoney(y.cumEnd,cur)),'']
   ].filter(Boolean);
   let html='<thead><tr><th>损益（P&amp;L）</th><th class="num">第1年</th><th class="num">第2年</th><th class="num">第3年</th><th class="num">第4年</th><th class="num">第5年</th></tr></thead><tbody>';
-  rows.forEach(([k,vals,b])=>{const st=b?' style="font-weight:700"':'';html+='<tr'+st+'><td>'+k+'</td>'+vals.map(v=>'<td class="num">'+v+'</td>').join('')+'</tr>';});
+  rows.forEach(([k,vals,f])=>{const cls=f==='sub'?' class="trow-sub"':'';const st=f==='b'?' style="font-weight:700"':'';html+='<tr'+cls+st+'><td>'+k+'</td>'+vals.map(v=>'<td class="num">'+v+'</td>').join('')+'</tr>';});
   html+='</tbody>';
   document.getElementById(r+'-table').innerHTML=html;
+  // use of funds
+  document.getElementById(r+'-uof').innerHTML=
+    '<div class="h">本轮建议融资 <span class="raise">'+fmtMoney(raise,cur)+'</span> · 资金用途</div>'+
+    '<div class="sub">≈ 峰值现金缺口 × 1.3 缓冲；分配为示意，最终按团队与计划确定</div>'+
+    '<div class="stack">'+UOF_ALLOC.map(([nm,rt,col])=>'<i style="width:'+(rt*100)+'%;background:'+col+'"></i>').join('')+'</div>'+
+    '<div class="legend">'+UOF_ALLOC.map(([nm,rt,col])=>'<div class="lg"><span class="dot" style="background:'+col+'"></span>'+nm+' <b>'+Math.round(rt*100)+'%</b> · '+fmtMoney(raise*rt,cur)+'</div>').join('')+'</div>';
   const ctx=document.getElementById(r+'-chart');
   const data={labels:['第1年','第2年','第3年','第4年','第5年'],datasets:[
     {type:'bar',label:'年营收',data:yr.map(y=>Math.round(y.rev)),backgroundColor:'rgba(47,107,255,.75)',borderRadius:4,order:2},
