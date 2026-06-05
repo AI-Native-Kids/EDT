@@ -39,6 +39,7 @@
   nav.bar .links::-webkit-scrollbar{display:none}
   nav.bar .links a{color:var(--slate);font-size:13px;padding:7px 11px;border-radius:8px;white-space:nowrap;font-weight:500}
   nav.bar .links a:hover{color:var(--ink);background:var(--mist);text-decoration:none}
+  nav.bar .links a.active{color:var(--blue);background:var(--mist);font-weight:700}
   nav.bar .cta{background:var(--ink);color:#fff;padding:8px 15px;border-radius:30px;font-size:13px;font-weight:700;white-space:nowrap}
   nav.bar .cta:hover{background:var(--blue);text-decoration:none}
   @media(max-width:920px){nav.bar .links{display:none}}
@@ -216,11 +217,54 @@
   .disclaimer{font-size:12px;color:#6E889A;border-top:1px solid rgba(255,255,255,.1);padding-top:16px;margin-top:18px;line-height:1.65}
   ul.tight{margin:10px 0;padding-left:20px}ul.tight li{margin:7px 0;font-size:14.5px;color:var(--slate)}
 
+  /* tear sheet */
+  .tear{background:var(--ink);color:#EAF2F9}
+  .tear .wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(255,255,255,.1);border-radius:0}
+  .tear .ts{background:var(--ink);padding:18px 16px}
+  .tear .ts .k{color:#7FE3D9;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .tear .ts .v{color:#fff;font-weight:700;font-size:14.5px;margin-top:6px;line-height:1.35}
+  @media(max-width:860px){.tear .wrap{grid-template-columns:repeat(2,1fr)}}
+
+  /* product mockup */
+  .mock{border-radius:14px;border:1px solid var(--line);overflow:hidden;background:#fff;box-shadow:var(--shadow);max-width:560px;margin:0 auto}
+  .mock .bar{background:var(--mist2);padding:10px 14px;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--line)}
+  .mock .bar i{width:10px;height:10px;border-radius:50%;background:#D7DEE6;display:inline-block}
+  .mock .bar .u{margin-left:10px;font-size:11px;color:var(--faint);background:#fff;border:1px solid var(--line);border-radius:20px;padding:3px 12px}
+  .mock .body{padding:18px;display:grid;grid-template-columns:1.3fr 1fr;gap:14px;min-height:230px}
+  @media(max-width:520px){.mock .body{grid-template-columns:1fr}}
+  .mock .chatline{height:11px;border-radius:6px;background:var(--mist2);margin:9px 0}
+  .mock .chatline.a{width:80%;background:#E2ECFB}.mock .chatline.b{width:60%}
+  .mock .codeblk{background:var(--ink);border-radius:10px;padding:14px;color:#9FE9E0;font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.7}
+  .mock .codeblk .c{color:#7FA8FF}.mock .codeblk .s{color:#FFB27D}
+  .mock .badge2{display:inline-block;background:#EEFAF4;color:#157C49;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:8px}
+  .mocklabel{text-align:center;font-size:12px;color:var(--faint);margin-top:10px}
+
+  /* wedge path */
+  .wedge{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .wedge .w{flex:1;min-width:120px;border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;position:relative}
+  .wedge .w.flag{border-color:var(--blue);background:linear-gradient(180deg,#EFF5FF,#fff)}
+  .wedge .w .t2{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+  .wedge .w.flag .t2{color:var(--blue)}
+  .wedge .w h4{margin:6px 0 4px;font-size:15px}
+  .wedge .w p{margin:0;font-size:12.5px;color:var(--slate)}
+
+  /* competition table */
+  .compgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:840px){.compgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.compgrid{grid-template-columns:1fr}}
+  .comp{border:1px solid var(--line);border-radius:var(--r);padding:18px;background:#fff}
+  .comp.us{border:2px solid var(--teal);background:linear-gradient(180deg,#EEFBF8,#fff)}
+  .comp .who{font-weight:800;font-size:15px;margin-bottom:4px}
+  .comp .role{font-size:12px;color:var(--faint);margin-bottom:10px}
+  .comp .gap{font-size:13px;color:#33454F}
+  .comp.us .gap{color:#0B6E63}
+
   @media(max-width:680px){
     .wrap{padding:0 18px}section.s{padding:52px 0}
     .hero .wrap{padding:48px 18px 44px}
     .metric .v{font-size:21px}.tscroll table{min-width:560px}
     .askbox{padding:24px}
+    .tear .ts{padding:14px}
   }
   @media print{
     nav.bar,#progress,.ctas,.btnrow,.modeltabs{display:none!important}
@@ -242,8 +286,10 @@
       <a href="#problem">问题</a>
       <a href="#product">产品</a>
       <a href="#market">市场</a>
+      <a href="#competition">竞争</a>
       <a href="#model-sec">财务模型</a>
       <a href="#global">出海</a>
+      <a href="#team">团队</a>
       <a href="#ask">融资</a>
     </div>
     <a class="cta" href="index.html">完整报告 ↗</a>
@@ -268,6 +314,18 @@
     </div>
   </div>
 </header>
+
+<!-- TEAR SHEET -->
+<section class="tear">
+  <div class="wrap">
+    <div class="ts"><div class="k">阶段</div><div class="v">Pre-seed / 天使</div></div>
+    <div class="ts"><div class="k">市场</div><div class="v">¥3466亿 · AI渗透~7%</div></div>
+    <div class="ts"><div class="k">变现</div><div class="v">家长会员（AI 藏在会员里）</div></div>
+    <div class="ts"><div class="k">旗舰→扩张</div><div class="v">AI 编程 → 科技素养矩阵</div></div>
+    <div class="ts"><div class="k">护城河</div><div class="v">合规 · 成效 · AI · 信任</div></div>
+    <div class="ts"><div class="k">视野</div><div class="v">中国起步、为全球而建</div></div>
+  </div>
+</section>
 
 <!-- 1 · THESIS -->
 <section class="s" id="thesis">
@@ -318,6 +376,24 @@
 <section class="s" id="product">
   <div class="wrap">
     <div class="head reveal"><div class="eyebrow">03 / 产品</div><h2 class="t">学 → 做 → 看见进步</h2><p>孩子在产品里边学边创作；家长收到成长报告。一个闭环，三方都满意。</p></div>
+
+    <div class="reveal" style="margin:8px 0 30px">
+      <div class="mock">
+        <div class="bar"><i></i><i></i><i></i><span class="u">ai-native-kids · 编程实验室</span></div>
+        <div class="body">
+          <div>
+            <div style="font-size:12px;color:var(--faint);font-weight:700">AI 老师</div>
+            <div class="chatline a"></div><div class="chatline"></div>
+            <div style="font-size:12px;color:var(--blue);font-weight:700;margin-top:12px">小朋友</div>
+            <div class="chatline b"></div>
+            <span class="badge2">✓ 作品已生成：我的第一个小游戏</span>
+          </div>
+          <div class="codeblk"><span class="c">when</span> 🟢 clicked<br/>&nbsp;&nbsp;move <span class="s">10</span> steps<br/>&nbsp;&nbsp;<span class="c">say</span> "你好!"<br/>&nbsp;&nbsp;play sound 🎵<br/><br/>▶ 运行成功 ✨</div>
+        </div>
+      </div>
+      <div class="mocklabel">产品界面（占位示意，待替换真实截图 / demo）</div>
+    </div>
+
     <div class="steps reveal">
       <div class="step"><div class="num"></div><h4>学</h4><p>AI 个性化课程，按孩子节奏与薄弱点因材施教，10 分钟内拿到第一个小成果。</p><div class="ar">→</div></div>
       <div class="step"><div class="num"></div><h4>做</h4><p>边学边用 AI 编程/创作出能展示的作品——成就感驱动留存。</p><div class="ar">→</div></div>
@@ -329,6 +405,15 @@
       <div class="card"><div class="ic">📈</div><h4>可验证成效</h4><p>成长报告与学习成果证据——家长信任与续费的基础。</p></div>
       <div class="card"><div class="ic">🤖</div><h4>AI 原生</h4><p>个性化、轻资产、多语言可复制，天生比"硬件 + 录播"更进一步。</p></div>
       <div class="card"><div class="ic">❤️</div><h4>家长信任</h4><p>安全口碑 + 社区 + 跨品类沉淀，形成转换成本与网络效应。</p></div>
+    </div>
+
+    <div class="head reveal" style="margin:42px 0 16px"><h2 class="t" style="font-size:24px">先窄后宽：单品类切入，科技素养矩阵扩张</h2><p>以 AI 编程跑通单位经济与合规，再复用同一套"个性化引擎 + 家长系统 + 合规底座"横向扩品类——全部停留在非学科类允许车道。</p></div>
+    <div class="wedge reveal">
+      <div class="w flag"><div class="t2">旗舰 · 现在</div><h4>AI 编程</h4><p>你的强项，天然出可展示作品</p></div>
+      <div class="w"><div class="t2">扩张</div><h4>机器人</h4><p>动手 + 逻辑</p></div>
+      <div class="w"><div class="t2">扩张</div><h4>科学探究</h4><p>实验 + 好奇心</p></div>
+      <div class="w"><div class="t2">扩张</div><h4>AI 素养</h4><p>面向未来的能力</p></div>
+      <div class="w"><div class="t2">扩张</div><h4>创客/设计</h4><p>创造与表达</p></div>
     </div>
   </div>
 </section>
@@ -347,10 +432,24 @@
   </div>
 </section>
 
-<!-- 5 · BUSINESS MODEL -->
+<!-- 5 · COMPETITION -->
+<section class="s" id="competition">
+  <div class="wrap">
+    <div class="head reveal"><div class="eyebrow">05 / 竞争</div><h2 class="t">"字节/好未来为什么不直接碾压你？"</h2><p>这是投资人头号必问。答案：大厂有通用 AI 与流量，但<strong>没有"系统化科技素养教研 × 细分合规深耕 × 家长信任"的闭环</strong>——而这正是赢这个细分的关键，也是大厂不一定愿意为之深耕的地方。</p></div>
+    <div class="compgrid reveal">
+      <div class="comp"><div class="who">字节 · 豆包爱学</div><div class="role">大厂 AI 教育 App</div><div class="gap">资源/流量碾压、通用 AI 强；但<strong>通用、非系统化素质教育</strong>，大厂未必深耕单一细分与合规。</div></div>
+      <div class="comp"><div class="who">好未来 / 学而思</div><div class="role">素质教育 + 学习机</div><div class="gap">品牌强、转型标杆；但偏<strong>硬件与传统课程，AI 个性化与软件体验留白</strong>。</div></div>
+      <div class="comp"><div class="who">科大讯飞 / 编程猫等</div><div class="role">硬件 / 单品类编程</div><div class="gap">硬件红海或单一品类、固定课程，<strong>缺 AI 个性化与跨品类一站式</strong>。</div></div>
+      <div class="comp us"><div class="who">本产品 ★</div><div class="role">AI 原生 · 系统化科技素养</div><div class="gap"><strong>AI 个性化 × 系统化教研 × 双减合规 × 家长信任</strong> 四环咬合——窄而深，大厂抄不快。</div></div>
+    </div>
+    <div class="callout insight reveal"><h4>◆ 一句话</h4><p>我们不和大厂拼"谁的通用 AI 强"，而是拼"<strong>谁能让家长最放心、让孩子最有进步</strong>"——这是合规、教研、信任的硬功夫，不是模型参数能替代的。详见<a href="index.html#competition">完整报告第 05 章</a>。</p></div>
+  </div>
+</section>
+
+<!-- 6 · BUSINESS MODEL -->
 <section class="s alt" id="bizmodel">
   <div class="wrap">
-    <div class="head reveal"><div class="eyebrow">05 / 商业模式</div><h2 class="t">家长会员，AI 藏在会员里</h2><p>对用户只呈现分层会员费；AI 算力封装在会员额度内、对用户不可见——既保留订阅的可预测性，又让定价与算力成本脱钩。</p></div>
+    <div class="head reveal"><div class="eyebrow">06 / 商业模式</div><h2 class="t">家长会员，AI 藏在会员里</h2><p>对用户只呈现分层会员费；AI 算力封装在会员额度内、对用户不可见——既保留订阅的可预测性，又让定价与算力成本脱钩。</p></div>
     <div class="tiers reveal">
       <div class="tier"><div class="nm">① 单科 / 低价入门</div><div class="pr">¥99<small>/月</small></div><div class="ds">单一科技素养品类（如编程）。低门槛获客、筛选意图。</div></div>
       <div class="tier feat"><div class="badge">主力</div><div class="nm">② 全科</div><div class="pr">¥199<small>/月</small></div><div class="ds">编程 + 机器人 + 科学 + AI 素养，跨品类提高 ARPU 与留存。</div></div>
@@ -363,7 +462,7 @@
 <!-- 6 · FINANCIAL MODEL -->
 <section class="s" id="model-sec">
   <div class="wrap">
-    <div class="head reveal"><div class="eyebrow">06 / 财务预期模型</div><h2 class="t">可交互模型：调整假设，实时测算</h2><p>多档会员 + 完整 P&amp;L（营收→算力→毛利→获客→运营→经营盈亏→累计现金流），自动算 LTV:CAC、回收期、<b>现金流转正年与峰值现金缺口（≈融资需求）</b>。中国 / 美国两版，可导出 CSV。</p></div>
+    <div class="head reveal"><div class="eyebrow">07 / 财务预期模型</div><h2 class="t">可交互模型：调整假设，实时测算</h2><p>多档会员 + 完整 P&amp;L（营收→算力→毛利→获客→运营→经营盈亏→累计现金流），自动算 LTV:CAC、回收期、<b>现金流转正年与峰值现金缺口（≈融资需求）</b>。中国 / 美国两版，可导出 CSV。</p></div>
 
     <div class="callout warm reveal" style="margin-top:0"><h4>▶ 这是「假设驱动」的示意沙盘，非财务预测</h4><p>默认值为示意性假设，用于展示经济结构与敏感性，<b>非承诺、非预测</b>。真实的转化、续费、CAC、各档价格/占比、成本须以 MVP 试点数据替换。把它当成"和投资人一起调参的沙盘"。</p></div>
 
@@ -402,7 +501,7 @@
       <div class="metrics" id="cn-metrics"></div>
       <div class="chart-box"><canvas id="cn-chart"></canvas></div>
       <div class="tscroll"><table id="cn-table"></table></div>
-      <div class="btnrow"><button class="btn primary" data-csv="cn">⬇ 导出 CSV</button></div>
+      <div class="btnrow"><button class="btn" data-preset="cn">⚖ 套用保守假设</button><button class="btn primary" data-csv="cn">⬇ 导出 CSV</button></div>
       </div>
     </div>
 
@@ -435,7 +534,7 @@
       <div class="metrics" id="us-metrics"></div>
       <div class="chart-box"><canvas id="us-chart"></canvas></div>
       <div class="tscroll"><table id="us-table"></table></div>
-      <div class="btnrow"><button class="btn primary" data-csv="us">⬇ 导出 CSV</button></div>
+      <div class="btnrow"><button class="btn" data-preset="us">⚖ 套用保守假设</button><button class="btn primary" data-csv="us">⬇ 导出 CSV</button></div>
       </div>
     </div>
 
@@ -447,7 +546,7 @@
 <!-- 7 · GO GLOBAL -->
 <section class="s alt" id="global">
   <div class="wrap">
-    <div class="head reveal"><div class="eyebrow">07 / 出海能力</div><h2 class="t">中国造，为全球而建</h2><p>科技素养是普世需求，AI 原生让复制成本极低——出海既是第二增长曲线，也是对中国监管的对冲。</p></div>
+    <div class="head reveal"><div class="eyebrow">08 / 出海能力</div><h2 class="t">中国造，为全球而建</h2><p>科技素养是普世需求，AI 原生让复制成本极低——出海既是第二增长曲线，也是对中国监管的对冲。</p></div>
     <div class="grid g3 reveal">
       <div class="card"><div class="tag">优势</div><h4>普世需求</h4><p>编程/AI 素养/STEAM 全球家长都买单，不像学科补习绑定本地课纲与语言，迁移成本低。</p></div>
       <div class="card"><div class="tag">优势</div><h4>AI 原生 = 低成本多语言</h4><p>个性化辅导天然可多语言化，复制到新市场远低于真人/本地化课程。</p></div>
@@ -460,17 +559,35 @@
   </div>
 </section>
 
-<!-- 8 · ASK -->
+<!-- 9 · TEAM -->
+<section class="s alt" id="team">
+  <div class="wrap">
+    <div class="head reveal"><div class="eyebrow">09 / 团队</div><h2 class="t">为什么是我们</h2><p>投资人投的是人。以下为占位框架，请替换为真实姓名、履历与照片——<strong>编程教育起家（coding.minds）+ 中美两地团队</strong>是你的核心叙事。</p></div>
+    <div class="grid g4 reveal">
+      <div class="card"><div class="tag">创始人 / CEO</div><h4>姓名（待填）</h4><p>一句话履历：教育/产品/创业背景与"为什么是你做这件事"。</p></div>
+      <div class="card"><div class="tag">技术 / AI</div><h4>姓名（待填）</h4><p>AI/工程负责人：模型应用、产品工程、数据合规能力。</p></div>
+      <div class="card"><div class="tag">教研 / 课程</div><h4>姓名（待填）</h4><p>科技素养教研负责人：课程体系、成效衡量、师资。</p></div>
+      <div class="card"><div class="tag">增长 / 运营</div><h4>姓名（待填）</h4><p>家长获客与社区/内容增长负责人。</p></div>
+    </div>
+    <div class="callout insight reveal"><h4>◆ 待补充（提高融资成功率的关键素材）</h4><p>① 创始团队真实履历与"独特优势"；② 任何<strong>早期信号/traction</strong>：候补名单、试点结果、LOI、你现有的内容粉丝量/社群规模；③ 顾问/导师。<strong>哪怕很小的真实数据，也比漂亮的文案更能拿到钱。</strong></p></div>
+  </div>
+</section>
+
+<!-- 10 · ASK -->
 <section class="s" id="ask">
   <div class="wrap">
-    <div class="head reveal"><div class="eyebrow">08 / 融资与里程碑</div><h2 class="t">现在这一轮要做的事</h2></div>
+    <div class="head reveal"><div class="eyebrow">10 / 融资与里程碑</div><h2 class="t">现在这一轮要做的事</h2></div>
     <div class="askbox reveal">
       <h3>Pre-seed / 天使：验证 + 合规 MVP</h3>
       <p style="color:#B7CCDD;margin:0;max-width:60ch">尚无规模化运营数据，本轮用最小成本验证需求、做出合规 MVP，再凭真实数据冲种子轮。金额按团队与目标设定（待定，可用上方模型的"峰值现金缺口"反推）。</p>
       <div class="grid3">
         <div class="ab"><div class="k">资金用途</div><h4>MVP · 内容 · 合规</h4><p>合规科技素养 MVP、首条编程学习路径、未成年人模式/算法备案、早期获客实验。</p></div>
         <div class="ab"><div class="k">180 天里程碑</div><h4>跑通单位经济</h4><p>证明家长转化与续费、LTV:CAC ≥ 3、合规框架就位、可复用"科技素养底座"。</p></div>
-        <div class="ab"><div class="k">为什么是我们</div><h4>编程基因 + 中美团队</h4><p>编程教育起家（coding.minds），中美两地团队，兼顾产品力、合规与出海。</p></div>
+        <div class="ab"><div class="k">本轮目标</div><h4>金额 / 估值（待填）</h4><p>建议用上方模型的"峰值现金缺口 × 1.5 安全系数"反推融资额，并写清出让比例。</p></div>
+      </div>
+      <div style="margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+        <a class="btnp" href="mailto:你的邮箱@example.com?subject=AI-Native%20Kids%20·%20投资沟通">✉ 约个时间聊</a>
+        <span style="color:#90A6B8;font-size:13px">把上面的邮箱换成你的真实联系方式（邮箱/微信）。</span>
       </div>
     </div>
     <div class="callout good reveal"><h4>▶ 一句话定位</h4><p>在一个 ¥3000 亿+、AI 渗透仅 ~7% 的市场，做<b>合规、安全、有成效的 AI 科技素养学习系统</b>（产品起步），长期成长为科技素养<b>平台/生态</b>；<b>合规是护城河，成效是复购，出海是第二曲线。</b></p></div>
@@ -494,6 +611,10 @@ addEventListener('scroll',()=>{const h=document.documentElement;const sc=h.scrol
 // reveal on scroll
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// scrollspy: highlight nav link of section in view
+const navlinks=[...document.querySelectorAll('nav.bar .links a')];
+const spy=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navlinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));}})},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id]').forEach(s=>spy.observe(s));
 
 Chart.defaults.font.family="'Noto Sans SC', sans-serif";
 Chart.defaults.font.size=12;Chart.defaults.color='#5C6B7A';
@@ -503,6 +624,11 @@ const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m
 const DEF={
   cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:120,p1:99,m1:50,p2:199,m2:35,p3:299,m3:15,gm:55,freecost:5,freelife:3,opex:3000000,opexg:1.5,cur:'¥'},
   us:{mode:'funnel',newfree:20000,growth:1.8,conv:6,life:14,cac:40,p1:15,m1:50,p2:25,m2:35,p3:39,m3:15,gm:60,freecost:1,freelife:3,opex:800000,opexg:1.6,cur:'$'}
+};
+// 保守情景：低转化/高 CAC/低增长/短留存——用于压力测试可信度
+const CONS={
+  cn:{mode:'funnel',newfree:30000,growth:1.5,conv:3,life:10,cac:200,p1:79,m1:60,p2:159,m2:30,p3:259,m3:10,gm:50,freecost:6,freelife:3,opex:3000000,opexg:1.5,cur:'¥'},
+  us:{mode:'funnel',newfree:12000,growth:1.5,conv:4,life:10,cac:70,p1:12,m1:60,p2:22,m2:30,p3:34,m3:10,gm:55,freecost:1.5,freelife:3,opex:800000,opexg:1.6,cur:'$'}
 };
 const charts={};
 function applyMode(r){
@@ -622,6 +748,10 @@ function exportCSV(r){
     document.getElementById(r+'-mode').value=d.mode;applyMode(r);render(r);
   });
   document.querySelector('[data-csv="'+r+'"]').addEventListener('click',()=>exportCSV(r));
+  document.querySelector('[data-preset="'+r+'"]').addEventListener('click',()=>{
+    const d=CONS[r];FIELDS.forEach(id=>document.getElementById(r+'-'+id).value=d[id]);
+    document.getElementById(r+'-mode').value=d.mode;applyMode(r);render(r);
+  });
   applyMode(r);
 });
 document.querySelectorAll('.mtab').forEach(b=>b.addEventListener('click',()=>{
