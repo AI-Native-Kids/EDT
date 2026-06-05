@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>投资人简版 · K-12 AI 科技素养平台</title>
+<meta name="description" content="投资人简版：产品简述 + 可交互财务预期模型（中国/美国）+ 出海能力" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--navy:#051C2C;--ink:#1A1A1A;--slate:#5B6B78;--line:#E3E8EC;--paper:#FFFFFF;--mist:#F4F7F9;
+    --cyan:#00A9F4;--blue:#2251FF;--teal:#0BA39A;--amber:#F2A900;--red:#E1383C;--green:#1E9E62;--maxw:1040px;}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Noto Sans SC",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-family:"Noto Serif SC","Noto Sans SC",serif;color:var(--navy);line-height:1.3;font-weight:700}
+  a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .mono{font-variant-numeric:tabular-nums}
+
+  /* hero */
+  header.hero{background:radial-gradient(1100px 500px at 80% -10%,rgba(0,169,244,.20),transparent 60%),radial-gradient(800px 400px at 5% 110%,rgba(34,81,255,.16),transparent 55%),var(--navy);color:#EAF2F7;padding:54px 0 44px}
+  header.hero .kicker{color:var(--cyan);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+  header.hero h1{color:#fff;font-size:clamp(26px,4.6vw,44px);margin:0 0 14px;font-weight:900;letter-spacing:-.01em}
+  header.hero .lede{color:#C9DAE6;font-size:clamp(15px,2vw,18px);font-weight:300;max-width:780px}
+  header.hero .row{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+  header.hero .chip{background:rgba(11,163,154,.16);border:1px solid rgba(11,163,154,.5);color:#7FE3D9;padding:7px 14px;border-radius:30px;font-size:13px;font-weight:500}
+  header.hero .links{margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;font-size:13px}
+  header.hero .links a{color:#AEC2CE;border:1px solid rgba(255,255,255,.2);padding:6px 12px;border-radius:20px}
+  header.hero .links a:hover{color:#fff;background:rgba(255,255,255,.08);text-decoration:none}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  section.alt{background:var(--mist)}
+  .sec-no{color:var(--cyan);font-weight:700;font-size:12.5px;letter-spacing:.14em}
+  h2.sec{font-size:clamp(22px,3.2vw,30px);margin:6px 0 10px;font-weight:900}
+  .sub{color:var(--slate);font-size:16px;max-width:760px;margin-bottom:8px}
+
+  .grid{display:grid;gap:16px;margin:22px 0}
+  .g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px}
+  .card h4{margin:0 0 7px;font-size:16px}
+  .card p{margin:0;font-size:14.5px;color:var(--slate)}
+  .card .lab{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+
+  .stat{background:linear-gradient(160deg,#fff,#F7FAFC);border:1px solid var(--line);border-radius:12px;padding:20px;text-align:left}
+  .stat .num{font-family:"Noto Serif SC";font-size:30px;font-weight:900;color:var(--navy);line-height:1}
+  .stat .num small{font-size:15px;color:var(--cyan)}
+  .stat .lab{margin-top:9px;font-size:13px;color:var(--slate)}
+
+  .callout{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:14.5px}
+  .callout h4{margin:0 0 6px;font-size:15px}.callout p{margin:0;color:#33454F}
+  .callout.insight{background:#EAF7FE;border-color:#BfE6FB}.callout.insight h4{color:#0270A8}
+  .callout.risk{background:#FDF0F0;border-color:#F6CFCF}.callout.risk h4{color:#B92E32}
+  .callout.action{background:#EAF8F0;border-color:#C6E9D4}.callout.action h4{color:#157C49}
+
+  table{width:100%;border-collapse:collapse;margin:0;font-size:13.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  th{background:var(--navy);color:#fff;font-weight:500;font-size:12.5px}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr:nth-child(even) td{background:var(--mist)}
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;margin:16px 0}
+  .src{font-size:12px;color:#90A0AC}
+
+  /* ---- financial model ---- */
+  .modeltabs{display:flex;gap:8px;margin:6px 0 18px}
+  .mtab{appearance:none;border:1px solid var(--line);background:#fff;cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:700;color:var(--slate);padding:10px 18px;border-radius:30px;transition:.15s}
+  .mtab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .mpanel{display:none}.mpanel.active{display:block}
+  .inputs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}
+  @media(max-width:820px){.inputs{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.inputs{grid-template-columns:1fr}}
+  .field{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+  .field label{display:block;font-size:12px;color:var(--slate);margin-bottom:5px}
+  .field .inp{display:flex;align-items:center;gap:4px}
+  .field .pre{color:#90A0AC;font-size:14px}
+  .field input{width:100%;border:none;outline:none;font-family:inherit;font-size:16px;font-weight:700;color:var(--navy);background:transparent;font-variant-numeric:tabular-nums}
+  .field .suf{color:#90A0AC;font-size:13px}
+  .metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}
+  @media(max-width:820px){.metrics{grid-template-columns:repeat(2,1fr)}}
+  .metric{background:linear-gradient(160deg,#fff,#F4F7F9);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .metric .v{font-family:"Noto Serif SC";font-size:24px;font-weight:900;color:var(--navy);line-height:1.1}
+  .metric .v.ok{color:var(--green)}.metric .v.bad{color:var(--red)}
+  .metric .k{font-size:12px;color:var(--slate);margin-top:6px}
+  .chart-box{position:relative;height:300px;margin:14px 0}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+  .btn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--navy);font-family:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:20px;cursor:pointer}
+  .btn:hover{border-color:var(--cyan);color:var(--cyan)}
+  .btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}.btn.primary:hover{color:#fff;opacity:.92}
+
+  footer{background:var(--navy);color:#9FB6C4;padding:34px 0;font-size:12.5px;margin-top:0}
+  footer b{color:#fff}footer a{color:var(--cyan)}
+  .disclaimer{font-size:12px;color:#6E889A;border-top:1px solid rgba(255,255,255,.1);padding-top:14px;margin-top:14px;line-height:1.6}
+  ul.tight{margin:10px 0;padding-left:20px}ul.tight li{margin:6px 0;font-size:14.5px}
+
+  @media(max-width:680px){
+    .wrap{padding:0 16px}section{padding:36px 0}
+    header.hero{padding:42px 0 34px}
+    .stat .num{font-size:26px}.metric .v{font-size:21px}
+    .tscroll table{min-width:560px}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">投资人简版 · Investor Brief</div>
+    <h1>给孩子的 AI 原生「科技素养」学习伙伴</h1>
+    <p class="lede">面向 K-12 的 AI 科技素质教育平台：以 AI 编程为旗舰，覆盖机器人 / 科学 / AI 素养 / 创客。<strong>免费内容获客，家长会员变现</strong>（AI 算力隐于会员额度）。中国起步、为全球而建。</p>
+    <div class="row">
+      <span class="chip">AI 渗透仅 ~7% 的 ¥3000 亿+ 市场</span>
+      <span class="chip">双减允许的非学科赛道</span>
+      <span class="chip">合规即护城河</span>
+      <span class="chip">中国造 · 可出海</span>
+    </div>
+    <div class="links">
+      <a href="index.html">← 完整战略报告（15 章）</a>
+      <a href="playbooks.html">落地清单 Playbooks</a>
+      <a href="#model">↓ 财务预期模型</a>
+    </div>
+  </div>
+</header>
+
+<!-- 1 · PRODUCT -->
+<section id="product">
+  <div class="wrap">
+    <div class="sec-no">01 / 产品简述</div>
+    <h2 class="sec">一屏读懂</h2>
+    <div class="grid g3">
+      <div class="card"><div class="lab">问题</div><h4>家长焦虑、好教育稀缺</h4><p>家长为"AI 时代孩子的学习力"焦虑；优质科技素养教育贵、不个性化；学科补习又受双减限制。</p></div>
+      <div class="card"><div class="lab">方案</div><h4>AI 个性化科技素养</h4><p>AI 一对一辅导 + 系统化科技素养课程（编程为旗舰），安全合规、看得见成效、可负担。</p></div>
+      <div class="card"><div class="lab">为什么是现在</div><h4>AI 让 1:1 可负担</h4><p>AI 把个性化辅导边际成本压到极低；中国 AI 教育渗透仅 ~7%；科技素养是政策鼓励方向。</p></div>
+      <div class="card"><div class="lab">商业模式</div><h4>免费 → 家长会员</h4><p>免费内容做漏斗，家长分层会员变现（月付、合规）；AI 算力封装在会员额度内、对用户不可见。</p></div>
+      <div class="card"><div class="lab">护城河</div><h4>合规 × 成效 × AI</h4><p>双减合规深耕 + 系统化教研 + AI 个性化 + 家长信任/口碑闭环——大厂有 AI 但不一定愿做细分合规。</p></div>
+      <div class="card"><div class="lab">为什么是我们</div><h4>编程基因 + 中美团队</h4><p>编程教育起家（coding.minds），中美两地团队，兼顾产品力、合规与出海。</p></div>
+    </div>
+
+    <div class="grid g4" style="margin-top:6px">
+      <div class="stat"><div class="num">¥3466<small>亿</small></div><div class="lab">2024 中国教育科技市场（艾瑞）<span class="src">高可信</span></div></div>
+      <div class="stat"><div class="num">~7%<small>AI 渗透</small></div><div class="lab">AI 占教育收入比例，留白巨大<span class="src">高可信</span></div></div>
+      <div class="stat"><div class="num">&gt;90%<small>C 端</small></div><div class="lab">市场以家庭付费为主，契合会员模式<span class="src">高可信</span></div></div>
+      <div class="stat"><div class="num">全球<small>普世需求</small></div><div class="lab">科技素养跨文化通用，利于出海</div></div>
+    </div>
+    <p class="src">数据见<a href="index.html#china">完整报告第 13 章</a>（含教育部/网信办/艾瑞/国信一手信源）。</p>
+  </div>
+</section>
+
+<!-- 2 · FINANCIAL MODEL -->
+<section id="model" class="alt">
+  <div class="wrap">
+    <div class="sec-no">02 / 财务预期模型</div>
+    <h2 class="sec">可交互模型：调整假设，实时测算（中国 / 美国）</h2>
+    <p class="sub">下方所有假设<strong>均可编辑</strong>。模型按月模拟 5 年（含留存衰减），自动算出营收、毛利、LTV:CAC 与回收期。</p>
+
+    <div class="callout risk" style="margin-top:4px"><h4>▶ 重要：这是「假设驱动」的示意模型，非财务预测</h4><p>默认值为<strong>示意性假设</strong>，用于展示模式的经济结构与敏感性，<strong>非承诺、非预测</strong>。真实的转化率、续费、CAC、ARPU 须以 MVP 试点数据替换（见<a href="playbooks.html">两周验证 Sprint</a>）。请把它当成"和投资人一起调参的沙盘"。</p></div>
+
+    <div class="modeltabs">
+      <button class="mtab active" data-m="cn">🇨🇳 中国版（人民币）</button>
+      <button class="mtab" data-m="us">🇺🇸 美国版（美元）</button>
+    </div>
+
+    <!-- CN -->
+    <div class="mpanel active" id="m-cn">
+      <div class="inputs">
+        <div class="field"><label>第1年新增免费用户</label><div class="inp"><input id="cn-newfree" type="number" value="50000"><span class="suf">人/年</span></div></div>
+        <div class="field"><label>免费获客年增长</label><div class="inp"><input id="cn-growth" type="number" step="0.1" value="1.9"><span class="suf">×/年</span></div></div>
+        <div class="field"><label>免费→付费转化率</label><div class="inp"><input id="cn-conv" type="number" step="0.1" value="5"><span class="suf">%</span></div></div>
+        <div class="field"><label>会员月费 ARPU</label><div class="inp"><span class="pre">¥</span><input id="cn-arpu" type="number" value="129"><span class="suf">/月</span></div></div>
+        <div class="field"><label>毛利率（会员费−算力）</label><div class="inp"><input id="cn-gm" type="number" value="55"><span class="suf">%</span></div></div>
+        <div class="field"><label>平均续费时长</label><div class="inp"><input id="cn-life" type="number" value="14"><span class="suf">月</span></div></div>
+        <div class="field"><label>获客成本 CAC</label><div class="inp"><span class="pre">¥</span><input id="cn-cac" type="number" value="120"><span class="suf">/付费</span></div></div>
+        <div class="field"><label>—</label><div class="inp"><button class="btn" data-reset="cn">↺ 恢复默认</button></div></div>
+      </div>
+      <div class="metrics" id="cn-metrics"></div>
+      <div class="chart-box"><canvas id="cn-chart"></canvas></div>
+      <div class="tscroll"><table id="cn-table"></table></div>
+      <div class="btnrow"><button class="btn primary" data-csv="cn">⬇ 导出 CSV</button></div>
+    </div>
+
+    <!-- US -->
+    <div class="mpanel" id="m-us">
+      <div class="inputs">
+        <div class="field"><label>第1年新增免费用户</label><div class="inp"><input id="us-newfree" type="number" value="20000"><span class="suf">人/年</span></div></div>
+        <div class="field"><label>免费获客年增长</label><div class="inp"><input id="us-growth" type="number" step="0.1" value="1.8"><span class="suf">×/年</span></div></div>
+        <div class="field"><label>免费→付费转化率</label><div class="inp"><input id="us-conv" type="number" step="0.1" value="6"><span class="suf">%</span></div></div>
+        <div class="field"><label>会员月费 ARPU</label><div class="inp"><span class="pre">$</span><input id="us-arpu" type="number" value="19"><span class="suf">/月</span></div></div>
+        <div class="field"><label>毛利率（会员费−算力）</label><div class="inp"><input id="us-gm" type="number" value="60"><span class="suf">%</span></div></div>
+        <div class="field"><label>平均续费时长</label><div class="inp"><input id="us-life" type="number" value="14"><span class="suf">月</span></div></div>
+        <div class="field"><label>获客成本 CAC</label><div class="inp"><span class="pre">$</span><input id="us-cac" type="number" value="40"><span class="suf">/付费</span></div></div>
+        <div class="field"><label>—</label><div class="inp"><button class="btn" data-reset="us">↺ 恢复默认</button></div></div>
+      </div>
+      <div class="metrics" id="us-metrics"></div>
+      <div class="chart-box"><canvas id="us-chart"></canvas></div>
+      <div class="tscroll"><table id="us-table"></table></div>
+      <div class="btnrow"><button class="btn primary" data-csv="us">⬇ 导出 CSV</button></div>
+    </div>
+
+    <div class="callout insight"><h4>◆ 怎么读这个模型</h4><p>盯三个数：<strong>LTV:CAC ≥ 3</strong>（健康线）、<strong>回收期</strong>（越短越好，理想 &lt; 12 个月）、<strong>Y3/Y5 营收量级</strong>。中国版走"低客单 + 高量 + 严合规（月付）"，美国版走"高客单 + 高 CAC"。改几个关键假设，就能看到生意的敏感点在哪里。</p></div>
+  </div>
+</section>
+
+<!-- 3 · GO GLOBAL -->
+<section id="global">
+  <div class="wrap">
+    <div class="sec-no">03 / 出海能力</div>
+    <h2 class="sec">中国造、为全球而建</h2>
+    <p class="sub">为什么这个在中国做的项目，天生具备出海能力——而出海既是第二增长曲线，也是对中国监管的对冲。</p>
+
+    <div class="grid g3">
+      <div class="card"><div class="lab">优势 1</div><h4>科技素养是普世需求</h4><p>编程/AI 素养/STEAM 全球家长都焦虑、都买单；不像学科补习高度绑定本地课纲、语言与考试——<strong>内容跨文化迁移成本低</strong>。</p></div>
+      <div class="card"><div class="lab">优势 2</div><h4>AI 原生 = 低成本多语言</h4><p>AI 个性化辅导天然可多语言化，复制到新市场的边际成本，远低于真人/本地化课程。</p></div>
+      <div class="card"><div class="lab">优势 3</div><h4>中国工程与内容效率</h4><p>中国团队的工程速度、内容生产效率与成本结构，是出海的成本优势（参照 TikTok/Shein/游戏出海逻辑）。</p></div>
+      <div class="card"><div class="lab">优势 4</div><h4>监管对冲</h4><p>双减限制了中国学科类天花板；出海打开增长第二曲线，也分散单一监管体系的风险。</p></div>
+      <div class="card"><div class="lab">优势 5</div><h4>架构已为出海设计</h4><p>开曼控股 + 美国 Delaware + 全球数据栈（见<a href="index.html#structure">报告第 14 章</a>）本就是多法域出海的底座。</p></div>
+      <div class="card"><div class="lab">路径</div><h4>先英语高 ARPU 滩头</h4><p>美/加/澳 + 东南亚国际学校 + 中东 → 再做非英语本地化；D2C 家长会员为主，国际学校/海外华人社区可作 B2B2C 先锋。</p></div>
+    </div>
+
+    <div class="callout risk"><h4>▶ 诚实面对出海的真实挑战</h4><p>① <strong>品牌信任不迁移</strong>——海外获客要从零建立；② 各国<strong>儿童隐私合规</strong>（COPPA/GDPR-K）有成本；③ <strong>本地化</strong>（语言、文化、家长心智）；④ 与本地玩家竞争。对标可参考中国教育/内容出海的成败案例（有道、字节 Gauth、以及更广义的 TikTok/Shein）。<strong>出海是第二曲线，不是第一战场——先在主场把单位经济跑通。</strong></p></div>
+  </div>
+</section>
+
+<!-- 4 · ASK -->
+<section id="ask" class="alt">
+  <div class="wrap">
+    <div class="sec-no">04 / 融资与里程碑</div>
+    <h2 class="sec">现在这一轮要做的事</h2>
+    <div class="grid g3">
+      <div class="card"><div class="lab">阶段</div><h4>Pre-seed / 天使</h4><p>尚无规模化运营数据，本轮用于<strong>验证 + 做出合规 MVP</strong>，再凭真实数据冲种子轮。金额按团队与目标设定（待定）。</p></div>
+      <div class="card"><div class="lab">资金用途</div><h4>MVP · 内容 · 合规</h4><p>合规科技素养 MVP、首条编程学习路径与内容、未成年人模式/算法备案等合规、早期获客实验。</p></div>
+      <div class="card"><div class="lab">180 天里程碑</div><h4>跑通单位经济</h4><p>证明 <strong>家长转化 + 续费</strong>、<strong>LTV:CAC ≥ 3</strong>、合规框架就位、可复用的"科技素养底座"。</p></div>
+    </div>
+    <div class="callout action"><h4>▶ 一句话定位</h4><p>在一个 ¥3000 亿+、AI 渗透仅 ~7% 的市场，做<strong>合规、安全、有成效的 AI 科技素养平台</strong>；中国起步、为全球而建；<strong>合规是护城河，成效是复购，出海是第二曲线。</strong></p></div>
+    <p class="src" style="margin-top:14px">需要深度论证（市场/竞争/单位经济/退出/合规/架构）请见 <a href="index.html">完整战略评估报告（15 章）</a>；执行清单见 <a href="playbooks.html">Playbooks</a>。</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <b>投资人简版 · K-12 AI 科技素养平台</b> · 产品简述 + 财务模型（中/美）+ 出海能力<br/>
+    <a href="index.html">完整报告</a> · <a href="playbooks.html">落地清单</a>
+    <div class="disclaimer">免责声明：本页财务模型为<strong>假设驱动的示意沙盘，非财务预测或投资承诺</strong>；默认假设须以一手试点数据替换。市场数据见完整报告信源；合规结论须经专业顾问确认。供内部与投资沟通用。</div>
+  </div>
+</footer>
+
+<script>
+Chart.defaults.font.family="'Noto Sans SC', sans-serif";
+Chart.defaults.font.size=12;Chart.defaults.color='#5B6B78';
+const TEAL='#0BA39A',BLUE='#2251FF',SLATE='#9FB0BC',gridc='rgba(91,107,120,.12)';
+
+const DEF={
+  cn:{newfree:50000,growth:1.9,conv:5,arpu:129,gm:55,life:14,cac:120,cur:'¥'},
+  us:{newfree:20000,growth:1.8,conv:6,arpu:19,gm:60,life:14,cac:40,cur:'$'}
+};
+const charts={};
+
+function fmtMoney(v,cur){
+  const a=Math.abs(v);
+  if(cur==='¥'){
+    if(a>=1e8)return '¥'+(v/1e8).toFixed(2)+'亿';
+    if(a>=1e4)return '¥'+(v/1e4).toFixed(1)+'万';
+    return '¥'+Math.round(v).toLocaleString();
+  }else{
+    if(a>=1e6)return '$'+(v/1e6).toFixed(2)+'M';
+    if(a>=1e3)return '$'+(v/1e3).toFixed(1)+'K';
+    return '$'+Math.round(v).toLocaleString();
+  }
+}
+function fmtInt(v){return Math.round(v).toLocaleString();}
+
+function readInputs(r){
+  const g=id=>parseFloat(document.getElementById(r+'-'+id).value)||0;
+  return {newfree:g('newfree'),growth:g('growth'),conv:g('conv')/100,arpu:g('arpu'),gm:g('gm')/100,life:Math.max(1,g('life')),cac:g('cac')};
+}
+function project(p){
+  const months=60, gmM=Math.pow(p.growth,1/12), churn=1/p.life;
+  let active=0, freeM=p.newfree/12;
+  const yr=Array.from({length:5},()=>({newFree:0,newPaid:0,rev:0,gp:0,cac:0,end:0}));
+  for(let m=0;m<months;m++){
+    const y=Math.floor(m/12);
+    const newPaid=freeM*p.conv;
+    active=active*(1-churn)+newPaid;
+    const rev=active*p.arpu*1; // monthly revenue (ARPU is monthly)
+    yr[y].newFree+=freeM; yr[y].newPaid+=newPaid; yr[y].rev+=rev*1; yr[y].gp+=rev*p.gm; yr[y].cac+=newPaid*p.cac; yr[y].end=active;
+    // note: annual revenue = sum of 12 monthly revenues
+    freeM*=gmM;
+  }
+  // rev above summed monthly already (12 per year)
+  return yr;
+}
+function render(r){
+  const p=readInputs(r), cur=DEF[r].cur, yr=project(p);
+  // metrics
+  const ltv=p.arpu*p.gm*p.life;
+  const ratio=p.cac>0?ltv/p.cac:0;
+  const payback=p.arpu*p.gm>0?p.cac/(p.arpu*p.gm):0;
+  const y3=yr[2].rev, y5=yr[4].rev;
+  const rc=ratio>=3?'ok':(ratio<1.5?'bad':'');
+  const pc=payback<=12?'ok':(payback>24?'bad':'');
+  document.getElementById(r+'-metrics').innerHTML=
+    `<div class="metric"><div class="v">${fmtMoney(ltv,cur)}</div><div class="k">单付费 LTV（毛利口径）</div></div>`+
+    `<div class="metric"><div class="v ${rc}">${ratio.toFixed(1)} : 1</div><div class="k">LTV : CAC（健康 ≥3）</div></div>`+
+    `<div class="metric"><div class="v ${pc}">${payback.toFixed(1)} 月</div><div class="k">CAC 回收期</div></div>`+
+    `<div class="metric"><div class="v">${fmtMoney(y3,cur)}</div><div class="k">第 3 年营收</div></div>`+
+    `<div class="metric"><div class="v">${fmtMoney(y5,cur)}</div><div class="k">第 5 年营收</div></div>`;
+  // table
+  const rows=[
+    ['新增免费用户',yr.map(y=>fmtInt(y.newFree))],
+    ['新增付费家庭',yr.map(y=>fmtInt(y.newPaid))],
+    ['年末活跃付费',yr.map(y=>fmtInt(y.end))],
+    ['年营收',yr.map(y=>fmtMoney(y.rev,cur))],
+    ['年毛利',yr.map(y=>fmtMoney(y.gp,cur))],
+    ['获客投入',yr.map(y=>fmtMoney(y.cac,cur))],
+    ['贡献（毛利−获客）',yr.map(y=>fmtMoney(y.gp-y.cac,cur))]
+  ];
+  let html='<thead><tr><th>指标</th><th class="num">第1年</th><th class="num">第2年</th><th class="num">第3年</th><th class="num">第4年</th><th class="num">第5年</th></tr></thead><tbody>';
+  rows.forEach(([k,vals])=>{html+='<tr><td>'+k+'</td>'+vals.map(v=>'<td class="num">'+v+'</td>').join('')+'</tr>';});
+  html+='</tbody>';
+  document.getElementById(r+'-table').innerHTML=html;
+  // chart
+  const ctx=document.getElementById(r+'-chart');
+  const data={labels:['第1年','第2年','第3年','第4年','第5年'],datasets:[
+    {type:'bar',label:'年营收',data:yr.map(y=>Math.round(y.rev)),backgroundColor:'rgba(34,81,255,.8)',borderRadius:4},
+    {type:'bar',label:'年毛利',data:yr.map(y=>Math.round(y.gp)),backgroundColor:'rgba(11,163,154,.85)',borderRadius:4}
+  ]};
+  const opt={maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtMoney(c.parsed.y,cur)}}},
+    scales:{x:{grid:{display:false}},y:{grid:{color:gridc},ticks:{callback:v=>fmtMoney(v,cur)}}}};
+  if(charts[r]){charts[r].data=data;charts[r].options=opt;charts[r].update();}
+  else charts[r]=new Chart(ctx,{type:'bar',data,options:opt});
+}
+function exportCSV(r){
+  const p=readInputs(r),cur=DEF[r].cur,yr=project(p);
+  const lines=[['指标','第1年','第2年','第3年','第4年','第5年']];
+  lines.push(['新增免费用户',...yr.map(y=>Math.round(y.newFree))]);
+  lines.push(['新增付费家庭',...yr.map(y=>Math.round(y.newPaid))]);
+  lines.push(['年末活跃付费',...yr.map(y=>Math.round(y.end))]);
+  lines.push(['年营收('+cur+')',...yr.map(y=>Math.round(y.rev))]);
+  lines.push(['年毛利('+cur+')',...yr.map(y=>Math.round(y.gp))]);
+  lines.push(['获客投入('+cur+')',...yr.map(y=>Math.round(y.cac))]);
+  lines.push(['贡献('+cur+')',...yr.map(y=>Math.round(y.gp-y.cac))]);
+  lines.push([]);
+  lines.push(['假设','新增免费/年',p.newfree,'增长×',p.growth,'转化%',(p.conv*100)]);
+  lines.push(['假设','ARPU',p.arpu,'毛利%',(p.gm*100),'续费月',p.life,'CAC',p.cac]);
+  const csv='﻿'+lines.map(r=>r.join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='财务模型_'+r+'.csv';a.click();
+}
+
+// wire
+['cn','us'].forEach(r=>{
+  ['newfree','growth','conv','arpu','gm','life','cac'].forEach(id=>{
+    document.getElementById(r+'-'+id).addEventListener('input',()=>render(r));
+  });
+  document.querySelector('[data-reset="'+r+'"]').addEventListener('click',()=>{
+    const d=DEF[r];['newfree','growth','conv','arpu','gm','life','cac'].forEach(id=>document.getElementById(r+'-'+id).value=d[id]);
+    render(r);
+  });
+  document.querySelector('[data-csv="'+r+'"]').addEventListener('click',()=>exportCSV(r));
+});
+document.querySelectorAll('.mtab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.mtab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.mpanel').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  const id=b.dataset.m;document.getElementById('m-'+id).classList.add('active');
+  render(id);
+  if(charts[id])charts[id].resize();
+}));
+render('cn');render('us');
+</script>
+</body>
+</html>
