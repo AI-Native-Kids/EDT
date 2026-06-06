@@ -497,6 +497,8 @@
 
     <div class="callout warm reveal" style="margin-top:0"><h4>▶ 这是「假设驱动」的示意沙盘，非财务预测</h4><p>默认值为示意性假设（已上调价格、并计入<b>其他收入</b>，呈现 5 年内转正的路径），用于展示经济结构与敏感性，<b>非承诺、非预测</b>。真实数据须以 MVP 试点替换。<b>合规提示</b>：其他收入中的"竞赛"在中国须为教育部白名单内的<b>非学科类</b>赛事；考级/营/硬件/2B 亦须各自合规。</p></div>
 
+    <div class="callout good reveal" style="margin-top:14px"><h4>◆ 定价能 cover 大模型成本吗？能。</h4><p><b>中国</b>采用<b>国产大模型（DeepSeek / 豆包 / Qwen）</b>，单个活跃孩子月算力成本约 <b>¥2–10</b>，仅占 ¥234 会员费的 <b>个位数 %</b> → 毛利 <b>68%</b>（其余 COGS 为基础设施/支付/CDN）。<b>美国</b>用"中端模型为主 + 前沿模型路由难任务"，月成本占 $150 会员的 <b>1–12%</b> → 毛利 <b>68%</b>。<b>成本工程</b>：模型路由 + Prompt 缓存 + 上下文管理 + 分档公平使用，把"重度用户烧毛利"管住。<span class="src">用量与单价为估算，须以 MVP 埋点校准。</span></p></div>
+
     <div class="reveal">
     <div class="modeltabs">
       <button class="mtab active" data-m="cn">🇨🇳 中国版（人民币）</button>
@@ -535,7 +537,7 @@
         <div class="field"><label>其他收入毛利率</label><div class="inp"><input id="cn-ancgm" type="number" value="60"><span class="suf">%</span></div></div>
         <div class="field"><label>其他收入年增长（品类成熟）</label><div class="inp"><input id="cn-ancg" type="number" step="0.05" value="1.35"><span class="suf">×/年</span></div></div>
         <div class="isub">成本</div>
-        <div class="field"><label>毛利率（会员费−算力）</label><div class="inp"><input id="cn-gm" type="number" value="55"><span class="suf">%</span></div></div>
+        <div class="field"><label>毛利率（会员费−算力，国产模型）</label><div class="inp"><input id="cn-gm" type="number" value="68"><span class="suf">%</span></div></div>
         <div class="field" data-only="funnel"><label>免费用户月均算力成本</label><div class="inp"><span class="pre">¥</span><input id="cn-freecost" type="number" value="5"><span class="suf">/月·人</span></div></div>
         <div class="field" data-only="funnel"><label>免费用户活跃月数</label><div class="inp"><input id="cn-freelife" type="number" value="3"><span class="suf">月</span></div></div>
         <div class="field"><label>年运营成本（团队/研发/G&amp;A，第1年）</label><div class="inp"><span class="pre">¥</span><input id="cn-opex" type="number" value="3000000"></div></div>
@@ -707,13 +709,13 @@ const TEAL='#0FB5A6',BLUE='#2F6BFF',SLATE='#8FA0AE',gridc='rgba(92,107,122,.12)'
 const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m3','gm','anc','ancgm','ancg','freecost','freelife','opex','opexg'];
 // 基准情景（已上调价格、加入其他收入，呈现 5 年内转正的盈利路径）
 const DEF={
-  cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:250,p1:169,m1:45,p2:329,m2:35,p3:599,m3:20,gm:58,anc:500,ancgm:60,ancg:1.35,freecost:3,freelife:2,opex:4500000,opexg:1.4,cur:'¥'},
+  cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:250,p1:169,m1:45,p2:329,m2:35,p3:599,m3:20,gm:68,anc:500,ancgm:65,ancg:1.35,freecost:1.5,freelife:2,opex:4500000,opexg:1.4,cur:'¥'},
   us:{mode:'funnel',newfree:20000,growth:1.8,conv:6,life:16,cac:180,p1:99,m1:45,p2:159,m2:35,p3:249,m3:20,gm:68,anc:150,ancgm:65,ancg:1.3,freecost:0.8,freelife:2,opex:1000000,opexg:1.45,cur:'$'}
 };
 // 保守 = 现实下行：压住需求侧（转化/CAC/增长/留存 + 用户买更便宜档），并假设成本纪律（放慢运营扩张）。
 // 仍是真实下行（规模更小、转正更晚、LTV:CAC 更低），但不是"末日螺旋"——保留可投性。
 const CONS={
-  cn:{mode:'funnel',newfree:35000,growth:1.6,conv:4,life:12,cac:350,p1:169,m1:55,p2:329,m2:30,p3:599,m3:15,gm:55,anc:350,ancgm:58,ancg:1.25,freecost:3,freelife:2,opex:4500000,opexg:1.28,cur:'¥'},
+  cn:{mode:'funnel',newfree:35000,growth:1.6,conv:4,life:12,cac:350,p1:169,m1:55,p2:329,m2:30,p3:599,m3:15,gm:62,anc:350,ancgm:60,ancg:1.25,freecost:2,freelife:2,opex:4500000,opexg:1.28,cur:'¥'},
   us:{mode:'funnel',newfree:14000,growth:1.55,conv:4,life:13,cac:240,p1:99,m1:55,p2:159,m2:30,p3:249,m3:15,gm:64,anc:100,ancgm:62,ancg:1.2,freecost:0.8,freelife:2,opex:1000000,opexg:1.3,cur:'$'}
 };
 const charts={};
