@@ -473,10 +473,11 @@
   <div class="wrap">
     <div class="head reveal"><div class="eyebrow">06 / 商业模式</div><h2 class="t">家长会员，AI 藏在会员里</h2><p>对用户只呈现分层会员费；AI 算力封装在会员额度内、对用户不可见——既保留订阅的可预测性，又让定价与算力成本脱钩。</p></div>
     <div class="tiers reveal">
-      <div class="tier"><div class="nm">① 单科 / 低价入门</div><div class="pr">¥99<small>/月</small></div><div class="ds">单一科技素养品类（如编程）。低门槛获客、筛选意图。</div></div>
-      <div class="tier feat"><div class="badge">主力</div><div class="nm">② 全科</div><div class="pr">¥199<small>/月</small></div><div class="ds">编程 + 机器人 + 科学 + AI 素养，跨品类提高 ARPU 与留存。</div></div>
-      <div class="tier"><div class="nm">③ 家庭版</div><div class="pr">¥299<small>/月</small></div><div class="ds">多孩子家庭，最高 LTV、最强转换成本。</div></div>
+      <div class="tier"><div class="nm">① 单科 · 入门</div><div class="pr">¥169<small>/月</small></div><div class="ds">单一科技素养品类（如编程）。低门槛获客、筛选意图。</div></div>
+      <div class="tier feat"><div class="badge">主力</div><div class="nm">② 全科</div><div class="pr">¥329<small>/月</small></div><div class="ds">编程 + 机器人 + 科学 + AI 素养，跨品类提高 ARPU 与留存。</div></div>
+      <div class="tier"><div class="nm">③ 家庭版</div><div class="pr">¥599<small>/月</small></div><div class="ds">多孩子家庭，最高 LTV、最强转换成本。</div></div>
     </div>
+    <p class="src" style="margin-top:10px">参照中国线上少儿编程/科技素养课包（约 ¥2,000–4,000/年）定价；混合月费约 ¥311（≈¥3,700/年），低于线下面授、保留"可负担"定位。美国版定价更高（线上 $99–249/月），见下方模型切换。</p>
     <div class="callout insight reveal"><h4>◆ 两种获客打法（可在下方模型里切换对比）</h4><p><b>免费漏斗</b>：免费内容引流再转化——但免费用户也烧 AI 算力（隐性成本）。<b>低价直付</b>：无免费墙，每个用户都付费、无免费烧钱，但顶部漏斗更小。<b>下方财务模型可一键切换，直接对比两者的现金流转正年与峰值缺口。</b></p></div>
   </div>
 </section>
@@ -515,12 +516,12 @@
         <div class="field"><label>平均续费时长</label><div class="inp"><input id="cn-life" type="number" value="14"><span class="suf">月</span></div></div>
         <div class="field"><label>获客成本 CAC</label><div class="inp"><span class="pre">¥</span><input id="cn-cac" type="number" value="120"><span class="suf">/付费</span></div></div>
         <div class="isub">会员档位（价格 × 付费用户占比）</div>
-        <div class="field"><label>① 单科/低价 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p1" type="number" value="99"><span class="suf">/月</span></div></div>
-        <div class="field"><label>① 占比</label><div class="inp"><input id="cn-m1" type="number" value="50"><span class="suf">%</span></div></div>
-        <div class="field"><label>② 全科 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p2" type="number" value="199"><span class="suf">/月</span></div></div>
+        <div class="field"><label>① 单科 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p1" type="number" value="169"><span class="suf">/月</span></div></div>
+        <div class="field"><label>① 占比</label><div class="inp"><input id="cn-m1" type="number" value="45"><span class="suf">%</span></div></div>
+        <div class="field"><label>② 全科 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p2" type="number" value="329"><span class="suf">/月</span></div></div>
         <div class="field"><label>② 占比</label><div class="inp"><input id="cn-m2" type="number" value="35"><span class="suf">%</span></div></div>
-        <div class="field"><label>③ 家庭版 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p3" type="number" value="299"><span class="suf">/月</span></div></div>
-        <div class="field"><label>③ 占比</label><div class="inp"><input id="cn-m3" type="number" value="15"><span class="suf">%</span></div></div>
+        <div class="field"><label>③ 家庭版 价格</label><div class="inp"><span class="pre">¥</span><input id="cn-p3" type="number" value="599"><span class="suf">/月</span></div></div>
+        <div class="field"><label>③ 占比</label><div class="inp"><input id="cn-m3" type="number" value="20"><span class="suf">%</span></div></div>
         <div class="isub">其他收入（竞赛/考级/营/硬件/2B · 须合规）</div>
         <div class="field"><label>年人均其他收入（活跃付费）</label><div class="inp"><span class="pre">¥</span><input id="cn-anc" type="number" value="400"><span class="suf">/年</span></div></div>
         <div class="field"><label>其他收入毛利率</label><div class="inp"><input id="cn-ancgm" type="number" value="60"><span class="suf">%</span></div></div>
@@ -665,12 +666,12 @@ const TEAL='#0FB5A6',BLUE='#2F6BFF',SLATE='#8FA0AE',gridc='rgba(92,107,122,.12)'
 const FIELDS=['newfree','growth','conv','life','cac','p1','m1','p2','m2','p3','m3','gm','anc','ancgm','ancg','freecost','freelife','opex','opexg'];
 // 基准情景（已上调价格、加入其他收入，呈现 5 年内转正的盈利路径）
 const DEF={
-  cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:120,p1:129,m1:45,p2:259,m2:35,p3:429,m3:20,gm:58,anc:400,ancgm:60,ancg:1.35,freecost:3,freelife:2,opex:4500000,opexg:1.4,cur:'¥'},
+  cn:{mode:'funnel',newfree:50000,growth:1.9,conv:5,life:14,cac:250,p1:169,m1:45,p2:329,m2:35,p3:599,m3:20,gm:58,anc:500,ancgm:60,ancg:1.35,freecost:3,freelife:2,opex:4500000,opexg:1.4,cur:'¥'},
   us:{mode:'funnel',newfree:20000,growth:1.8,conv:6,life:16,cac:180,p1:99,m1:45,p2:159,m2:35,p3:249,m3:20,gm:68,anc:150,ancgm:65,ancg:1.3,freecost:0.8,freelife:2,opex:1000000,opexg:1.45,cur:'$'}
 };
 // 保守情景：低转化/高 CAC/低增长/短留存——用于压力测试可信度
 const CONS={
-  cn:{mode:'funnel',newfree:30000,growth:1.5,conv:3,life:10,cac:200,p1:99,m1:55,p2:199,m2:30,p3:359,m3:15,gm:52,anc:200,ancgm:55,ancg:1.2,freecost:4,freelife:3,opex:4500000,opexg:1.45,cur:'¥'},
+  cn:{mode:'funnel',newfree:30000,growth:1.5,conv:3,life:10,cac:450,p1:139,m1:55,p2:259,m2:30,p3:459,m3:15,gm:52,anc:250,ancgm:55,ancg:1.2,freecost:4,freelife:3,opex:4500000,opexg:1.45,cur:'¥'},
   us:{mode:'funnel',newfree:12000,growth:1.5,conv:4,life:11,cac:300,p1:79,m1:55,p2:129,m2:30,p3:199,m3:15,gm:62,anc:90,ancgm:60,ancg:1.2,freecost:1,freelife:3,opex:1000000,opexg:1.5,cur:'$'}
 };
 const charts={};
