@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 导师测试 · 第1课《让小猫动起来》</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root{--ink:#0B1B2E;--mist:#F5F8FB;--line:#E5ECF2;--blue:#2F6BFF;--teal:#0FB5A6;--coral:#FF7A45;--red:#E1383C;--green:#1E9E62;--slate:#5C6B7A;--faint:#90A0AE}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Noto Sans SC",-apple-system,"Segoe UI",sans-serif;background:var(--mist);color:var(--ink);font-size:15px;line-height:1.6}
+  header{background:var(--ink);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header .ttl{font-weight:900;font-size:16px}header .ttl span{color:var(--coral)}
+  header .sub{color:#9FB6C4;font-size:12.5px}
+  header .sp{flex:1}
+  .seg{display:inline-flex;background:rgba(255,255,255,.1);border-radius:20px;padding:3px}
+  .seg button{appearance:none;border:none;background:transparent;color:#cdd9e3;font-family:inherit;font-size:13px;font-weight:700;padding:6px 14px;border-radius:18px;cursor:pointer}
+  .seg button.on{background:#fff;color:var(--ink)}
+  header .btn{appearance:none;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font-family:inherit;font-size:13px;padding:6px 12px;border-radius:18px;cursor:pointer}
+  header .btn:hover{background:rgba(255,255,255,.1)}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+  @media(max-width:880px){.wrap{grid-template-columns:1fr}}
+
+  .panel{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
+  .panel .ph{padding:12px 16px;border-bottom:1px solid var(--line);font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+  .panel .ph .dot{width:9px;height:9px;border-radius:50%;background:var(--teal)}
+
+  /* chat */
+  .chat{height:62vh;min-height:420px;overflow-y:auto;padding:16px;background:linear-gradient(#fff,#FBFDFF)}
+  .msg{display:flex;gap:10px;margin:14px 0;max-width:88%}
+  .msg .av{width:34px;height:34px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:18px}
+  .msg.ai .av{background:#EAF7FE}
+  .msg.kid{margin-left:auto;flex-direction:row-reverse}
+  .msg .bub{padding:10px 14px;border-radius:14px;font-size:14.5px;white-space:pre-wrap}
+  .msg.ai .bub{background:#fff;border:1px solid var(--line);border-top-left-radius:4px}
+  .msg.kid .bub{background:var(--blue);color:#fff;border-top-right-radius:4px}
+  .msg.sys{justify-content:center;max-width:100%}
+  .msg.sys .bub{background:#FFF6EE;border:1px dashed #F3C9A8;color:#B0651F;font-size:12.5px;border-radius:10px}
+  .typing{color:var(--faint);font-size:13px;padding:0 16px 8px 60px}
+
+  .composer{border-top:1px solid var(--line);padding:12px;display:flex;gap:8px;align-items:flex-end}
+  .composer textarea{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-family:inherit;font-size:14.5px;resize:none;outline:none;min-height:42px;max-height:120px}
+  .composer textarea:focus{border-color:var(--blue)}
+  .composer .send{appearance:none;border:none;background:var(--blue);color:#fff;font-family:inherit;font-weight:700;font-size:14px;padding:0 18px;height:42px;border-radius:12px;cursor:pointer}
+  .composer .send:disabled{opacity:.5;cursor:default}
+  .hintbtn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--slate);font-family:inherit;font-size:12px;padding:0 12px;height:42px;border-radius:12px;cursor:pointer}
+
+  /* teacher panel */
+  .tp{padding:14px 16px;overflow-y:auto;max-height:72vh}
+  .tp .goal{background:#EFF5FF;border:1px solid #CFE0FB;border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:14px}
+  .tp .goal b{color:var(--blue)}
+  .tp h4{margin:14px 0 8px;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--coral)}
+  .steps{display:flex;flex-wrap:wrap;gap:5px}
+  .steps .s{font-size:11px;padding:4px 8px;border-radius:14px;background:var(--mist);color:var(--faint);border:1px solid var(--line)}
+  .steps .s.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .steps .s.done{background:#E7F6F0;color:var(--green);border-color:#C7EAD7}
+  .kv{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .kv:last-child{border-bottom:none}
+  .kv .v{font-weight:700}
+  .pill{font-size:11px;font-weight:700;padding:2px 9px;border-radius:12px}
+  .pill.g{background:#E7F6F0;color:var(--green)}.pill.n{background:var(--mist);color:var(--slate)}.pill.b{background:#FDECEC;color:var(--red)}.pill.y{background:#FEF6E0;color:#B07D00}
+  .concepts span{display:inline-block;font-size:12px;padding:3px 9px;border-radius:12px;margin:3px 4px 0 0;background:var(--mist);color:var(--slate);border:1px solid var(--line)}
+  .concepts span.ok{background:#E7F6F0;color:var(--green);border-color:#C7EAD7}
+  .report{background:#FBFDFF;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13px;margin-top:6px;display:none}
+  .report.show{display:block}
+  .report .row{margin:6px 0}.report .row b{color:var(--ink)}
+  .safety{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:13px;background:#E7F6F0;color:#157C49}
+  .safety.alert{background:#FDECEC;color:var(--red);font-weight:700}
+
+  /* settings modal */
+  .modal{position:fixed;inset:0;background:rgba(11,27,46,.55);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+  .modal.show{display:flex}
+  .card{background:#fff;border-radius:16px;max-width:520px;width:100%;padding:22px;max-height:90vh;overflow:auto}
+  .card h3{margin:0 0 4px;font-size:18px}
+  .card .note{font-size:12.5px;color:var(--slate);margin:0 0 14px}
+  .fld{margin:10px 0}
+  .fld label{display:block;font-size:12.5px;color:var(--slate);margin-bottom:4px;font-weight:600}
+  .fld input,.fld select{width:100%;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-family:inherit;font-size:14px;outline:none}
+  .fld input:focus,.fld select:focus{border-color:var(--blue)}
+  .warn{background:#FFF1F1;border:1px solid #F3C9C9;color:#B02A2E;font-size:12px;border-radius:8px;padding:9px 11px;margin:12px 0}
+  .row2{display:flex;gap:16px;margin-top:16px;justify-content:flex-end}
+  .row2 button{appearance:none;font-family:inherit;font-size:14px;font-weight:700;padding:9px 18px;border-radius:10px;cursor:pointer}
+  .row2 .save{background:var(--blue);color:#fff;border:none}
+  .row2 .cancel{background:#fff;color:var(--slate);border:1px solid var(--line)}
+  details.adv{margin-top:8px}details.adv summary{cursor:pointer;font-size:12.5px;color:var(--slate);font-weight:700}
+  .smalllink{color:var(--blue);cursor:pointer;font-size:12.5px}
+</style>
+</head>
+<body>
+<header>
+  <div class="ttl">AI 导师测试 · <span>小酷</span></div>
+  <div class="sub">第1课《让小猫动起来》</div>
+  <div class="sp"></div>
+  <div class="seg"><button id="m-demo" class="on">演示模式</button><button id="m-live">真实测试</button></div>
+  <button class="btn" id="reset">↺ 重置</button>
+  <button class="btn" id="open-settings">⚙ API 设置</button>
+</header>
+
+<div class="wrap">
+  <!-- chat -->
+  <div class="panel">
+    <div class="ph"><span class="dot"></span> 对话 <span style="color:var(--faint);font-weight:400;font-size:12px;margin-left:auto" id="mode-label">演示模式（无需密钥）</span></div>
+    <div class="chat" id="chat"></div>
+    <div class="typing" id="typing" style="display:none">小酷正在输入…</div>
+    <div class="composer">
+      <button class="hintbtn" id="stuck" title="模拟孩子卡住，看 AI 怎么阶梯提示">我卡住了</button>
+      <textarea id="input" placeholder="用孩子的口吻回复，体验 AI 怎么教…（演示模式直接发送即可推进）"></textarea>
+      <button class="send" id="send">发送</button>
+    </div>
+  </div>
+
+  <!-- teacher panel -->
+  <div class="panel">
+    <div class="ph"><span class="dot" style="background:var(--coral)"></span> 教研 / 调试面板</div>
+    <div class="tp">
+      <div class="goal">🎯 <b>本课目标</b>：点击小猫 → 移动 + 说话 + 声音的小动画。<br/><b>首胜目标：10 分钟内做出第一个能跑的版本。</b></div>
+
+      <h4>当前进度</h4>
+      <div class="steps" id="steps"></div>
+
+      <h4>实时信号</h4>
+      <div class="kv"><span>提示级别</span><span class="v" id="hintlv">L0（独立）</span></div>
+      <div class="kv"><span>情绪</span><span class="v"><span class="pill n" id="emotion">中性</span></span></div>
+      <div class="kv"><span>需要人工介入</span><span class="v"><span class="pill g" id="needhuman">否</span></span></div>
+
+      <h4>掌握的概念</h4>
+      <div class="concepts" id="concepts">
+        <span data-c="sequence">顺序执行</span>
+        <span data-c="event">事件（点击触发）</span>
+        <span data-c="blocks">基础积木</span>
+      </div>
+
+      <h4>成长报告预览（给家长）</h4>
+      <div class="report" id="report"></div>
+      <div id="report-empty" style="font-size:12.5px;color:var(--faint)">完成本课后自动生成…</div>
+
+      <div class="safety" id="safety">🛡️ 安全护栏正常 · 内容/任务/隐私/情绪监测中</div>
+    </div>
+  </div>
+</div>
+
+<!-- settings -->
+<div class="modal" id="settings">
+  <div class="card">
+    <h3>API 设置（真实测试模式）</h3>
+    <p class="note">支持 OpenAI 兼容接口（DeepSeek / OpenAI / 通义千问 / 自定义）。密钥只存在你本机浏览器，不上传。</p>
+    <div class="warn">⚠️ 测试用途。请勿在公开/共享电脑输入生产密钥；浏览器直连可能被部分服务的跨域(CORS)策略拦截，建议用 DeepSeek 或 OpenAI 测试。</div>
+    <div class="fld"><label>服务商预设</label><select id="cfg-preset">
+      <option value="deepseek">DeepSeek（推荐·便宜·国产）</option>
+      <option value="openai">OpenAI</option>
+      <option value="qwen">通义千问（DashScope 兼容）</option>
+      <option value="custom">自定义</option>
+    </select></div>
+    <div class="fld"><label>Base URL</label><input id="cfg-url" placeholder="https://api.deepseek.com"></div>
+    <div class="fld"><label>模型</label><input id="cfg-model" placeholder="deepseek-chat"></div>
+    <div class="fld"><label>API Key</label><input id="cfg-key" type="password" placeholder="sk-..."></div>
+    <details class="adv"><summary>高级：查看/编辑系统提示词</summary>
+      <div class="fld" style="margin-top:10px"><textarea id="cfg-sys" style="width:100%;min-height:160px;border:1px solid var(--line);border-radius:10px;padding:10px;font-family:ui-monospace,monospace;font-size:12px"></textarea></div>
+    </details>
+    <div class="row2"><button class="cancel" id="cfg-cancel">取消</button><button class="save" id="cfg-save">保存并切到真实测试</button></div>
+  </div>
+</div>
+
+<script>
+// ---------- system prompt (from design doc §5) ----------
+const SYSTEM_DEFAULT = `# 角色
+你是"小酷"，一个面向 8–12 岁零基础孩子的编程学习伙伴。你温暖、耐心、爱鼓励，像个大哥哥/姐姐。你在教积木式编程（Scratch 风格）。
+
+# 本课：第1课《让小猫动起来》
+目标作品：点击角色 → 移动 + 说话 + 播放声音的小动画。孩子在一个积木编程界面操作，你通过对话引导他一步步完成（孩子会用文字描述他看到/做的）。
+
+# 教学规则（最重要）
+1. 你是教练不是替身：绝不直接给出完整代码或替孩子把积木拖好。永远引导孩子自己做。
+2. 一次只引导一小步，等孩子完成/回应再继续。
+3. 用提问引导（苏格拉底式）。孩子卡住时按"阶梯提示"逐级给：L1只问引导性问题→L2缩小范围→L3指出具体位置→L4示范一步但让孩子操作。默认从L1开始，连续卡2次升一级，情绪低落则鼓励+降难度。
+4. 每完成一步都即时肯定；跑通时放大庆祝。
+5. 鼓励个性化：让孩子做他自己想要的版本。
+6. 语言简单、短句、适龄、少量 emoji。
+
+# 安全规则（红线，最高优先级）
+1. 只聊编程与本课相关；孩子跑题→温和拉回。
+2. 绝不生成暴力/成人/危险/不适龄内容；遇不当请求→温和拒绝并转回学习。
+3. 不索取或记录任何个人身份信息（真名/住址/学校/电话）。
+4. 识别挫败/负面情绪→先共情鼓励、降低难度。
+5. 若孩子透露自伤/被欺凌/被虐待/紧急求助等→立即停止常规教学，输出 need_human=true，温和地说会让大人来帮忙，不自行深入处理。
+
+# 输出格式
+先用孩子能懂的话回复（简短）。然后另起一行，输出一行 JSON 信号（这行会被系统隐藏）：
+{"step": 0-7, "hint_level": 0-4, "mastery": ["sequence"或"event"或"blocks"中已掌握的], "emotion": "positive|neutral|frustrated", "need_human": false}
+step 含义：0暖场 1设目标 2第一块积木 3首胜 4加一个 5卡住提示 6个性化 7收尾。`;
+
+const STEP_NAMES = ['暖场','设目标','第一块','首胜🎉','加一个','提示','个性化','收尾'];
+const PRESETS = {
+  deepseek:{url:'https://api.deepseek.com',model:'deepseek-chat'},
+  openai:{url:'https://api.openai.com/v1',model:'gpt-4o-mini'},
+  qwen:{url:'https://dashscope.aliyuncs.com/compatible-mode/v1',model:'qwen-plus'},
+  custom:{url:'',model:''}
+};
+
+// ---------- scripted demo ----------
+const DEMO = [
+  {ai:"嗨！我是你的编程伙伴小酷 🐱 今天我们一起让一只小猫动起来！\n先问你——你最喜欢小猫、小狗，还是恐龙呀？",step:0,hint:0,emotion:'positive'},
+  {ai:"哈哈好选择！那我们今天的目标是：**点一下小猫，它就会走两步、还会说话！** 听起来酷不酷？😎\n准备好了吗？我们先让它"被点击就动"。",step:1,hint:0},
+  {ai:"在左边的积木里，找一块绿色的"当角色被点击"——你能找到它吗？找到了就告诉我～",step:2,hint:1},
+  {ai:"太棒了！把它拖到中间空白处。\n然后找一块蓝色的"移动10步"，接在它的**下面**，让它们连起来。",step:2,hint:1,mastery:['event']},
+  {ai:"现在点上面的绿旗、或者直接点小猫试试看！……\n🎉🎉 它动了！你刚刚写出了人生第一段程序！太厉害了！",step:3,hint:0,mastery:['event','sequence']},
+  {ai:"现在轮到你来加新东西啦：你想让它**说话**，还是**发出声音**？\n挑一个，找找看哪块积木能做到～",step:4,hint:0},
+  {ai:"没关系，我们一起来～你想让它"说话"对吧？\n看看**紫色的"外观"**分类里，有没有一块像"说你好2秒"的积木？",step:5,hint:2,emotion:'neutral'},
+  {ai:"找到啦，真棒！把它接在下面。\n现在最好玩的来了——让它说**你**想说的话，把文字改成你喜欢的，试试看？😄",step:6,hint:0,mastery:['event','sequence','blocks']},
+  {ai:"哇，看看你做的小猫！会动、会说话 🎉 你今天太厉害了！\n要不要保存下来给爸爸妈妈看看？我来把你今天学的记下来 📝",step:7,hint:0,mastery:['event','sequence','blocks']}
+];
+const DEMO_REPORT = {
+  work:"《会动会说话的小猫》——点击后移动并说出自定义的话",
+  concepts:"学会了让程序"按顺序做事"、用"点击"触发动作，还自己加了"说话"",
+  effort:"约 14 分钟 · 主动尝试 5 次 · 中途卡了一下自己找到了积木",
+  highlight:"今天他自己想到要让小猫说"我最厉害"，特别得意！",
+  next:"下节课：让小猫听到声音会跳起来（认识"循环"）",
+  cheer:"你写出了人生第一段程序，编程超人就是你！🦸"
+};
+
+// ---------- state ----------
+let mode='demo', demoIdx=0, sending=false, masteredSet=new Set();
+let history=[]; // {role,content} for live
+const $=id=>document.getElementById(id);
+const chat=$('chat');
+
+function cfg(){ try{return JSON.parse(localStorage.getItem('tutorcfg')||'{}');}catch(e){return {};} }
+function saveCfg(c){ localStorage.setItem('tutorcfg', JSON.stringify(c)); }
+
+function renderSteps(cur,done){
+  $('steps').innerHTML = STEP_NAMES.map((n,i)=>`<span class="s ${i===cur?'on':(i<cur?'done':'')}">${i} ${n}</span>`).join('');
+}
+function setSignal(s){
+  if(s.step!=null) renderSteps(s.step);
+  if(s.hint_level!=null||s.hint!=null){const h=s.hint_level??s.hint;$('hintlv').textContent='L'+h+(h===0?'（独立）':'');}
+  if(s.emotion){const e=s.emotion;const map={positive:['g','积极😊'],neutral:['n','中性'],frustrated:['b','受挫😟']};const[c,t]=map[e]||['n',e];$('emotion').className='pill '+c;$('emotion').textContent=t;}
+  const nh=s.need_human;$('needhuman').className='pill '+(nh?'b':'g');$('needhuman').textContent=nh?'是 ⚠️':'否';
+  if(nh){$('safety').className='safety alert';$('safety').textContent='⚠️ 触发敏感信号 → 已标记需人工介入 / 通知家长';}
+  const m=s.mastery||[]; m.forEach(c=>masteredSet.add(c));
+  document.querySelectorAll('#concepts span').forEach(sp=>sp.classList.toggle('ok',masteredSet.has(sp.dataset.c)));
+}
+function bubble(role,text){
+  const d=document.createElement('div');d.className='msg '+role;
+  const av=role==='ai'?'🐱':(role==='kid'?'🧒':'ℹ️');
+  d.innerHTML=`<div class="av">${av}</div><div class="bub"></div>`;
+  d.querySelector('.bub').textContent=text;
+  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+}
+function sys(text){const d=document.createElement('div');d.className='msg sys';d.innerHTML=`<div class="bub">${text}</div>`;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
+
+function showReport(r){
+  $('report-empty').style.display='none';
+  $('report').className='report show';
+  $('report').innerHTML=`<div class="row"><b>今日作品：</b>${r.work}</div><div class="row"><b>掌握：</b>${r.concepts}</div><div class="row"><b>投入：</b>${r.effort}</div><div class="row" style="color:var(--coral)"><b>亮点：</b>${r.highlight}</div><div class="row"><b>下一步：</b>${r.next}</div><div class="row" style="color:var(--green)"><b>鼓励：</b>${r.cheer}</div>`;
+}
+
+// ---------- demo flow ----------
+function demoNext(){
+  if(demoIdx>=DEMO.length){ sys('演示结束。点「重置」重来，或切到「真实测试」连你的模型实测。'); return; }
+  const t=DEMO[demoIdx++];
+  $('typing').style.display='block';
+  setTimeout(()=>{
+    $('typing').style.display='none';
+    bubble('ai',t.ai.replace(/\*\*/g,''));
+    setSignal({step:t.step,hint:t.hint,emotion:t.emotion||'positive',mastery:t.mastery||[],need_human:false});
+    if(t.step===7) showReport(DEMO_REPORT);
+  },600);
+}
+
+// ---------- live flow ----------
+function extractSignal(text){
+  const ms=text.match(/\{[^{}]*"step"[\s\S]*?\}/g);
+  if(ms&&ms.length){try{return {sig:JSON.parse(ms[ms.length-1]),clean:text.replace(ms[ms.length-1],'').trim()};}catch(e){}}
+  return {sig:null,clean:text};
+}
+async function liveSend(userText){
+  const c=cfg();
+  if(!c.key){ sys('请先点右上「⚙ API 设置」填入你的 API Key。'); openSettings(); return; }
+  history.push({role:'user',content:userText});
+  $('typing').style.display='block'; sending=true; $('send').disabled=true;
+  try{
+    const msgs=[{role:'system',content:c.sys||SYSTEM_DEFAULT},...history];
+    const res=await fetch(c.url.replace(/\/$/,'')+'/chat/completions',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+c.key},
+      body:JSON.stringify({model:c.model,messages:msgs,temperature:0.7})
+    });
+    if(!res.ok){throw new Error('HTTP '+res.status+' '+(await res.text()).slice(0,180));}
+    const data=await res.json();
+    const raw=data.choices[0].message.content;
+    const {sig,clean}=extractSignal(raw);
+    history.push({role:'assistant',content:raw});
+    bubble('ai',clean);
+    if(sig) setSignal(sig);
+  }catch(e){ sys('调用失败：'+e.message+'\n（可能是密钥/URL 错误，或浏览器跨域 CORS 被拦——试试 DeepSeek/OpenAI。）'); }
+  finally{ $('typing').style.display='none'; sending=false; $('send').disabled=false; }
+}
+
+// ---------- input ----------
+function send(){
+  const v=$('input').value.trim();
+  if(mode==='demo'){ if(v){bubble('kid',v);$('input').value='';} demoNext(); return; }
+  if(!v||sending) return;
+  bubble('kid',v); $('input').value=''; liveSend(v);
+}
+$('send').onclick=send;
+$('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
+$('stuck').onclick=()=>{
+  const txt='（我看着积木，不知道下一步该放哪…）';
+  if(mode==='demo'){ bubble('kid',txt); demoNext(); }
+  else { bubble('kid',txt); liveSend(txt); }
+};
+
+// ---------- mode ----------
+function setMode(m){
+  mode=m;
+  $('m-demo').classList.toggle('on',m==='demo'); $('m-live').classList.toggle('on',m==='live');
+  $('mode-label').textContent = m==='demo'?'演示模式（无需密钥）':'真实测试模式（连你的模型）';
+  resetChat();
+}
+$('m-demo').onclick=()=>setMode('demo');
+$('m-live').onclick=()=>setMode('live');
+
+function resetChat(){
+  chat.innerHTML=''; demoIdx=0; history=[]; masteredSet=new Set();
+  document.querySelectorAll('#concepts span').forEach(sp=>sp.classList.remove('ok'));
+  $('report').className='report'; $('report-empty').style.display='block';
+  $('safety').className='safety'; $('safety').textContent='🛡️ 安全护栏正常 · 内容/任务/隐私/情绪监测中';
+  setSignal({step:0,hint:0,emotion:'neutral',need_human:false});
+  if(mode==='demo'){ sys('演示模式：每次「发送」或点「我卡住了」推进一步，看 AI 怎么教。'); demoNext(); }
+  else { sys('真实测试：你扮演 8 岁孩子和小酷对话。先在「⚙ API 设置」填密钥；小酷会先开场。'); liveSend('（老师：请按第1课开场，先暖场再设目标。）'); }
+}
+$('reset').onclick=resetChat;
+
+// ---------- settings ----------
+function openSettings(){
+  const c=cfg(); const p=c.preset||'deepseek';
+  $('cfg-preset').value=p; $('cfg-url').value=c.url||PRESETS[p].url; $('cfg-model').value=c.model||PRESETS[p].model;
+  $('cfg-key').value=c.key||''; $('cfg-sys').value=c.sys||SYSTEM_DEFAULT;
+  $('settings').classList.add('show');
+}
+$('open-settings').onclick=openSettings;
+$('cfg-cancel').onclick=()=>$('settings').classList.remove('show');
+$('cfg-preset').onchange=()=>{const p=PRESETS[$('cfg-preset').value];$('cfg-url').value=p.url;$('cfg-model').value=p.model;};
+$('cfg-save').onclick=()=>{
+  saveCfg({preset:$('cfg-preset').value,url:$('cfg-url').value.trim(),model:$('cfg-model').value.trim(),key:$('cfg-key').value.trim(),sys:$('cfg-sys').value});
+  $('settings').classList.remove('show'); setMode('live');
+};
+
+// init
+renderSteps(0); setMode('demo');
+</script>
+</body>
+</html>

@@ -2,6 +2,8 @@
 
 > 这是"先做哪个"的答案落地：**用一个窄切片，把 AI 教学法设计透，再用现成技术交付，在你的真实学生身上验证"AI 能不能教好编程"。**
 > 用途：① 指导最薄 MVP 的搭建；② 作为教研标准；③ 验证后复制到下一课。
+>
+> 🧪 **可交互测试页**：[`docs/lesson1-tutor-test.html`](../docs/lesson1-tutor-test.html)（线上：`https://ai-native-kids.github.io/EDT/lesson1-tutor-test.html`）——演示模式（无需密钥，可给人看）+ 真实测试模式（连国产模型/OpenAI 密钥，实测教学质量），右侧教研面板实时显示步骤/提示级别/情绪/掌握/安全信号。
 
 ---
 
