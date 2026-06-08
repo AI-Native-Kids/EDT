@@ -19,8 +19,9 @@
   header .btn{appearance:none;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font-family:inherit;font-size:13px;padding:6px 12px;border-radius:18px;cursor:pointer}
   header .btn:hover{background:rgba(255,255,255,.1)}
 
-  .wrap{max-width:1180px;margin:0 auto;padding:16px;display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
-  @media(max-width:880px){.wrap{grid-template-columns:1fr}}
+  .wrap{max-width:1340px;margin:0 auto;padding:16px;display:grid;grid-template-columns:330px minmax(0,1.3fr) 300px;gap:14px;align-items:start}
+  @media(max-width:1180px){.wrap{grid-template-columns:1fr 1fr}}
+  @media(max-width:760px){.wrap{grid-template-columns:1fr}}
 
   .panel{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
   .panel .ph{padding:12px 16px;border-bottom:1px solid var(--line);font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
@@ -45,6 +46,31 @@
   .composer .send{appearance:none;border:none;background:var(--blue);color:#fff;font-family:inherit;font-weight:700;font-size:14px;padding:0 18px;height:42px;border-radius:12px;cursor:pointer}
   .composer .send:disabled{opacity:.5;cursor:default}
   .hintbtn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--slate);font-family:inherit;font-size:12px;padding:0 12px;height:42px;border-radius:12px;cursor:pointer}
+
+  /* workspace (scratch-style, demo) */
+  .stage{position:relative;height:150px;background:linear-gradient(#DFF1FF,#F3FBFF);border-bottom:1px solid var(--line);overflow:hidden}
+  .stage .ground{position:absolute;left:0;right:0;bottom:0;height:14px;background:#EAF3DA;border-top:1px solid #D6E6BE}
+  .stage .sprite{position:absolute;left:18px;bottom:16px;font-size:46px;line-height:1;transform-origin:center bottom;z-index:2}
+  .stage .sprite.run{animation:walk 1s ease-in-out forwards}
+  @keyframes walk{0%{transform:translateX(0)}25%{transform:translateX(18px) translateY(-6px)}50%{transform:translateX(34px)}75%{transform:translateX(52px) translateY(-6px)}100%{transform:translateX(52px)}}
+  .stage .bubble{position:absolute;left:64px;bottom:78px;max-width:150px;background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:6px 10px;font-size:13px;font-weight:700;opacity:0;transform:translateY(6px) scale(.9);transition:.2s;pointer-events:none;z-index:3}
+  .stage .bubble.show{opacity:1;transform:translateY(0) scale(1)}
+  .stage .bubble:after{content:"";position:absolute;left:16px;bottom:-9px;border:7px solid transparent;border-top-color:var(--ink)}
+  .stage .goflag{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;border:none;background:#fff;color:var(--green);font-size:12px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15);z-index:4}
+  .ws-body{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:250px}
+  .ws-col{padding:10px;overflow-y:auto}
+  .ws-col.palette{border-right:1px solid var(--line);background:#FBFDFF}
+  .ws-h{font-size:11px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+  .grp{margin-bottom:10px}.grp-t{font-size:11px;font-weight:700;margin-bottom:2px}
+  .block{display:block;color:#fff;font-size:12.5px;font-weight:600;padding:7px 10px;border-radius:7px;margin:5px 0;box-shadow:0 1px 0 rgba(0,0,0,.18);cursor:default}
+  .block .slot{background:rgba(255,255,255,.85);color:#333;border-radius:9px;padding:0 6px;font-weight:700;margin:0 1px}
+  .b-event{background:#FFBF00;color:#5b4500}.b-event .slot{color:#5b4500}
+  .b-motion{background:#4C97FF}.b-looks{background:#9966FF}.b-sound{background:#CF63CF}
+  .block.hat{border-top-left-radius:16px;border-top-right-radius:16px}
+  .block.pulse{animation:pulse 1.1s ease-in-out infinite;outline:3px solid #FFD60A;outline-offset:1px}
+  @keyframes pulse{0%,100%{outline-color:rgba(255,214,10,.25)}50%{outline-color:rgba(255,214,10,1)}}
+  #stack .block{margin:0 0 4px}
+  .empty-hint{font-size:12px;color:var(--faint);border:2px dashed var(--line);border-radius:8px;padding:14px 8px;text-align:center;margin-top:4px}
 
   /* teacher panel */
   .tp{padding:14px 16px;overflow-y:auto;max-height:72vh}
@@ -98,6 +124,37 @@
 </header>
 
 <div class="wrap">
+  <!-- workspace -->
+  <div class="panel">
+    <div class="ph"><span class="dot" style="background:var(--blue)"></span> 积木工作区 <span style="color:var(--faint);font-weight:400;font-size:12px;margin-left:auto">Scratch 风格 · 跟着对话自动搭</span></div>
+    <div class="stage" id="stage">
+      <div class="ground"></div>
+      <div class="bubble" id="bubble"></div>
+      <div class="sprite" id="sprite">🐱</div>
+      <button class="goflag" id="goflag" title="运行程序">▶</button>
+    </div>
+    <div class="ws-body">
+      <div class="ws-col palette">
+        <div class="ws-h">积木库</div>
+        <div class="grp"><div class="grp-t" style="color:#C99700">事件</div>
+          <div class="block hat b-event" data-b="hat">当 <span class="slot">🚩</span> 被点击</div>
+        </div>
+        <div class="grp"><div class="grp-t" style="color:#3373CC">动作</div>
+          <div class="block b-motion" data-b="move">移动 <span class="slot">10</span> 步</div>
+        </div>
+        <div class="grp"><div class="grp-t" style="color:#774DCB">外观 / 声音</div>
+          <div class="block b-looks" data-b="say">说 <span class="slot">你好!</span> <span class="slot">2</span> 秒</div>
+          <div class="block b-sound" data-b="sound">播放声音 <span class="slot">喵</span></div>
+        </div>
+      </div>
+      <div class="ws-col script">
+        <div class="ws-h">我的程序</div>
+        <div id="stack"></div>
+        <div class="empty-hint" id="ws-empty">积木会拖到这里…<br/>（演示会自动搭好）</div>
+      </div>
+    </div>
+  </div>
+
   <!-- chat -->
   <div class="panel">
     <div class="ph"><span class="dot"></span> 对话 <span style="color:var(--faint);font-weight:400;font-size:12px;margin-left:auto" id="mode-label">演示模式（无需密钥）</span></div>
@@ -191,6 +248,13 @@ const SYSTEM_DEFAULT = `# 角色
 step 含义：0暖场 1设目标 2第一块积木 3首胜 4加一个 5卡住提示 6个性化 7收尾。`;
 
 const STEP_NAMES = ['暖场','设目标','第一块','首胜🎉','加一个','提示','个性化','收尾'];
+// scratch-style block definitions for the workspace
+const BLOCKS = {
+  hat: {cls:'b-event hat', html:'当 <span class="slot">🚩</span> 被点击'},
+  move:{cls:'b-motion',     html:'移动 <span class="slot">10</span> 步'},
+  say: {cls:'b-looks',      html:'说 <span class="slot">$SAY</span> <span class="slot">2</span> 秒'},
+  sound:{cls:'b-sound',     html:'播放声音 <span class="slot">喵</span>'}
+};
 const PRESETS = {
   deepseek:{url:'https://api.deepseek.com',model:'deepseek-chat'},
   openai:{url:'https://api.openai.com/v1',model:'gpt-4o-mini'},
@@ -200,15 +264,15 @@ const PRESETS = {
 
 // ---------- scripted demo ----------
 const DEMO = [
-  {ai:"嗨！我是你的编程伙伴小酷 🐱 今天我们一起让一只小猫动起来！\n先问你——你最喜欢小猫、小狗，还是恐龙呀？",step:0,hint:0,emotion:'positive'},
-  {ai:"哈哈好选择！那我们今天的目标是：**点一下小猫，它就会走两步、还会说话！** 听起来酷不酷？😎\n准备好了吗？我们先让它“被点击就动”。",step:1,hint:0},
-  {ai:"在左边的积木里，找一块绿色的“当角色被点击”——你能找到它吗？找到了就告诉我～",step:2,hint:1},
-  {ai:"太棒了！把它拖到中间空白处。\n然后找一块蓝色的“移动10步”，接在它的**下面**，让它们连起来。",step:2,hint:1,mastery:['event']},
-  {ai:"现在点上面的绿旗、或者直接点小猫试试看！……\n🎉🎉 它动了！你刚刚写出了人生第一段程序！太厉害了！",step:3,hint:0,mastery:['event','sequence']},
-  {ai:"现在轮到你来加新东西啦：你想让它**说话**，还是**发出声音**？\n挑一个，找找看哪块积木能做到～",step:4,hint:0},
-  {ai:"没关系，我们一起来～你想让它“说话”对吧？\n看看**紫色的“外观”**分类里，有没有一块像“说你好2秒”的积木？",step:5,hint:2,emotion:'neutral'},
-  {ai:"找到啦，真棒！把它接在下面。\n现在最好玩的来了——让它说**你**想说的话，把文字改成你喜欢的，试试看？😄",step:6,hint:0,mastery:['event','sequence','blocks']},
-  {ai:"哇，看看你做的小猫！会动、会说话 🎉 你今天太厉害了！\n要不要保存下来给爸爸妈妈看看？我来把你今天学的记下来 📝",step:7,hint:0,mastery:['event','sequence','blocks']}
+  {ai:"嗨！我是你的编程伙伴小酷 🐱 今天我们一起让一只小猫动起来！\n先问你——你最喜欢小猫、小狗，还是恐龙呀？",step:0,hint:0,emotion:'positive',ws:{blocks:[]}},
+  {ai:"哈哈好选择！那我们今天的目标是：**点一下小猫，它就会走两步、还会说话！** 听起来酷不酷？😎\n准备好了吗？我们先让它“被点击就动”。",step:1,hint:0,ws:{blocks:[]}},
+  {ai:"在左边的积木里，找一块黄色的“当🚩被点击”——你能找到它吗？找到了就告诉我～",step:2,hint:1,ws:{blocks:[],hl:'hat'}},
+  {ai:"太棒了！把它拖到右边“我的程序”里。\n然后找一块蓝色的“移动10步”，接在它的**下面**，让它们连起来。",step:2,hint:1,mastery:['event'],ws:{blocks:['hat'],hl:'move'}},
+  {ai:"现在点上面的绿旗、或者直接点小猫试试看！……\n🎉🎉 它动了！你刚刚写出了人生第一段程序！太厉害了！",step:3,hint:0,mastery:['event','sequence'],ws:{blocks:['hat','move'],run:true}},
+  {ai:"现在轮到你来加新东西啦：你想让它**说话**，还是**发出声音**？\n挑一个，找找看哪块积木能做到～",step:4,hint:0,ws:{blocks:['hat','move']}},
+  {ai:"没关系，我们一起来～你想让它“说话”对吧？\n看看**紫色的“外观”**分类里，有没有一块像“说你好2秒”的积木？",step:5,hint:2,emotion:'neutral',ws:{blocks:['hat','move'],hl:'say'}},
+  {ai:"找到啦，真棒！把它接在下面。\n现在最好玩的来了——让它说**你**想说的话，把文字改成你喜欢的，试试看？😄",step:6,hint:0,mastery:['event','sequence','blocks'],ws:{blocks:['hat','move','say'],say:'你好!'}},
+  {ai:"哇，看看你做的小猫！会动、会说话 🎉 你今天太厉害了！\n要不要保存下来给爸爸妈妈看看？我来把你今天学的记下来 📝",step:7,hint:0,mastery:['event','sequence','blocks'],ws:{blocks:['hat','move','say'],say:'我最厉害!',run:true}}
 ];
 const DEMO_REPORT = {
   work:"《会动会说话的小猫》——点击后移动并说出自定义的话",
@@ -220,7 +284,7 @@ const DEMO_REPORT = {
 };
 
 // ---------- state ----------
-let mode='demo', demoIdx=0, sending=false, masteredSet=new Set();
+let mode='demo', demoIdx=0, sending=false, masteredSet=new Set(), curWs={blocks:[]};
 let history=[]; // {role,content} for live
 const $=id=>document.getElementById(id);
 const chat=$('chat');
@@ -239,6 +303,7 @@ function setSignal(s){
   if(nh){$('safety').className='safety alert';$('safety').textContent='⚠️ 触发敏感信号 → 已标记需人工介入 / 通知家长';}
   const m=s.mastery||[]; m.forEach(c=>masteredSet.add(c));
   document.querySelectorAll('#concepts span').forEach(sp=>sp.classList.toggle('ok',masteredSet.has(sp.dataset.c)));
+  if(mode==='live' && s.step!=null) setWorkspace(wsForStep(s.step));
 }
 function bubble(role,text){
   const d=document.createElement('div');d.className='msg '+role;
@@ -255,6 +320,39 @@ function showReport(r){
   $('report').innerHTML=`<div class="row"><b>今日作品：</b>${r.work}</div><div class="row"><b>掌握：</b>${r.concepts}</div><div class="row"><b>投入：</b>${r.effort}</div><div class="row" style="color:var(--coral)"><b>亮点：</b>${r.highlight}</div><div class="row"><b>下一步：</b>${r.next}</div><div class="row" style="color:var(--green)"><b>鼓励：</b>${r.cheer}</div>`;
 }
 
+// ---------- workspace (scratch-style) ----------
+function setWorkspace(ws){
+  curWs = ws = ws||{blocks:[]};
+  const blocks = ws.blocks||[];
+  const say = ws.say||'你好!';
+  $('stack').innerHTML = blocks.map(k=>{
+    const b=BLOCKS[k]; return `<div class="block ${b.cls}">${b.html.replace('$SAY',say)}</div>`;
+  }).join('');
+  $('ws-empty').style.display = blocks.length?'none':'block';
+  document.querySelectorAll('.palette .block').forEach(b=>b.classList.toggle('pulse',b.dataset.b===ws.hl));
+  if(ws.run) runStage(blocks.includes('say')?say:null);
+  else $('bubble').classList.remove('show');
+}
+function runStage(sayText){
+  const s=$('sprite'); s.classList.remove('run'); void s.offsetWidth; s.classList.add('run');
+  const b=$('bubble');
+  if(sayText){ b.textContent=sayText; b.classList.add('show'); } else b.classList.remove('show');
+}
+// derive a workspace state from the model's step signal (live mode)
+function wsForStep(step){
+  switch(step){
+    case 0: case 1: return {blocks:[]};
+    case 2: return {blocks:['hat'],hl:'move'};
+    case 3: return {blocks:['hat','move'],run:true};
+    case 4: return {blocks:['hat','move']};
+    case 5: return {blocks:['hat','move'],hl:'say'};
+    case 6: return {blocks:['hat','move','say'],say:'你好!'};
+    case 7: return {blocks:['hat','move','say'],say:'你好!',run:true};
+    default: return curWs;
+  }
+}
+$('goflag').onclick=()=>runStage(curWs.blocks&&curWs.blocks.includes('say')?(curWs.say||'你好!'):null);
+
 // ---------- demo flow ----------
 function demoNext(){
   if(demoIdx>=DEMO.length){ sys('演示结束。点「重置」重来，或切到「真实测试」连你的模型实测。'); return; }
@@ -264,6 +362,7 @@ function demoNext(){
     $('typing').style.display='none';
     bubble('ai',t.ai.replace(/\*\*/g,''));
     setSignal({step:t.step,hint:t.hint,emotion:t.emotion||'positive',mastery:t.mastery||[],need_human:false});
+    if(t.ws) setWorkspace(t.ws);
     if(t.step===7) showReport(DEMO_REPORT);
   },600);
 }
@@ -323,6 +422,7 @@ $('m-live').onclick=()=>setMode('live');
 
 function resetChat(){
   chat.innerHTML=''; demoIdx=0; history=[]; masteredSet=new Set();
+  setWorkspace({blocks:[]});
   document.querySelectorAll('#concepts span').forEach(sp=>sp.classList.remove('ok'));
   $('report').className='report'; $('report-empty').style.display='block';
   $('safety').className='safety'; $('safety').textContent='🛡️ 安全护栏正常 · 内容/任务/隐私/情绪监测中';
