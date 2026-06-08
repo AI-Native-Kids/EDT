@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AI 导师测试 · 第1课《让小猫动起来》</title>
+<title>AI 创造伙伴测试 · 第1课《说出你的第一个游戏》· Vibe Coding</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
 <style>
   :root{--ink:#0B1B2E;--mist:#F5F8FB;--line:#E5ECF2;--blue:#2F6BFF;--teal:#0FB5A6;--coral:#FF7A45;--red:#E1383C;--green:#1E9E62;--slate:#5C6B7A;--faint:#90A0AE}
@@ -12,6 +12,7 @@
   header{background:var(--ink);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   header .ttl{font-weight:900;font-size:16px}header .ttl span{color:var(--coral)}
   header .sub{color:#9FB6C4;font-size:12.5px}
+  header .sub b{color:var(--teal)}
   header .sp{flex:1}
   .seg{display:inline-flex;background:rgba(255,255,255,.1);border-radius:20px;padding:3px}
   .seg button{appearance:none;border:none;background:transparent;color:#cdd9e3;font-family:inherit;font-size:13px;font-weight:700;padding:6px 14px;border-radius:18px;cursor:pointer}
@@ -19,17 +20,18 @@
   header .btn{appearance:none;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font-family:inherit;font-size:13px;padding:6px 12px;border-radius:18px;cursor:pointer}
   header .btn:hover{background:rgba(255,255,255,.1)}
 
-  .wrap{max-width:1340px;margin:0 auto;padding:16px;display:grid;grid-template-columns:330px minmax(0,1.3fr) 300px;gap:14px;align-items:start}
+  .wrap{max-width:1380px;margin:0 auto;padding:16px;display:grid;grid-template-columns:minmax(0,0.95fr) minmax(0,1.25fr) 290px;gap:14px;align-items:start}
   @media(max-width:1180px){.wrap{grid-template-columns:1fr 1fr}}
   @media(max-width:760px){.wrap{grid-template-columns:1fr}}
 
   .panel{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
   .panel .ph{padding:12px 16px;border-bottom:1px solid var(--line);font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
   .panel .ph .dot{width:9px;height:9px;border-radius:50%;background:var(--teal)}
+  .panel .ph .faint{color:var(--faint);font-weight:400;font-size:12px}
 
   /* chat */
-  .chat{height:62vh;min-height:420px;overflow-y:auto;padding:16px;background:linear-gradient(#fff,#FBFDFF)}
-  .msg{display:flex;gap:10px;margin:14px 0;max-width:88%}
+  .chat{height:60vh;min-height:420px;overflow-y:auto;padding:16px;background:linear-gradient(#fff,#FBFDFF)}
+  .msg{display:flex;gap:10px;margin:14px 0;max-width:90%}
   .msg .av{width:34px;height:34px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-size:18px}
   .msg.ai .av{background:#EAF7FE}
   .msg.kid{margin-left:auto;flex-direction:row-reverse}
@@ -45,35 +47,22 @@
   .composer textarea:focus{border-color:var(--blue)}
   .composer .send{appearance:none;border:none;background:var(--blue);color:#fff;font-family:inherit;font-weight:700;font-size:14px;padding:0 18px;height:42px;border-radius:12px;cursor:pointer}
   .composer .send:disabled{opacity:.5;cursor:default}
-  .hintbtn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--slate);font-family:inherit;font-size:12px;padding:0 12px;height:42px;border-radius:12px;cursor:pointer}
+  .hintbtn{appearance:none;border:1px solid var(--line);background:#fff;color:var(--slate);font-family:inherit;font-size:12px;padding:0 10px;height:42px;border-radius:12px;cursor:pointer;white-space:nowrap}
 
-  /* workspace (scratch-style, demo) */
-  .stage{position:relative;height:150px;background:linear-gradient(#DFF1FF,#F3FBFF);border-bottom:1px solid var(--line);overflow:hidden}
-  .stage .ground{position:absolute;left:0;right:0;bottom:0;height:14px;background:#EAF3DA;border-top:1px solid #D6E6BE}
-  .stage .sprite{position:absolute;left:18px;bottom:16px;font-size:46px;line-height:1;transform-origin:center bottom;z-index:2}
-  .stage .sprite.run{animation:walk 1s ease-in-out forwards}
-  @keyframes walk{0%{transform:translateX(0)}25%{transform:translateX(18px) translateY(-6px)}50%{transform:translateX(34px)}75%{transform:translateX(52px) translateY(-6px)}100%{transform:translateX(52px)}}
-  .stage .bubble{position:absolute;left:64px;bottom:78px;max-width:150px;background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:6px 10px;font-size:13px;font-weight:700;opacity:0;transform:translateY(6px) scale(.9);transition:.2s;pointer-events:none;z-index:3}
-  .stage .bubble.show{opacity:1;transform:translateY(0) scale(1)}
-  .stage .bubble:after{content:"";position:absolute;left:16px;bottom:-9px;border:7px solid transparent;border-top-color:var(--ink)}
-  .stage .goflag{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;border:none;background:#fff;color:var(--green);font-size:12px;cursor:pointer;box-shadow:0 1px 4px rgba(0,0,0,.15);z-index:4}
-  .ws-body{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:250px}
-  .ws-col{padding:10px;overflow-y:auto}
-  .ws-col.palette{border-right:1px solid var(--line);background:#FBFDFF}
-  .ws-h{font-size:11px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
-  .grp{margin-bottom:10px}.grp-t{font-size:11px;font-weight:700;margin-bottom:2px}
-  .block{display:block;color:#fff;font-size:12.5px;font-weight:600;padding:7px 10px;border-radius:7px;margin:5px 0;box-shadow:0 1px 0 rgba(0,0,0,.18);cursor:default}
-  .block .slot{background:rgba(255,255,255,.85);color:#333;border-radius:9px;padding:0 6px;font-weight:700;margin:0 1px}
-  .b-event{background:#FFBF00;color:#5b4500}.b-event .slot{color:#5b4500}
-  .b-motion{background:#4C97FF}.b-looks{background:#9966FF}.b-sound{background:#CF63CF}
-  .block.hat{border-top-left-radius:16px;border-top-right-radius:16px}
-  .block.pulse{animation:pulse 1.1s ease-in-out infinite;outline:3px solid #FFD60A;outline-offset:1px}
-  @keyframes pulse{0%,100%{outline-color:rgba(255,214,10,.25)}50%{outline-color:rgba(255,214,10,1)}}
-  #stack .block{margin:0 0 4px}
-  .empty-hint{font-size:12px;color:var(--faint);border:2px dashed var(--line);border-radius:8px;padding:14px 8px;text-align:center;margin-top:4px}
+  /* live preview (the real running program) */
+  .preview{position:relative;flex:1;min-height:430px;height:60vh;background:#0b1b2e}
+  .preview iframe{width:100%;height:100%;border:0;background:#fff;display:block}
+  .pv-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8aa0b3;font-size:13.5px;text-align:center;padding:24px;flex-direction:column;gap:8px}
+  .pv-empty .big{font-size:30px}
+  .pvbar{display:flex;align-items:center;gap:8px;border-top:1px solid var(--line);padding:7px 10px;background:#fff}
+  .pvbar .mini{appearance:none;border:1px solid var(--line);background:#fff;color:var(--slate);font-family:inherit;font-size:12px;border-radius:8px;padding:4px 10px;cursor:pointer}
+  .pvbar .mini:hover{border-color:var(--blue);color:var(--blue)}
+  .pvbar .grow{flex:1}
+  .codebox{display:none;margin:0;max-height:210px;overflow:auto;background:#0b1b2e;color:#cfe3ff;font-family:ui-monospace,SFMono-Regular,monospace;font-size:11px;line-height:1.55;padding:10px 12px;white-space:pre-wrap;word-break:break-all;border-top:1px solid #1d3147}
+  .codebox.show{display:block}
 
   /* teacher panel */
-  .tp{padding:14px 16px;overflow-y:auto;max-height:72vh}
+  .tp{padding:14px 16px;overflow-y:auto;max-height:74vh}
   .tp .goal{background:#EFF5FF;border:1px solid #CFE0FB;border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:14px}
   .tp .goal b{color:var(--blue)}
   .tp h4{margin:14px 0 8px;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--coral)}
@@ -110,13 +99,12 @@
   .row2 .save{background:var(--blue);color:#fff;border:none}
   .row2 .cancel{background:#fff;color:var(--slate);border:1px solid var(--line)}
   details.adv{margin-top:8px}details.adv summary{cursor:pointer;font-size:12.5px;color:var(--slate);font-weight:700}
-  .smalllink{color:var(--blue);cursor:pointer;font-size:12.5px}
 </style>
 </head>
 <body>
 <header>
-  <div class="ttl">AI 导师测试 · <span>小酷</span></div>
-  <div class="sub">第1课《让小猫动起来》</div>
+  <div class="ttl">AI 创造伙伴 · <span>小酷</span></div>
+  <div class="sub">第1课《说出你的第一个游戏》· <b>Vibe Coding</b></div>
   <div class="sp"></div>
   <div class="seg"><button id="m-demo" class="on">演示模式</button><button id="m-live">真实测试</button></div>
   <button class="btn" id="reset">↺ 重置</button>
@@ -124,68 +112,56 @@
 </header>
 
 <div class="wrap">
-  <!-- workspace -->
+  <!-- chat -->
   <div class="panel">
-    <div class="ph"><span class="dot" style="background:var(--blue)"></span> 积木工作区 <span style="color:var(--faint);font-weight:400;font-size:12px;margin-left:auto">Scratch 风格 · 跟着对话自动搭</span></div>
-    <div class="stage" id="stage">
-      <div class="ground"></div>
-      <div class="bubble" id="bubble"></div>
-      <div class="sprite" id="sprite">🐱</div>
-      <button class="goflag" id="goflag" title="运行程序">▶</button>
-    </div>
-    <div class="ws-body">
-      <div class="ws-col palette">
-        <div class="ws-h">积木库</div>
-        <div class="grp"><div class="grp-t" style="color:#C99700">事件</div>
-          <div class="block hat b-event" data-b="hat">当 <span class="slot">🚩</span> 被点击</div>
-        </div>
-        <div class="grp"><div class="grp-t" style="color:#3373CC">动作</div>
-          <div class="block b-motion" data-b="move">移动 <span class="slot">10</span> 步</div>
-        </div>
-        <div class="grp"><div class="grp-t" style="color:#774DCB">外观 / 声音</div>
-          <div class="block b-looks" data-b="say">说 <span class="slot">你好!</span> <span class="slot">2</span> 秒</div>
-          <div class="block b-sound" data-b="sound">播放声音 <span class="slot">喵</span></div>
-        </div>
-      </div>
-      <div class="ws-col script">
-        <div class="ws-h">我的程序</div>
-        <div id="stack"></div>
-        <div class="empty-hint" id="ws-empty">积木会拖到这里…<br/>（演示会自动搭好）</div>
-      </div>
+    <div class="ph"><span class="dot"></span> 对话 · 你是创意总监 <span class="faint" style="margin-left:auto" id="mode-label">演示模式（无需密钥）</span></div>
+    <div class="chat" id="chat"></div>
+    <div class="typing" id="typing" style="display:none">小酷正在动手做…</div>
+    <div class="composer">
+      <button class="hintbtn" id="stuck" title="想不出加什么时，看 AI 怎么给灵感">💡 给点灵感</button>
+      <textarea id="input" placeholder="用大白话说你想做什么 / 想怎么改…（演示模式直接点发送按剧本推进）"></textarea>
+      <button class="send" id="send">发送</button>
     </div>
   </div>
 
-  <!-- chat -->
+  <!-- live preview -->
   <div class="panel">
-    <div class="ph"><span class="dot"></span> 对话 <span style="color:var(--faint);font-weight:400;font-size:12px;margin-left:auto" id="mode-label">演示模式（无需密钥）</span></div>
-    <div class="chat" id="chat"></div>
-    <div class="typing" id="typing" style="display:none">小酷正在输入…</div>
-    <div class="composer">
-      <button class="hintbtn" id="stuck" title="模拟孩子卡住，看 AI 怎么阶梯提示">我卡住了</button>
-      <textarea id="input" placeholder="用孩子的口吻回复，体验 AI 怎么教…（演示模式直接发送即可推进）"></textarea>
-      <button class="send" id="send">发送</button>
+    <div class="ph"><span class="dot" style="background:var(--blue)"></span> 实时预览 <span class="faint">真能玩 · 边说边变</span></div>
+    <div class="preview">
+      <iframe id="stageframe" title="你的程序预览" sandbox="allow-scripts"></iframe>
+      <div class="pv-empty" id="pv-empty"><span class="big">🎮</span>这里会出现你“说”出来的程序<br/>说出你想做的游戏，小酷就把它做出来…</div>
     </div>
+    <div class="pvbar">
+      <button class="mini" id="reload">↻ 重玩</button>
+      <span class="grow"></span>
+      <button class="mini" id="codetoggle">&lt;/&gt; 看看代码</button>
+    </div>
+    <pre class="codebox" id="codebox"></pre>
   </div>
 
   <!-- teacher panel -->
   <div class="panel">
     <div class="ph"><span class="dot" style="background:var(--coral)"></span> 教研 / 调试面板</div>
     <div class="tp">
-      <div class="goal">🎯 <b>本课目标</b>：点击小猫 → 移动 + 说话 + 声音的小动画。<br/><b>首胜目标：10 分钟内做出第一个能跑的版本。</b></div>
+      <div class="goal">🎯 <b>本课目标</b>：让孩子用“说话”把脑子里的游戏做出来。<br/><b>首胜目标：10 分钟内做出第一个能玩的版本，再靠对话不断迭代。</b></div>
 
       <h4>当前进度</h4>
       <div class="steps" id="steps"></div>
 
       <h4>实时信号</h4>
-      <div class="kv"><span>提示级别</span><span class="v" id="hintlv">L0（独立）</span></div>
+      <div class="kv"><span>正在练的能力</span><span class="v" id="skill">—</span></div>
+      <div class="kv"><span>迭代次数</span><span class="v" id="itercount">0</span></div>
       <div class="kv"><span>情绪</span><span class="v"><span class="pill n" id="emotion">中性</span></span></div>
       <div class="kv"><span>需要人工介入</span><span class="v"><span class="pill g" id="needhuman">否</span></span></div>
 
-      <h4>掌握的概念</h4>
+      <h4>正在练的 AI-native 能力</h4>
       <div class="concepts" id="concepts">
-        <span data-c="sequence">顺序执行</span>
-        <span data-c="event">事件（点击触发）</span>
-        <span data-c="blocks">基础积木</span>
+        <span data-c="describe">说清需求</span>
+        <span data-c="decompose">拆解任务</span>
+        <span data-c="verify">看效果验证</span>
+        <span data-c="debug">用话调试</span>
+        <span data-c="iterate">迭代改进</span>
+        <span data-c="style">审美表达</span>
       </div>
 
       <h4>成长报告预览（给家长）</h4>
@@ -201,8 +177,8 @@
 <div class="modal" id="settings">
   <div class="card">
     <h3>API 设置（真实测试模式）</h3>
-    <p class="note">支持 OpenAI 兼容接口（DeepSeek / OpenAI / 通义千问 / 自定义）。密钥只存在你本机浏览器，不上传。</p>
-    <div class="warn">⚠️ 测试用途。请勿在公开/共享电脑输入生产密钥；浏览器直连可能被部分服务的跨域(CORS)策略拦截，建议用 DeepSeek 或 OpenAI 测试。</div>
+    <p class="note">支持 OpenAI 兼容接口（DeepSeek / OpenAI / 通义千问 / 自定义）。密钥只存在你本机浏览器，不上传。真实模式下小酷会真的生成“能玩的程序”注入右侧预览。</p>
+    <div class="warn">⚠️ 测试用途。请勿在公开/共享电脑输入生产密钥；浏览器直连可能被部分服务的跨域(CORS)策略拦截，建议用 DeepSeek 或 OpenAI 测试。建议选支持代码生成较好的模型。</div>
     <div class="fld"><label>服务商预设</label><select id="cfg-preset">
       <option value="deepseek">DeepSeek（推荐·便宜·国产）</option>
       <option value="openai">OpenAI</option>
@@ -220,41 +196,43 @@
 </div>
 
 <script>
-// ---------- system prompt (from design doc §5) ----------
+// ---------- system prompt (Vibe Coding pedagogy) ----------
 const SYSTEM_DEFAULT = `# 角色
-你是"小酷"，一个面向 8–12 岁零基础孩子的编程学习伙伴。你温暖、耐心、爱鼓励，像个大哥哥/姐姐。你在教积木式编程（Scratch 风格）。
+你是"小酷"，面向 8–12 岁孩子的 AI 创造伙伴。在这里孩子不写复杂代码——他用自然语言描述想做的东西（游戏 / 动画），你负责把它变成"真正能在网页里跑起来的程序"。你温暖、耐心、爱鼓励，像个大哥哥/姐姐。
 
-# 本课：第1课《让小猫动起来》
-目标作品：点击角色 → 移动 + 说话 + 播放声音的小动画。孩子在一个积木编程界面操作，你通过对话引导他一步步完成（孩子会用文字描述他看到/做的）。
+# 本课：用"说话"做出第一个能玩的小游戏（Vibe Coding）
+孩子当"创意总监"，你当"实现伙伴"。目标：10 分钟内做出第一个能玩的版本，然后通过对话不断迭代。
 
-# 教学规则（最重要）
-1. 你是教练不是替身：绝不直接给出完整代码或替孩子把积木拖好。永远引导孩子自己做。
-2. 一次只引导一小步，等孩子完成/回应再继续。
-3. 用提问引导（苏格拉底式）。孩子卡住时按"阶梯提示"逐级给：L1只问引导性问题→L2缩小范围→L3指出具体位置→L4示范一步但让孩子操作。默认从L1开始，连续卡2次升一级，情绪低落则鼓励+降难度。
-4. 每完成一步都即时肯定；跑通时放大庆祝。
-5. 鼓励个性化：让孩子做他自己想要的版本。
-6. 语言简单、短句、适龄、少量 emoji。
+# 你要教孩子的核心能力（AI-native）
+1. 说清需求：帮孩子把模糊的想法问清楚、说具体。
+2. 拆解任务：把大想法拆成"先做哪一小步"，一次只做一步。
+3. 看效果验证：每做一版都让孩子玩一玩、观察。
+4. 用话调试：引导孩子说出"哪里不对"，把问题描述清楚。
+5. 迭代改进：鼓励一点点加东西、调参数。
+6. 审美表达：鼓励孩子加入自己的风格（换形象 / 颜色 / 速度）。
+
+# 工作方式（最重要）
+1. 你负责写代码，并产出"完整、可独立运行的单文件 HTML 程序"（自带 style 和 script，不依赖外部文件/网络）。
+2. 一次只做一小步，做完让孩子玩、再问下一步。先让孩子快速首胜。
+3. 多用提问引导孩子表达想法、自己发现问题，但实现交给你。
+4. 每完成一步即时肯定；做出新效果/跑通时放大庆祝。
+5. 语言简单、短句、适龄、少量 emoji。游戏要让方向键和鼠标/触摸都能玩。
 
 # 安全规则（红线，最高优先级）
-1. 只聊编程与本课相关；孩子跑题→温和拉回。
-2. 绝不生成暴力/成人/危险/不适龄内容；遇不当请求→温和拒绝并转回学习。
+1. 只聊创作与本课相关；孩子跑题→温和拉回。
+2. 绝不生成暴力/成人/危险/不适龄内容；遇不当请求→温和拒绝并转回创作。
 3. 不索取或记录任何个人身份信息（真名/住址/学校/电话）。
 4. 识别挫败/负面情绪→先共情鼓励、降低难度。
 5. 若孩子透露自伤/被欺凌/被虐待/紧急求助等→立即停止常规教学，输出 need_human=true，温和地说会让大人来帮忙，不自行深入处理。
 
-# 输出格式
-先用孩子能懂的话回复（简短）。然后另起一行，输出一行 JSON 信号（这行会被系统隐藏）：
-{"step": 0-7, "hint_level": 0-4, "mastery": ["sequence"或"event"或"blocks"中已掌握的], "emotion": "positive|neutral|frustrated", "need_human": false}
-step 含义：0暖场 1设目标 2第一块积木 3首胜 4加一个 5卡住提示 6个性化 7收尾。`;
+# 输出格式（严格遵守）
+先用孩子能懂的话回复（简短）。然后输出**完整的程序**，放在一个 \`\`\`html 代码块里（系统会自动运行它，孩子只看到运行效果、看不到代码）。最后另起一行，输出一行 JSON 信号（这行会被系统隐藏）：
+{"stage": 0-7, "skill": "describe|decompose|verify|debug|iterate|style", "mastery": ["describe"/"decompose"/"verify"/"debug"/"iterate"/"style" 中已练到的], "emotion": "positive|neutral|frustrated", "need_human": false}
+stage 含义：0暖场 1表达意图 2首个可玩版 3迭代加元素 4用话调试 5增强(计分等) 6个性化 7发布。
+注意：每次都要输出**完整**的 HTML（不要只给改动片段），这样才能直接运行。`;
 
-const STEP_NAMES = ['暖场','设目标','第一块','首胜🎉','加一个','提示','个性化','收尾'];
-// scratch-style block definitions for the workspace
-const BLOCKS = {
-  hat: {cls:'b-event hat', html:'当 <span class="slot">🚩</span> 被点击'},
-  move:{cls:'b-motion',     html:'移动 <span class="slot">10</span> 步'},
-  say: {cls:'b-looks',      html:'说 <span class="slot">$SAY</span> <span class="slot">2</span> 秒'},
-  sound:{cls:'b-sound',     html:'播放声音 <span class="slot">喵</span>'}
-};
+const STAGE_NAMES = ['暖场','表达意图','首个可玩版🎉','迭代·加元素','用话调试','增强·计分','个性化','发布'];
+const SKILL_CN = {describe:'说清需求',decompose:'拆解任务',verify:'看效果验证',debug:'用话调试',iterate:'迭代改进',style:'审美表达'};
 const PRESETS = {
   deepseek:{url:'https://api.deepseek.com',model:'deepseek-chat'},
   openai:{url:'https://api.openai.com/v1',model:'gpt-4o-mini'},
@@ -262,48 +240,100 @@ const PRESETS = {
   custom:{url:'',model:''}
 };
 
-// ---------- scripted demo ----------
+// ---------- the actual running game (built progressively for the demo) ----------
+// returns a complete, self-contained, runnable HTML document as a string
+function buildGame(o){
+  o = o||{};
+  const fruit = o.fruit||'🍎';
+  const apples = !!o.apples, collide = !!o.collide, score = !!o.score;
+  const speed = o.speed||2.4;
+  const title = o.title||'我的小猫游戏';
+  // NB: the inner closing script tag is written as <\/script> so it does not
+  // prematurely close THIS page's <script> block.
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:linear-gradient(#bfe9ff,#eafff3);font-family:"Noto Sans SC",sans-serif;user-select:none;-webkit-user-select:none;touch-action:none}
+#cat{position:absolute;bottom:6px;font-size:48px;transform:translateX(-50%);will-change:left}
+.fruit{position:absolute;font-size:34px;transform:translateX(-50%);will-change:top}
+#hud{position:absolute;top:10px;left:12px;font-size:20px;font-weight:900;color:#0a8a6b;text-shadow:0 1px 0 #fff}
+.tip{position:absolute;top:10px;width:100%;text-align:center;color:#3a8a78;font-size:13px;pointer-events:none}
+.pop{position:absolute;font-size:24px;font-weight:900;color:#ff7a45;transform:translateX(-50%);animation:up .6s ease-out forwards;pointer-events:none}
+@keyframes up{to{transform:translate(-50%,-46px);opacity:0}}
+</style></head><body>
+${score?'<div id="hud">得分: 0</div>':''}
+<div class="tip">用 ← → 或 鼠标/手指 移动小猫</div>
+<div id="cat">🐱</div>
+<script>
+var W=function(){return innerWidth},H=function(){return innerHeight};
+var x=W()/2, score=0, fruits=[], t=0;
+var cat=document.getElementById('cat'), hud=document.getElementById('hud');
+var APPLES=${apples}, COLLIDE=${collide}, SCORE=${score}, SPD=${speed}, FRUIT=${JSON.stringify(fruit)};
+function place(){cat.style.left=x+'px'}
+function move(d){x=Math.max(24,Math.min(W()-24,x+d));place()}
+addEventListener('keydown',function(e){if(e.key=='ArrowLeft')move(-28);if(e.key=='ArrowRight')move(28)});
+addEventListener('pointerdown',function(e){x=e.clientX;place()});
+addEventListener('pointermove',function(e){if(e.buttons){x=e.clientX;place()}});
+function spawn(){var f=document.createElement('div');f.className='fruit';f.textContent=FRUIT;var fx=30+Math.random()*(W()-60);f.dataset.x=fx;f.dataset.y=-30;f.style.left=fx+'px';f.style.top='-30px';document.body.appendChild(f);fruits.push(f)}
+function pop(px){var p=document.createElement('div');p.className='pop';p.textContent='+1';p.style.left=px+'px';p.style.top=(H()-78)+'px';document.body.appendChild(p);setTimeout(function(){p.remove()},600)}
+function loop(){
+  if(APPLES){
+    t++; if(t>70){t=0;spawn()}
+    for(var i=fruits.length-1;i>=0;i--){
+      var f=fruits[i], y=(+f.dataset.y)+SPD*1.3; f.dataset.y=y; f.style.top=y+'px';
+      var fx=+f.dataset.x;
+      if(COLLIDE && y>H()-78 && y<H()-20 && Math.abs(fx-x)<42){
+        if(SCORE){score++; if(hud) hud.textContent='得分: '+score}
+        pop(x); f.remove(); fruits.splice(i,1); continue;
+      }
+      if(y>H()+34){f.remove(); fruits.splice(i,1)}
+    }
+  }
+  requestAnimationFrame(loop)
+}
+place(); loop();
+<\/script></body></html>`;
+}
+
+// ---------- scripted demo (kid <-> 小酷, with the preview really building up) ----------
 const DEMO = [
-  {ai:"嗨！我是你的编程伙伴小酷 🐱 今天我们一起让一只小猫动起来！\n先问你——你最喜欢小猫、小狗，还是恐龙呀？",step:0,hint:0,emotion:'positive',ws:{blocks:[]}},
-  {ai:"哈哈好选择！那我们今天的目标是：**点一下小猫，它就会走两步、还会说话！** 听起来酷不酷？😎\n准备好了吗？我们先让它“被点击就动”。",step:1,hint:0,ws:{blocks:[]}},
-  {ai:"在左边的积木里，找一块黄色的“当🚩被点击”——你能找到它吗？找到了就告诉我～",step:2,hint:1,ws:{blocks:[],hl:'hat'}},
-  {ai:"太棒了！把它拖到右边“我的程序”里。\n然后找一块蓝色的“移动10步”，接在它的**下面**，让它们连起来。",step:2,hint:1,mastery:['event'],ws:{blocks:['hat'],hl:'move'}},
-  {ai:"现在点上面的绿旗、或者直接点小猫试试看！……\n🎉🎉 它动了！你刚刚写出了人生第一段程序！太厉害了！",step:3,hint:0,mastery:['event','sequence'],ws:{blocks:['hat','move'],run:true}},
-  {ai:"现在轮到你来加新东西啦：你想让它**说话**，还是**发出声音**？\n挑一个，找找看哪块积木能做到～",step:4,hint:0,ws:{blocks:['hat','move']}},
-  {ai:"没关系，我们一起来～你想让它“说话”对吧？\n看看**紫色的“外观”**分类里，有没有一块像“说你好2秒”的积木？",step:5,hint:2,emotion:'neutral',ws:{blocks:['hat','move'],hl:'say'}},
-  {ai:"找到啦，真棒！把它接在下面。\n现在最好玩的来了——让它说**你**想说的话，把文字改成你喜欢的，试试看？😄",step:6,hint:0,mastery:['event','sequence','blocks'],ws:{blocks:['hat','move','say'],say:'你好!'}},
-  {ai:"哇，看看你做的小猫！会动、会说话 🎉 你今天太厉害了！\n要不要保存下来给爸爸妈妈看看？我来把你今天学的记下来 📝",step:7,hint:0,mastery:['event','sequence','blocks'],ws:{blocks:['hat','move','say'],say:'我最厉害!',run:true}}
+  {ai:"嗨！我是你的创造伙伴小酷 🐱 在这里你不用背复杂的代码——\n你来当“创意总监”，说出你想做的东西，我来把它变成真正能玩的程序！\n先想想：你想做一个游戏，还是一个动画？想做点什么呀？",stage:0,emotion:'positive'},
+  {kid:"我想做一个小猫接苹果的游戏！",ai:"哇，这个点子超棒！🎮 我们先把它拆成小步，这样最快能玩上：\n第一步，先让小猫能左右走起来，好不好？我先做出来——你用键盘 ← → 试试看 👉",stage:1,skill:'decompose',mastery:['describe','decompose'],build:{}},
+  {kid:"小猫能动了！好酷！",ai:"🎉 看！你的第一个程序跑起来了，这就是你刚才说的小猫。\n接下来你想加点什么？要不要让苹果从天上掉下来？",stage:2,skill:'verify',mastery:['describe','decompose','verify'],emotion:'positive'},
+  {kid:"对！让苹果掉下来",ai:"好嘞，苹果来啦 🍎 它们会从顶上一直掉下来。\n你先玩一玩，用小猫去接接看——有没有发现什么问题？",stage:3,skill:'iterate',mastery:['describe','decompose','verify'],build:{apples:true}},
+  {kid:"我接到苹果了，但是好像没有反应诶？",ai:"你观察得太准了！👀 这一步就叫“调试”——发现问题、把它说清楚。\n问题是：我还没告诉程序“接到了要怎么样”。我来加上——接到苹果就冒一个 +1 的小动画！再玩玩看 👉",stage:4,skill:'debug',mastery:['describe','decompose','verify','debug'],build:{apples:true,collide:true}},
+  {kid:"接到会冒 +1 啦！那能不能算分数？",ai:"当然可以！🏆 我在左上角加了“得分”，每接到一个就加一分。\n你看——这就是在“迭代”：一点点把它变得更好玩！",stage:5,skill:'iterate',mastery:['describe','decompose','verify','debug','iterate'],build:{apples:true,collide:true,score:true}},
+  {kid:"我想把苹果换成披萨！还要更快更刺激！",ai:"哈哈好主意，披萨雨来咯 🍕 我还把掉落速度调快了一点！\n这就是你自己的风格啦——一个独一无二的“接披萨大作战” 😎",stage:6,skill:'style',mastery:['describe','decompose','verify','debug','iterate','style'],build:{apples:true,collide:true,score:true,fruit:'🍕',speed:3.4}},
+  {kid:"太好玩了！",ai:"看看你做的这个游戏！🍕🐱 一个真能玩的作品，从你脑子里的一句话开始，被你一步步“指挥”出来了。\n要不要发给爸爸妈妈玩玩？我把你今天学到的本领记下来 📝",stage:7,mastery:['describe','decompose','verify','debug','iterate','style'],build:{apples:true,collide:true,score:true,fruit:'🍕',speed:3.4}}
 ];
 const DEMO_REPORT = {
-  work:"《会动会说话的小猫》——点击后移动并说出自定义的话",
-  concepts:"学会了让程序“按顺序做事”、用“点击”触发动作，还自己加了“说话”",
-  effort:"约 14 分钟 · 主动尝试 5 次 · 中途卡了一下自己找到了积木",
-  highlight:"今天他自己想到要让小猫说“我最厉害”，特别得意！",
-  next:"下节课：让小猫听到声音会跳起来（认识“循环”）",
-  cheer:"你写出了人生第一段程序，编程超人就是你！🦸"
+  work:"《接披萨大作战》——小猫左右移动、接住掉落的披萨并计分（真能玩、可分享）",
+  skills:"学会了把想法“说清楚”、拆成小步、做一版就玩一版去验证、发现问题用话讲明白（调试）、再不断迭代，还加上了自己的风格",
+  effort:"约 12 分钟 · 主动提出 4 个改进想法 · 自己发现了一个 bug",
+  highlight:"他自己发现“接到苹果却没反应”，并准确说出了问题——这是真正的工程师思维！",
+  next:"下次：给游戏加“倒计时”和“最高分”，挑战做一个会越来越难的版本",
+  cheer:"你今天当了一回“AI 创意总监”，把一句话变成了真游戏，超厉害！🦸"
 };
 
 // ---------- state ----------
-let mode='demo', demoIdx=0, sending=false, masteredSet=new Set(), curWs={blocks:[]};
+let mode='demo', demoIdx=0, sending=false, masteredSet=new Set(), iterCount=0, lastCode='';
 let history=[]; // {role,content} for live
 const $=id=>document.getElementById(id);
 const chat=$('chat');
 
-function cfg(){ try{return JSON.parse(localStorage.getItem('tutorcfg')||'{}');}catch(e){return {};} }
-function saveCfg(c){ localStorage.setItem('tutorcfg', JSON.stringify(c)); }
+function cfg(){ try{return JSON.parse(localStorage.getItem('vibecfg')||'{}');}catch(e){return {};} }
+function saveCfg(c){ localStorage.setItem('vibecfg', JSON.stringify(c)); }
 
-function renderSteps(cur,done){
-  $('steps').innerHTML = STEP_NAMES.map((n,i)=>`<span class="s ${i===cur?'on':(i<cur?'done':'')}">${i} ${n}</span>`).join('');
+function renderSteps(cur){
+  $('steps').innerHTML = STAGE_NAMES.map((n,i)=>`<span class="s ${i===cur?'on':(i<cur?'done':'')}">${i} ${n}</span>`).join('');
 }
 function setSignal(s){
-  if(s.step!=null) renderSteps(s.step);
-  if(s.hint_level!=null||s.hint!=null){const h=s.hint_level??s.hint;$('hintlv').textContent='L'+h+(h===0?'（独立）':'');}
-  if(s.emotion){const e=s.emotion;const map={positive:['g','积极😊'],neutral:['n','中性'],frustrated:['b','受挫😟']};const[c,t]=map[e]||['n',e];$('emotion').className='pill '+c;$('emotion').textContent=t;}
+  if(s.stage!=null) renderSteps(s.stage);
+  if(s.skill) $('skill').textContent = SKILL_CN[s.skill]||s.skill;
+  if(s.emotion){const map={positive:['g','积极😊'],neutral:['n','中性'],frustrated:['b','受挫😟']};const[c,t]=map[s.emotion]||['n',s.emotion];$('emotion').className='pill '+c;$('emotion').textContent=t;}
   const nh=s.need_human;$('needhuman').className='pill '+(nh?'b':'g');$('needhuman').textContent=nh?'是 ⚠️':'否';
   if(nh){$('safety').className='safety alert';$('safety').textContent='⚠️ 触发敏感信号 → 已标记需人工介入 / 通知家长';}
   const m=s.mastery||[]; m.forEach(c=>masteredSet.add(c));
   document.querySelectorAll('#concepts span').forEach(sp=>sp.classList.toggle('ok',masteredSet.has(sp.dataset.c)));
-  if(mode==='live' && s.step!=null) setWorkspace(wsForStep(s.step));
 }
 function bubble(role,text){
   const d=document.createElement('div');d.className='msg '+role;
@@ -317,61 +347,45 @@ function sys(text){const d=document.createElement('div');d.className='msg sys';d
 function showReport(r){
   $('report-empty').style.display='none';
   $('report').className='report show';
-  $('report').innerHTML=`<div class="row"><b>今日作品：</b>${r.work}</div><div class="row"><b>掌握：</b>${r.concepts}</div><div class="row"><b>投入：</b>${r.effort}</div><div class="row" style="color:var(--coral)"><b>亮点：</b>${r.highlight}</div><div class="row"><b>下一步：</b>${r.next}</div><div class="row" style="color:var(--green)"><b>鼓励：</b>${r.cheer}</div>`;
+  $('report').innerHTML=`<div class="row"><b>今日作品：</b>${r.work}</div><div class="row"><b>学到的本领：</b>${r.skills}</div><div class="row"><b>投入：</b>${r.effort}</div><div class="row" style="color:var(--coral)"><b>亮点：</b>${r.highlight}</div><div class="row"><b>下一步：</b>${r.next}</div><div class="row" style="color:var(--green)"><b>鼓励：</b>${r.cheer}</div>`;
 }
 
-// ---------- workspace (scratch-style) ----------
-function setWorkspace(ws){
-  curWs = ws = ws||{blocks:[]};
-  const blocks = ws.blocks||[];
-  const say = ws.say||'你好!';
-  $('stack').innerHTML = blocks.map(k=>{
-    const b=BLOCKS[k]; return `<div class="block ${b.cls}">${b.html.replace('$SAY',say)}</div>`;
-  }).join('');
-  $('ws-empty').style.display = blocks.length?'none':'block';
-  document.querySelectorAll('.palette .block').forEach(b=>b.classList.toggle('pulse',b.dataset.b===ws.hl));
-  if(ws.run) runStage(blocks.includes('say')?say:null);
-  else $('bubble').classList.remove('show');
+// ---------- preview ----------
+function setPreview(html){
+  const f=$('stageframe');
+  f.srcdoc = html;
+  lastCode = html;
+  $('pv-empty').style.display='none';
+  $('codebox').textContent = html;
+  iterCount++; $('itercount').textContent=iterCount;
 }
-function runStage(sayText){
-  const s=$('sprite'); s.classList.remove('run'); void s.offsetWidth; s.classList.add('run');
-  const b=$('bubble');
-  if(sayText){ b.textContent=sayText; b.classList.add('show'); } else b.classList.remove('show');
-}
-// derive a workspace state from the model's step signal (live mode)
-function wsForStep(step){
-  switch(step){
-    case 0: case 1: return {blocks:[]};
-    case 2: return {blocks:['hat'],hl:'move'};
-    case 3: return {blocks:['hat','move'],run:true};
-    case 4: return {blocks:['hat','move']};
-    case 5: return {blocks:['hat','move'],hl:'say'};
-    case 6: return {blocks:['hat','move','say'],say:'你好!'};
-    case 7: return {blocks:['hat','move','say'],say:'你好!',run:true};
-    default: return curWs;
-  }
-}
-$('goflag').onclick=()=>runStage(curWs.blocks&&curWs.blocks.includes('say')?(curWs.say||'你好!'):null);
+$('reload').onclick=()=>{ if(lastCode){ $('stageframe').srcdoc=lastCode; } };
+$('codetoggle').onclick=()=>$('codebox').classList.toggle('show');
 
 // ---------- demo flow ----------
 function demoNext(){
-  if(demoIdx>=DEMO.length){ sys('演示结束。点「重置」重来，或切到「真实测试」连你的模型实测。'); return; }
+  if(demoIdx>=DEMO.length){ sys('演示结束。点「重置」重来，或切到「真实测试」连你的模型，让它真的现场生成能玩的程序。'); return; }
   const t=DEMO[demoIdx++];
+  if(t.kid) bubble('kid',t.kid);
   $('typing').style.display='block';
   setTimeout(()=>{
     $('typing').style.display='none';
     bubble('ai',t.ai.replace(/\*\*/g,''));
-    setSignal({step:t.step,hint:t.hint,emotion:t.emotion||'positive',mastery:t.mastery||[],need_human:false});
-    if(t.ws) setWorkspace(t.ws);
-    if(t.step===7) showReport(DEMO_REPORT);
-  },600);
+    setSignal({stage:t.stage,emotion:t.emotion||'positive',mastery:t.mastery||[],need_human:false,skill:t.skill});
+    if(t.build) setPreview(buildGame(t.build));
+    if(t.stage===7) showReport(DEMO_REPORT);
+  },700);
 }
 
 // ---------- live flow ----------
-function extractSignal(text){
-  const ms=text.match(/\{[^{}]*"step"[\s\S]*?\}/g);
-  if(ms&&ms.length){try{return {sig:JSON.parse(ms[ms.length-1]),clean:text.replace(ms[ms.length-1],'').trim()};}catch(e){}}
-  return {sig:null,clean:text};
+function parseReply(text){
+  let code=null, clean=text;
+  const cm=text.match(/```(?:html)?\s*([\s\S]*?)```/i);
+  if(cm){ code=cm[1].trim(); clean=clean.replace(cm[0],'').trim(); }
+  let sig=null;
+  const sm=clean.match(/\{[^{}]*"stage"[\s\S]*?\}/g);
+  if(sm&&sm.length){ try{ sig=JSON.parse(sm[sm.length-1]); clean=clean.replace(sm[sm.length-1],'').trim(); }catch(e){} }
+  return {code,clean,sig};
 }
 async function liveSend(userText){
   const c=cfg();
@@ -387,9 +401,10 @@ async function liveSend(userText){
     if(!res.ok){throw new Error('HTTP '+res.status+' '+(await res.text()).slice(0,180));}
     const data=await res.json();
     const raw=data.choices[0].message.content;
-    const {sig,clean}=extractSignal(raw);
+    const {sig,clean,code}=parseReply(raw);
     history.push({role:'assistant',content:raw});
-    bubble('ai',clean);
+    bubble('ai',clean||'（我把程序更新到右边预览啦，试试看！）');
+    if(code) setPreview(code);
     if(sig) setSignal(sig);
   }catch(e){ sys('调用失败：'+e.message+'\n（可能是密钥/URL 错误，或浏览器跨域 CORS 被拦——试试 DeepSeek/OpenAI。）'); }
   finally{ $('typing').style.display='none'; sending=false; $('send').disabled=false; }
@@ -398,16 +413,16 @@ async function liveSend(userText){
 // ---------- input ----------
 function send(){
   const v=$('input').value.trim();
-  if(mode==='demo'){ if(v){bubble('kid',v);$('input').value='';} demoNext(); return; }
+  if(mode==='demo'){ $('input').value=''; demoNext(); return; }
   if(!v||sending) return;
   bubble('kid',v); $('input').value=''; liveSend(v);
 }
 $('send').onclick=send;
 $('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}});
 $('stuck').onclick=()=>{
-  const txt='（我看着积木，不知道下一步该放哪…）';
-  if(mode==='demo'){ bubble('kid',txt); demoNext(); }
-  else { bubble('kid',txt); liveSend(txt); }
+  if(mode==='demo'){ demoNext(); return; }
+  const txt='（我想不出接下来加什么了，你能给我几个好玩的主意吗？）';
+  bubble('kid',txt); liveSend(txt);
 };
 
 // ---------- mode ----------
@@ -421,14 +436,16 @@ $('m-demo').onclick=()=>setMode('demo');
 $('m-live').onclick=()=>setMode('live');
 
 function resetChat(){
-  chat.innerHTML=''; demoIdx=0; history=[]; masteredSet=new Set();
-  setWorkspace({blocks:[]});
+  chat.innerHTML=''; demoIdx=0; history=[]; masteredSet=new Set(); iterCount=0; lastCode='';
+  $('itercount').textContent='0'; $('skill').textContent='—';
+  $('stageframe').srcdoc=''; $('pv-empty').style.display='flex';
+  $('codebox').textContent=''; $('codebox').classList.remove('show');
   document.querySelectorAll('#concepts span').forEach(sp=>sp.classList.remove('ok'));
   $('report').className='report'; $('report-empty').style.display='block';
   $('safety').className='safety'; $('safety').textContent='🛡️ 安全护栏正常 · 内容/任务/隐私/情绪监测中';
-  setSignal({step:0,hint:0,emotion:'neutral',need_human:false});
-  if(mode==='demo'){ sys('演示模式：每次「发送」或点「我卡住了」推进一步，看 AI 怎么教。'); demoNext(); }
-  else { sys('真实测试：你扮演 8 岁孩子和小酷对话。先在「⚙ API 设置」填密钥；小酷会先开场。'); liveSend('（老师：请按第1课开场，先暖场再设目标。）'); }
+  setSignal({stage:0,emotion:'neutral',need_human:false});
+  if(mode==='demo'){ sys('演示模式：点「发送」按剧本一步步推进，看孩子怎么“说”出一个真能玩的游戏，右边预览会跟着长出来。'); demoNext(); }
+  else { sys('真实测试：你扮演孩子，说出你想做的游戏；小酷会真的生成能玩的程序到右边预览。先在「⚙ API 设置」填密钥。'); liveSend('（老师：请按第1课开场，先暖场，引导我说出想做的游戏。）'); }
 }
 $('reset').onclick=resetChat;
 
